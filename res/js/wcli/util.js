@@ -15,14 +15,14 @@ wcli.util = (function() {
 		 * @param {String} id The NameID of the control recieving the event
 		 * @return {Object} An options object for an Ext.Ajax.Request
 		 */
-		evt: function(evt, id) {
+		evt: function(evt, id, params) {
 			return {
-				params: {
+				params: Ext.apply({
 					pnlid: panel.panelId,
 					_type: "json",
 					ctlact: id + ":" + evt,
 					focus: id
-				},
+				}, params),
 				success: function(form, result) {
 					if (result.alerts.length > 1) {
 						var alerts = result.alerts;

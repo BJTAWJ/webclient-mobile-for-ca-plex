@@ -29,6 +29,7 @@ Ext.ns('wcli');
 	function _buildPanelConfig(plexConfig) {
 		var config = {},
 			body = plexConfig.body,
+			hidden = plexConfig.hidden,
 			fullscreen = plexConfig.fullscreen,
 			toolbars = plexConfig.toolbars;
 		
@@ -57,7 +58,7 @@ Ext.ns('wcli');
 		}
 		
 		// Body items (only visible if the panel isn't "fullscreen")
-		config.items = [];
+		config.items = hidden.slice(0);
 		if (fullscreen.length === 0) {
 			var bodyItems = [],
 				bodyMap = {};
