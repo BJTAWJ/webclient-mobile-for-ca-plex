@@ -1,0 +1,25 @@
+/(!EnableAction:SetState,SetFocus)
+
+/(!StatesArea)
+	/(!Action:SetState)"/(!NameID)": {
+		"disabled": /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If)
+	},/(!Action)
+/(!StatesArea)
+
+/(!FocusArea)
+	/(!Action:SetFocus)"/(!NameID)",/(!Action)
+/(!FocusArea)
+
+{
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	disabled: /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
+	iconCls: "/(!Param:iconCls)",
+	handler: function(b, e) {
+		/(!If:/(!Event:phys=Pressed))
+			panel.submit(wcli.util.evt("Pressed", "/(!NameID)"));
+		/(!If)
+	},
+	/(!If:/(!Property:Text)=)/(!Else)
+		text: "/(!Property:Text)"
+	/(!If)
+},

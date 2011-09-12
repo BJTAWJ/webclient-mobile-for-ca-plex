@@ -1,0 +1,52 @@
+/(!EnableAction:SetState,Load,Refresh,Hide,Show)
+
+/(!StatesArea)
+	/(!Action:SetState)/(!Action)
+	
+	/(!This:!Action:Load)
+	/(!If:/(!ActionArg:!Visible))"/(!NameID)": {
+		"childPanel":
+			/(Embed:html)
+				/(!ActionArg:!Owner:!Render:_type=html:_panelConfig=true)
+			/(Embed)
+	},/(!If)
+	/(!This:!Action)
+	
+	/(!This:!Action:Refresh)
+	/(!If:/(!ActionArg:!Visible))"/(!NameID)": {
+		"childPanel":
+			/(Embed:html)
+				/(!ActionArg:!Owner:!Render:_type=html:_panelConfig=true)
+			/(Embed)
+	},/(!If)
+	/(!This:!Action)
+  
+	/(!This:!Action:Hide)
+		"childPanel": { xtype: "container" }
+	/(!This:!Action)
+
+	/(!This:!Action:Show)
+		"childPanel":
+			/(Embed:html)
+				/(!ActionArg:!Owner:!Render:_type=html:_panelConfig=true)
+			/(Embed)
+	/(!This:!Action)
+/(!StatesArea)
+
+/(!FocusArea)
+	/(!Action:SetFocus)"/(!NameID)",/(!Action)
+/(!FocusArea)
+
+{
+	xtype: "container",
+	id: "/(!NameID)",
+	flex: 1,
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	items: [
+	/(!This)
+		/(!If:/(!Site:!Panel:!Visible))
+			/(!Site:!Render:_type=html:_panelConfig=true:_child=/(!Site:!Panel:!NameID)),
+		/(!If)
+	/(!This)
+	]
+},

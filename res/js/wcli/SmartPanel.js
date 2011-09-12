@@ -31,7 +31,8 @@ Ext.ns('wcli');
 			body = plexConfig.body,
 			hidden = plexConfig.hidden,
 			fullscreen = plexConfig.fullscreen,
-			toolbars = plexConfig.toolbars;
+			toolbars = plexConfig.toolbars,
+			tabs = plexConfig.tabs;
 		
 		// Toolbar items (always visible)
 		config.dockedItems = [];
@@ -55,6 +56,15 @@ Ext.ns('wcli');
 				scroll: 'horizontal',
 				items: _alignToolbar(tbItems[i])
 			});
+		}
+		
+		// Tabs (always visible if present)
+		if (tabs.length > 0) {
+			config.dockedItems.push(new Ext.TabBar({
+				dock: 'bottom',
+				ui: 'dark',
+				items: tabs
+			}));
 		}
 		
 		// Body items (only visible if the panel isn't "fullscreen")

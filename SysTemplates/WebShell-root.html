@@ -14,7 +14,6 @@
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/util.js"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/SmartPanel.js"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/CheckboxToggle.js"></script>
-		<script type="text/javascript" src="/(!WsRes)/js/wcli/picture.js"></script>
 		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 		
 		/(!AttachPoint:name=HeadArea)
@@ -29,6 +28,7 @@
 				onReady: function() {
 					var panelConfig = /(!If)({
 						xtype: 'smartpanel',
+						cls: 'x-tabpanel x-tabpanel-dark',
 						panelId: /(PNLID),
 						url: '/(WSACTION)',
 						scroll: 'vertical',
@@ -42,7 +42,7 @@
 							hidden: [/(!AttachPoint:name=HiddenArea)],
 							fullscreen: [/(!AttachPoint:name=FullscreenArea)],
 							toolbars: [/(!AttachPoint:name=ToolbarArea)],
-							tabbars: [/(!AttachPoint:name=TabbarArea)]
+							tabs: [/(!AttachPoint:name=TabbarArea)]
 							
 						}
 					})

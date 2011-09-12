@@ -33,7 +33,7 @@ wcli.util = (function() {
 							}
 						})();
 					}
-					else if (result.panelId !== panel.panelId) {
+					else if (result.refresh && result.panelId != panel.panelId) {
 						eval(result.init).call(window);
 						var panelConfig = eval(result.refresh);
 						var newPanel = Ext.create(panelConfig);
@@ -102,6 +102,12 @@ wcli.util = (function() {
 					marker.setPosition(coords);
 				}, 2000);
 				control.update(coords);
+			}
+			
+			if (state.childPanel) {
+				var panelConfig = eval(state.childPanel);
+				control.removeAll();
+				control.add(panelConfig);
 			}
 		},
 		
