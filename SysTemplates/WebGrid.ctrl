@@ -50,7 +50,7 @@
 	flex: 1,
 	grouped: "/(!Param:grouped)" === "true",
 	indexBar: "/(!Param:indexBar)" === "true",
-	itemTpl: wcli.util.gridTpl(wcli.util.htmlDecode("/(!This:!jsonCols)"), [
+	itemTpl: (window["/(!Param:tplGenerator)"] || wcli.util.gridTpl)(wcli.util.htmlDecode("/(!This:!jsonCols)"), [
 		/(!AttachPoint:name=ColumnsArea:inlinetemplate:sep=,)
 			"/(!Text:htmlbr)"
 		/(!AttachPoint)
@@ -67,6 +67,20 @@
 				/(!If)
 			},
 			scope: this
+		},
+		afterrender: {
+			fn: function() {
+				/(!If:/(!Event:phys=LoadGrid))
+				this.scroller.on('scrollend', function() {
+					var offsetBoundary = this.scroller.offsetBoundary;
+					var offset = scroller.offset;
+					if (offset >= offsetBoundary) {
+						panel.submit(wcli.util.evt("LoadGrid", "/(!NameID)"));
+					}
+				}, this);
+				/(!If)
+			},
+			scop: this
 		}
 	}
 },
