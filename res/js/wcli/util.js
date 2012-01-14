@@ -17,6 +17,7 @@ wcli.util = (function() {
 		 */
 		evt: function(evt, id, params) {
 			return {
+				method: "POST",
 				params: Ext.apply({
 					pnlid: panel.panelId,
 					_type: "json",
@@ -29,7 +30,7 @@ wcli.util = (function() {
 						alerts.pop();
 						(function display() {
 							if (result.alerts.length > 0) {
-								Ext.Msg.alert('Alert', alerts.pop(), display);
+								Ext.Msg.alert('', alerts.pop(), display);
 							}
 						})();
 					}
