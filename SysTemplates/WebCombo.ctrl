@@ -1,3 +1,7 @@
+/(!HeadArea)
+		<script type="text/javascript" src="/(!WsRes)/js/wcli/Select.js"></script>
+/(!HeadArea)
+
 /(!EnableAction:SetValue,SetState,SetFocus,Combo.Clear,Combo.Remove,Combo.Add)
 
 /(!ValuesArea)
@@ -39,8 +43,7 @@
 	/(!Action:SetFocus)"/(!NameID)",/(!Action)
 /(!FocusArea)
 
-{
-	xtype: "selectfield",
+new wcli.Select({
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: "/(!Param:label)" || "Field",
@@ -55,16 +58,19 @@
 	value: "/(!This:value)",
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	listeners: {
-		change: {
-			fn: function(e) {
-				/(!If:/(!Event:phys=Updated))
-				panel.submit(wcli.util.evt("Updated", "/(!NameID)"));
-				/(!If)
-				/(!If:/(!Event:phys=Modified))
-				panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
-				/(!If)
-			},
-			scope: this
+		change: function(e) {
+			/(!If:/(!Event:phys=Updated))
+			panel.submit(wcli.util.evt("Updated", "/(!NameID)"));
+			/(!If)
+			/(!If:/(!Event:phys=Modified))
+			panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
+			/(!If)
+			this.fieldEl.dom.focus();
+		},
+		blur: function(e){
+			/(!If:/(!Event:phys=Lost Focus))
+				panel.submit(wcli.util.evt("Lost Focus", "/(!NameID)"));
+			/(!If)
 		}
 	}
-},
+}),
