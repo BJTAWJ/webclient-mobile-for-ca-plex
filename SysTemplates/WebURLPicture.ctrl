@@ -1,3 +1,7 @@
+/(!HeadArea)
+	<script type="text/javascript" src="/(!WsRes)/js/wcli/picture.js"></script>
+/(!HeadArea)
+
 /(!EnableAction:SetValue,SetState,SetFocus)
 
 /(!ValuesArea)
