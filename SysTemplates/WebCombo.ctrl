@@ -1,4 +1,4 @@
-/(!HeadArea)
+/(!HeadArea:once)
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/Select.js"></script>
 /(!HeadArea)
 
