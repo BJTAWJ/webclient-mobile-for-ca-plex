@@ -6,7 +6,7 @@ wcli.Select = Ext.extend(Ext.form.Select, {
 		var idx = 0, record;
 		
 		if (value) {
-            idx = this.store.findExact("text", value);
+            idx = this.store.find("text", value, 0);
         }
 		record = this.store.getAt(idx);
 		
