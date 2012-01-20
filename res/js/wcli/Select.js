@@ -6,10 +6,23 @@ wcli.Select = Ext.extend(Ext.form.Select, {
 		var idx = 0, record;
 		
 		if (value) {
-            idx = this.store.find("text", value, 0);
+            idx = this.store.findExact("text", value);
         }
 		record = this.store.getAt(idx);
 		
 		Ext.form.Select.prototype.setValue.call(this, record && record.get('value'));
-	}
+	},
+
+    onListSelect: function(selModel, selected) {
+        if (selected) {
+            this.setValue(selected.get("text"));
+            this.fireEvent('change', this, this.getValue());
+        }
+        
+        this.listPanel.hide({
+            type: 'fade',
+            out: true,
+            scope: this
+        });
+    }
 });
