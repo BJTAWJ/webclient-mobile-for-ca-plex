@@ -1,7 +1,3 @@
-/(!HeadArea:once)
-		<script type="text/javascript" src="/(!WsRes)/js/wcli/Select.js"></script>
-/(!HeadArea)
-
 /(!EnableAction:SetValue,SetState,SetFocus,Combo.Clear,Combo.Remove,Combo.Add)
 
 /(!ValuesArea)
@@ -47,15 +43,17 @@ new wcli.Select({
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: "/(!Param:label)" || "Field",
-	options: [
-		/(!This)
+	options: (function() {
+		var value = /(!jsonValues);
+		var name = /(!jsonOptions);
+		var items = [];
+		for (var i=0; i<value.length; i++)
 		{
-			text: "/(!OptText)",
-			value: "/(!OptValue)"
-		},
-		/(!This)
-	],
-	value: "/(!This:value)",
+			items.push({text: name[i], value: value[i]});
+		}
+		return items;
+	})(),
+	value: /(!This:value),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	listeners: {
 		change: function(e) {
@@ -65,7 +63,7 @@ new wcli.Select({
 			/(!If:/(!Event:phys=Modified))
 			panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
 			/(!If)
-			this.fieldEl.dom.focus();
+			//this.fieldEl.dom.focus();
 		},
 		blur: function(e){
 			/(!If:/(!Event:phys=Lost Focus))

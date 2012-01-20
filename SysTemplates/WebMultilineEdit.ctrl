@@ -19,7 +19,7 @@
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: "/(!Param:label)" || "Field",
-	value: "/(!This)",
+	value: /(!This),
 	height: 300,
 	maxRows: 20,
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),

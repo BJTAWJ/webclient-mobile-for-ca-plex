@@ -21,7 +21,7 @@
 	label: "/(!Property:Text)" || "Field",
 	uncheckedValue: "/(!UncheckedValue)",
 	checkedValue: "/(!CheckedValue)",
-	value: "/(!This)" || "/(!UncheckedValue)",
+	value: /(!This) || "/(!UncheckedValue)",
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	listeners: {
 		focus: {

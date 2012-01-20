@@ -27,7 +27,7 @@
 
 	imageData: {
 		imageCls: "/(!Param:imageCls)" || "x-image-component",
-		imageSrc: "/(!WsRes)/images//(!This)",
+		imageSrc: /(!WsRes)+ "/images/" + /(!This),
 		imageAlign: "/(!Param:imageAlign)" || "left"
 	},
 

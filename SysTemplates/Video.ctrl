@@ -13,5 +13,5 @@
 /(!FocusArea)
 
 {
-	html: '<video src="/(!This)" controls="controls"></video>'
+	html: '<video src=/(!This) controls="controls"></video>'
 },

@@ -18,7 +18,7 @@ new Ext.form.DatePicker({
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: "/(!Param:label)" || undefined,
-	value: wcli.util.getDate("/(!This)"),
+	value: wcli.util.getDate(/(!This)),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	listeners: {
 		focus: {
@@ -50,4 +50,5 @@ new Ext.form.DatePicker({
 		}
 	}
 }),
+
 
