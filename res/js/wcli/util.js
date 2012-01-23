@@ -1,5 +1,12 @@
 Ext.ns('wcli');
 
+Ext.util.JSON.decode = function(s) {
+	return eval("(" + s + ")");
+};
+
+Ext.decode = Ext.util.JSON.decode;
+
+
 wcli.util = (function() {
 	function _esc(str) {
 		return str.replace(/ /g, "_");
