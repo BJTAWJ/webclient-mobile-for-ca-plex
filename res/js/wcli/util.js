@@ -148,7 +148,7 @@ wcli.util = (function() {
 		},
 		
 		regModel: function(name, cols) {
-			cols = JSON.parse(cols);
+			/*cols = JSON.parse(cols);*/
 
 			var model = {
 				fields: [{
@@ -170,7 +170,7 @@ wcli.util = (function() {
 		 * @return {String} A row template for a List control
 		 */
 		gridTpl: function(cols, heads, grouped) {
-			cols = JSON.parse(cols);
+			/*cols = JSON.parse(cols);*/
 			if (grouped) {
 				cols.shift();
 			}
