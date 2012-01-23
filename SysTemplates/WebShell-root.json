@@ -34,19 +34,15 @@
 /(OutTo)
 
 /(OutTo:json.init)
-	/(Embed:html)
 		(function() {
 			/(!AttachPoint:name=JS)
 		})
-	/(Embed)
 /(OutTo)
 
 /(OutTo:json.postInit)
-	/(Embed:html)
 		(function() {
 			/(!AttachPoint:name=JSPost)
 		})
-	/(Embed)
 /(OutTo)
 
 /(!Panel:!Action:Refresh)

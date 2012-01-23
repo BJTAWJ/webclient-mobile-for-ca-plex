@@ -50,7 +50,7 @@
 	flex: 1,
 	grouped: "/(!Param:grouped)" === "true",
 	indexBar: "/(!Param:indexBar)" === "true",
-	itemTpl: (window["/(!Param:tplGenerator)"] || wcli.util.gridTpl)(wcli.util.htmlDecode("/(!This:!jsonCols)"), [
+	itemTpl: (window["/(!Param:tplGenerator)"] || wcli.util.gridTpl)(/(!This:!jsonCols), [
 		/(!AttachPoint:name=ColumnsArea:inlinetemplate:sep=,)
 			"/(!Text:htmlbr)"
 		/(!AttachPoint)
@@ -70,7 +70,7 @@
 		},
 		afterrender: {
 			fn: function() {
-				/(!If:/(!Event:phys=LoadGrid))
+				/(!If:/(!Event:phys=Load Grid))
 				this.scroller.on('scrollend', function() {
 					var offsetBoundary = this.scroller.offsetBoundary;
 					var offset = scroller.offset;
