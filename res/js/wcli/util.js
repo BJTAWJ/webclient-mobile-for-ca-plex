@@ -199,7 +199,7 @@ wcli.util = (function() {
 			var store = {
 				model: model,
 				groupField: _esc(cols[0]),
-				sorters: _esc(cols[0]),
+				/*sorters: _esc(cols[0]),*/
 				data: []
 			};
 			for (var i = 0; i < rows.length; i++) {
