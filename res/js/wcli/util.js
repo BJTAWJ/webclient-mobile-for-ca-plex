@@ -44,11 +44,14 @@ wcli.util = (function() {
 					else if (result.refresh && result.panelId != panel.panelId) {
 						eval(result.init).call(window);
 						var panelConfig = eval(result.refresh);
+						
 						var newPanel = Ext.create(panelConfig);
 						
 						controller.on('cardswitch', function() {
 							panel.destroy();
 							window.panel = newPanel;
+							
+							panelConfig.jsOnLoad();
 						}, { single: true });
 						controller.setActiveItem(newPanel/*, 'slide'*/);
 						eval(result.postInit).call(window);
@@ -148,7 +151,6 @@ wcli.util = (function() {
 		},
 		
 		regModel: function(name, cols) {
-			/*cols = JSON.parse(cols);*/
 
 			var model = {
 				fields: [{
@@ -166,25 +168,24 @@ wcli.util = (function() {
 		
 		/**
 		 * Generates a row template for the given column definitions
-		 * @param {String} cols A stringified column definition array
+		 * @param {String} cols A column definition array
 		 * @return {String} A row template for a List control
 		 */
 		gridTpl: function(cols, heads, grouped) {
-			/*cols = JSON.parse(cols);*/
 			if (grouped) {
 				cols.shift();
 			}
 			
 			var tpl = "";
-			tpl += "<div>";
-			tpl += "<h1>{" + _esc(cols[0]) + "}</h1>";
-			tpl += "</div><div>";
-			for (var i = 1; i < cols.length; i++) {
+			tpl += "<table>";
+			//tpl += "<h1>{" + _esc(cols[0]) + "}</h1>";
+			//tpl += "</div><div>";
+			for (var i = 0; i < cols.length; i++) {
 				var c = _esc(cols[i]);
-				var h = heads[i];
-				tpl += "<span><p><b>" + h + "</b>: {" + c + "}</p></span>";
+				var h = heads[i+1];
+				tpl += "<tr><th>" + h + "</th><td>{" + c + "}</td></tr>";
 			}
-			tpl += "</div>";
+			tpl += "</table>";
 			return tpl;
 		},
 		

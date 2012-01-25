@@ -12,6 +12,10 @@ wcli.Select = Ext.extend(Ext.form.Select, {
 		
 		Ext.form.Select.prototype.setValue.call(this, record && record.get('value'));
 	},
+	
+	setValueFromData: function(value) {
+		Ext.form.Select.prototype.setValue.call(this, value);		
+	},
 
     onListSelect: function(selModel, selected) {
         if (selected) {
