@@ -43,6 +43,7 @@ new wcli.Select({
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: "/(!Param:label)" || "Field",
+	labelWidth: "40%",
 	options: (function() {
 		var value = /(!jsonValues);
 		var name = /(!jsonOptions);

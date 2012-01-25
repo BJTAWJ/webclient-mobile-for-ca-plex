@@ -20,10 +20,12 @@
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/CheckboxToggle.js"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/Select.js"></script>
 		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-		
+
 		/(!AttachPoint:name=HeadArea)
 		<script type="text/javascript">
+		/(Embed:js:cdata)
 			/(!AttachPoint:name=JSInit)
+		/(Embed)
 			Ext.setup({
 				tabletStartupScreen: '/(!WsRes)/images/tablet_startup.png',
 				phoneStartupScreen: '/(!WsRes)/images/phone_startup.png',
@@ -50,9 +52,14 @@
 							toolbars: [/(!AttachPoint:name=ToolbarArea)],
 							tabs: [/(!AttachPoint:name=TabbarArea)]
 						  /(Embed)
+						},
+						jsOnLoad: function() {
+					      /(Embed:js:cdata)
+							/(!AttachPoint:name=JSOnLoad)
+						  /(Embed)  
 						}
 					})
-					/(!If:/(!Req:_panelConfig))/(!Else)
+					/(!If:/(!Req:_panelConfig))/(!Else)									
 
 					window.panel = Ext.create(panelConfig);
 					
@@ -62,12 +69,14 @@
 						items: [panel]
 					});
 					panel.show();
-					/(!AttachPoint:name=JSOnLoad)
+					
+					panelConfig.jsOnLoad();
 				}
 			});
 		</script>
 	</head>
 	<body>
+		/(!AttachPoint:name=LinkArea)
 	</body>
 </html>
 /(!If)

@@ -17,8 +17,14 @@
 {
 	xtype: "textfield",
 	name: "/(!NameID)",
+	/(!If:/(!DataType)=Char)
+	inputType: "text",
+	/(!Else)
+	inputType: "number",
+	/(!If)
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: "/(!Param:label)" || undefined,
+	labelWidth: "40%",
 	value: /(!This),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	listeners: {
