@@ -171,7 +171,7 @@ wcli.util = (function() {
 		 * @param {String} cols A column definition array
 		 * @return {String} A row template for a List control
 		 */
-		gridTpl: function(cols, heads, grouped) {
+		gridTpl: function(cols, colvis, heads, grouped) {
 			if (grouped) {
 				cols.shift();
 			}
@@ -181,9 +181,11 @@ wcli.util = (function() {
 			//tpl += "<h1>{" + _esc(cols[0]) + "}</h1>";
 			//tpl += "</div><div>";
 			for (var i = 0; i < cols.length; i++) {
-				var c = _esc(cols[i]);
-				var h = heads[i+1];
-				tpl += "<tr><th>" + h + "</th><td>{" + c + "}</td></tr>";
+				if(colvis[i+1]==true){
+					var c = _esc(cols[i]);
+					var h = heads[i+1];
+					tpl += "<tr><th>" + h + "</th><td>{" + c + "}</td></tr>";
+				}
 			}
 			tpl += "</table>";
 			return tpl;
