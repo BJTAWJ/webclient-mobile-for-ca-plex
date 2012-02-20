@@ -18,7 +18,7 @@
 	xtype: "textareafield",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
-	label: "/(!Param:label)" || "Field",
+	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || "Field",
 	value: /(!This),
 	height: 300,
 	maxRows: 20,
