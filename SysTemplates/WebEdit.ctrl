@@ -23,7 +23,7 @@
 	inputType: "number",
 	/(!If)
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
-	label: "/(!Param:label)" || undefined,
+	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || undefined,
 	labelWidth: "40%",
 	value: /(!This),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
