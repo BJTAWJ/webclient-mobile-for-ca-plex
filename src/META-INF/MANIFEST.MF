@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Implementation-Title: WebClient
+Implementation-Version: r78
+Web-Library-Version: r78
+Web-Library-Provides: 
+Specification-Vendor: CMFirstTech
+Class-Path: 
+Web-Library-Requires: com.adcaustin.webclient
+Web-Library-Id: com.cmfirsttech.webclientmobile
+Implementation-Vendor: CMFirstTech
+Specification-Title: WebClient
+Web-Library-Name: WebClient i+ Mobile
+Specification-Version: 1.0
+
