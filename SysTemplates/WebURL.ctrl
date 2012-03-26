@@ -18,7 +18,7 @@
 	iconCls: "/(!Param:iconCls)",
 	ui: "/(!Param:ui)" || "plain",
 	handler: function(b, e) {
-		window.location = "/(!This)";
+		window.location = /(!This);
 	},
 	text: "/(!Param:label)" || "Link"
 },
