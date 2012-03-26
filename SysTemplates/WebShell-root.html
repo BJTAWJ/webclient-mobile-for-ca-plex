@@ -24,6 +24,9 @@
 		/(!AttachPoint:name=HeadArea)
 		<script type="text/javascript">
 		/(Embed:js:cdata)
+			if(window.navigator.userAgent.indexOf("AppleWebKit") == -1){
+				window.alert("This application only works in Google Chrome or Safari Browser");
+			}
 			/(!AttachPoint:name=JSInit)
 		/(Embed)
 			Ext.setup({
