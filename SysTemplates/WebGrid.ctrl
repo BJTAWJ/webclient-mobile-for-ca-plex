@@ -44,17 +44,25 @@
 /(!MainArea)
 
 {
+	__dummy__: (function() {
+		/(!NameID)_cols = [
+			/(!AttachPoint:name=ColumnsArea:inlinetemplate:sep=,)
+				/(!Text:htmlbr)
+			/(!AttachPoint)
+		];
+	})(),
+	
 	xtype: "list",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	flex: 1,
 	grouped: "/(!Param:grouped)" === "true",
 	indexBar: "/(!Param:indexBar)" === "true",
-	itemTpl: (window["/(!Param:tplGenerator)"] || wcli.util.gridTpl)(/(!This:!jsonCols),/(!jsonColVis), [
-		/(!AttachPoint:name=ColumnsArea:inlinetemplate:sep=,)
-			"/(!Text:htmlbr)"
-		/(!AttachPoint)
-	], "/(!Param:grouped)" === "true"),
+	/(!If:/(!Param:renderTplGenerator))
+		renderTpl: (/(!Param:renderTplGenerator))(/(!This:!jsonCols),/(!jsonColVis), /(!NameID)_cols, "/(!Param:grouped)" === "true"),
+	/(!If)
+	itemTpl: (/(!If:/(!Param:tplGenerator))/(!Param:tplGenerator)/(!Else)wcli.util.gridTpl/(!If))(/(!This:!jsonCols),/(!jsonColVis),
+				/(!NameID)_cols, "/(!Param:grouped)" === "true"),
 	store: window["/(!NameID)_store"],
 	disabled: "/(!Mode)" === "Read Only",
 	listeners: {
