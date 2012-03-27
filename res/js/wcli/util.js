@@ -52,6 +52,7 @@ wcli.util = (function() {
 							window.panel = newPanel;
 							
 							panelConfig.jsOnLoad();
+							wcli.util.addCSSArea(panelConfig.cssArea);
 						}, { single: true });
 						controller.setActiveItem(newPanel/*, 'slide'*/);
 						eval(result.postInit).call(window);
@@ -174,6 +175,8 @@ wcli.util = (function() {
 		gridTpl: function(cols, colvis, heads, grouped) {
 			if (grouped) {
 				cols.shift();
+				colvis.shift();
+				heads.shift();
 			}
 			
 			var tpl = "";
@@ -181,13 +184,56 @@ wcli.util = (function() {
 			//tpl += "<h1>{" + _esc(cols[0]) + "}</h1>";
 			//tpl += "</div><div>";
 			for (var i = 0; i < cols.length; i++) {
-				if(colvis[i+1]==true){
+				if(colvis[i]==true){
 					var c = _esc(cols[i]);
-					var h = heads[i+1];
-					tpl += "<tr><th>" + h + "</th><td>{" + c + "}</td></tr>";
+					var h = heads[i];
+					//tpl += "<tr><th>" + h + "</th><td>{" + c + "}</td></tr>";
+					tpl += "<tr><td>{" + c + "}</td></tr>";
 				}
 			}
 			tpl += "</table>";
+			return tpl;
+		},
+		
+		gridColHdr: function(cols, colvis, heads){
+			var tpl = "";
+			
+			for (var i = 0; i < cols.length; i++){
+				if (i % 3 == 0) {
+					tpl += "<table id='header'><tr class='x-list-header'>";
+				}
+				if(colvis[i]==true){
+						var h = heads[i];
+						tpl += "<th width='33%'>" + h + "</th>";
+				}
+				if (i % 3 == 2){
+					tpl += "</tr></table>";
+				}
+			}
+			if (i % 3 != 2) {
+				tpl += "</tr></table>";				
+			}
+			return tpl;
+		},
+		
+		gridColTpl: function(cols, colvis, heads){			
+			var tpl = "";
+			
+			for (var i = 0; i < cols.length; i++){
+				if(i %3 == 0){
+					tpl += "<table class='rows'><tr>";
+				}
+				if(colvis[i]==true){
+					var c = cols[i];
+					tpl += "<td width='33%'>{" + c + "}</td>";
+				}
+				if (i % 3 == 2){
+					tpl += "</tr></table>";
+				}
+			}
+			if (i % 3 != 2) {
+				tpl += "</tr></table>";				
+			}
 			return tpl;
 		},
 		
@@ -253,6 +299,12 @@ wcli.util = (function() {
 			}
 				
 			return new google.maps.LatLng(lat, long);
+		},
+		
+		addCSSArea: function(cssArea) {
+			cssArea.forEach(function(css) {
+				Ext.DomHelper.append(Ext.getBody(), { tag: 'link', rel: 'stylesheet', type: 'text/css', href: css });
+			});
 		}
 	});
 	
