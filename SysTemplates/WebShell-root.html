@@ -60,7 +60,8 @@
 					      /(Embed:js:cdata)
 							/(!AttachPoint:name=JSOnLoad)
 						  /(Embed)  
-						}
+						},
+						cssArea: [ /(!AttachPoint:name=CSSArea:sep=,) ]
 					})
 					/(!If:/(!Req:_panelConfig))/(!Else)									
 
@@ -73,13 +74,14 @@
 					});
 					panel.show();
 					
+					wcli.util.addCSSArea(panelConfig.cssArea);
 					panelConfig.jsOnLoad();
 				}
 			});
 		</script>
 	</head>
-	<body>
-		/(!AttachPoint:name=LinkArea)
+	<body>	
+		/(!AttachPoint:name=LinkArea)	
 	</body>
 </html>
 /(!If)
