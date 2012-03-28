@@ -59,10 +59,18 @@
 	grouped: "/(!Param:grouped)" === "true",
 	indexBar: "/(!Param:indexBar)" === "true",
 	/(!If:/(!Param:renderTplGenerator))
-		renderTpl: (/(!Param:renderTplGenerator))(/(!This:!jsonCols),/(!jsonColVis), /(!NameID)_cols, "/(!Param:grouped)" === "true"),
+		renderTpl: (/(!Param:renderTplGenerator))(/(!This:!jsonCols),/(!jsonColVis), /(!NameID)_cols, "/(!Param:grouped)" === "true", "/(!Param:gridClass)"),
 	/(!If)
 	itemTpl: (/(!If:/(!Param:tplGenerator))/(!Param:tplGenerator)/(!Else)wcli.util.gridTpl/(!If))(/(!This:!jsonCols),/(!jsonColVis),
-				/(!NameID)_cols, "/(!Param:grouped)" === "true"),
+				/(!NameID)_cols, "/(!Param:grouped)" === "true", "/(!Param:gridClass)"),
+	afterComponentLayout: function() {		
+		Ext.Component.prototype.afterComponentLayout.apply(this);		
+		if (typeof scrollerContainer == "undefined") {
+			return;
+		}
+		var pageBox = this.el.parent().getPageBox();		
+		this.scroller.container = scrollerContainer(pageBox);	
+	},
 	store: window["/(!NameID)_store"],
 	disabled: "/(!Mode)" === "Read Only",
 	listeners: {
@@ -81,7 +89,7 @@
 				/(!If:/(!Event:phys=Load Grid))
 				this.scroller.on('scrollend', function() {
 					var offsetBoundary = this.scroller.offsetBoundary;
-					var offset = scroller.offset;
+					var offset = this.scroller.offset;
 					if (offset >= offsetBoundary) {
 						panel.submit(wcli.util.evt("LoadGrid", "/(!NameID)"));
 					}
