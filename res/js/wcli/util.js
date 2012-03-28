@@ -51,8 +51,8 @@ wcli.util = (function() {
 							panel.destroy();
 							window.panel = newPanel;
 							
-							panelConfig.jsOnLoad();
 							wcli.util.addCSSArea(panelConfig.cssArea);
+							panelConfig.jsOnLoad();
 						}, { single: true });
 						controller.setActiveItem(newPanel/*, 'slide'*/);
 						eval(result.postInit).call(window);
@@ -195,16 +195,16 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
-		gridColHdr: function(cols, colvis, heads){
+		gridColHdr: function(cols, colvis, heads, grouped, gridclass){
 			var tpl = "";
 			
 			for (var i = 0; i < cols.length; i++){
 				if (i % 3 == 0) {
-					tpl += "<table id='header'><tr class='x-list-header'>";
+					tpl += "<table class='" + gridclass + "h'><tr class='head" + i + "'>";
 				}
 				if(colvis[i]==true){
 						var h = heads[i];
-						tpl += "<th width='33%'>" + h + "</th>";
+						tpl += "<th class='col" + i + "'>" + h + "</th>";
 				}
 				if (i % 3 == 2){
 					tpl += "</tr></table>";
@@ -216,16 +216,16 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
-		gridColTpl: function(cols, colvis, heads){			
+		gridColTpl: function(cols, colvis, heads, grouped, gridclass){			
 			var tpl = "";
 			
 			for (var i = 0; i < cols.length; i++){
 				if(i %3 == 0){
-					tpl += "<table class='rows'><tr>";
+					tpl += "<table class='" + gridclass + "'><tr>";
 				}
 				if(colvis[i]==true){
 					var c = cols[i];
-					tpl += "<td width='33%'>{" + c + "}</td>";
+					tpl += "<td class='col" + i + "'>{" + c + "}</td>";
 				}
 				if (i % 3 == 2){
 					tpl += "</tr></table>";
