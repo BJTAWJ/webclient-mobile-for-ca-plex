@@ -15,7 +15,7 @@
 /(!FocusArea)
 
 {
-	xtype: "textfield",
+	xtype: "spinnerfield",
 	name: "/(!NameID)",
 	inputType: "number",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),

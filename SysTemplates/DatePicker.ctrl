@@ -18,6 +18,7 @@ new Ext.form.DatePicker({
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || undefined,
+	labelWidth: "40%",
 	value: wcli.util.getDate(/(!This)),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	listeners: {
