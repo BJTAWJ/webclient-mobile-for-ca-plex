@@ -21,6 +21,9 @@ new Ext.form.DatePicker({
 	labelWidth: "40%",
 	value: wcli.util.getDate(/(!This)),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+	picker: {
+		yearTo: new Date().getFullYear() + 10,
+	},
 	listeners: {
 		focus: {
 			fn: function(e) {
