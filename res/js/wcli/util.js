@@ -203,7 +203,7 @@ wcli.util = (function() {
 					tpl += "<table class='" + gridclass + "h'><tr class='head" + i + "'>";
 				}
 				if(colvis[i]==true){
-						var h = heads[i];
+						var h = heads[i].colHeader;
 						tpl += "<th class='col" + i + "'>" + h + "</th>";
 				}
 				if (i % 3 == 2){
@@ -225,6 +225,13 @@ wcli.util = (function() {
 				}
 				if(colvis[i]==true){
 					var c = cols[i];
+					var dataType = heads[i].dataType;
+					if (dataType == "Date") {
+						c = "[new Date(values[\"" + c + "\"]).format(Ext.util.Format.defaultDateFormat)]";
+					}
+					if (dataType == "FixedDec" || dataType == "Double"){
+						c = c.toFixed(2);
+					}
 					tpl += "<td class='col" + i + "'>{" + c + "}</td>";
 				}
 				if (i % 3 == 2){
@@ -302,9 +309,19 @@ wcli.util = (function() {
 		},
 		
 		addCSSArea: function(cssArea) {
-			cssArea.forEach(function(css) {
-				Ext.DomHelper.append(Ext.getBody(), { tag: 'link', rel: 'stylesheet', type: 'text/css', href: css });
-			});
+			var links = document.getElementsByTagName("LINK");
+			var linkExist = false;
+			for(var i=0; i<links.length; i++){
+				if(links[i].href.indexOf(cssArea) != -1){
+					linkExist = true;
+					break;
+				}
+			}
+			if(linkExist == false){
+				cssArea.forEach(function(css) {
+					Ext.DomHelper.append(Ext.getBody(), { tag: 'link', rel: 'stylesheet', type: 'text/css', href: css });
+				});
+			}
 		}
 	});
 	
