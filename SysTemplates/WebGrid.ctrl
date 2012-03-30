@@ -47,7 +47,9 @@
 	__dummy__: (function() {
 		/(!NameID)_cols = [
 			/(!AttachPoint:name=ColumnsArea:inlinetemplate:sep=,)
-				/(!Text:htmlbr)
+				{ colHeader: /(!Text:htmlbr),
+				  dataType: "/(!Edit:!DataType)"
+				}
 			/(!AttachPoint)
 		];
 	})(),

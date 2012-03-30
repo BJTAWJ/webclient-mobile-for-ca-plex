@@ -19,7 +19,7 @@
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: "/(!Property:Text)" || "Field",
-	labelWidth: "40%",
+	labelWidth: /(!If:/(!Param:width))"/(!Param:width)" /(!Else)"40%" /(!If),
 	uncheckedValue: "/(!UncheckedValue)",
 	checkedValue: "/(!CheckedValue)",
 	value: /(!This) || "/(!UncheckedValue)",
