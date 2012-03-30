@@ -195,6 +195,15 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
+		dateConvert: function(input) {
+		     var format = 'yyyy-mm-dd'; // default format
+		     var parts = input.match(/(\d+)/g),
+		     			i = 0, fmt = {};
+		     format.replace(/(yyyy|dd|mm)/g, function(part) { fmt[part] = i++; });
+
+		     return new Date(parts[fmt['yyyy']], parts[fmt['mm']]-1, parts[fmt['dd']]);
+		},
+
 		gridColHdr: function(cols, colvis, heads, grouped, gridclass){
 			var tpl = "";
 			
@@ -227,7 +236,7 @@ wcli.util = (function() {
 					var c = cols[i];
 					var dataType = heads[i].dataType;
 					if (dataType == "Date") {
-						c = "[new Date(values[\"" + c + "\"]).format(Ext.util.Format.defaultDateFormat)]";
+						c = "[wcli.util.dateConvert(values[\"" + c + "\"]).format(Ext.util.Format.defaultDateFormat)]";
 					}
 					if (dataType == "FixedDec" || dataType == "Double"){
 						c = c.toFixed(2);
