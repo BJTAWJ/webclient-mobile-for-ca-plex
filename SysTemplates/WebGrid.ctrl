@@ -55,9 +55,11 @@
 	})(),
 	
 	xtype: "list",
+	baseCls: "/(!Param:gridClass)",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	flex: 1,
+	onItemDisclosure: "/(!Param:disclose)" === "true",
 	grouped: "/(!Param:grouped)" === "true",
 	indexBar: "/(!Param:indexBar)" === "true",
 	/(!If:/(!Param:renderTplGenerator))
