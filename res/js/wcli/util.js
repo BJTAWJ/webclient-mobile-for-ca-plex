@@ -25,6 +25,7 @@ wcli.util = (function() {
 		evt: function(evt, id, params) {
 			return {
 				method: "POST",
+				disableCaching: true,
 				params: Ext.apply({
 					pnlid: panel.panelId,
 					_type: "json",
@@ -41,7 +42,7 @@ wcli.util = (function() {
 							}
 						})();
 					}
-					else if (result.refresh && result.panelId != panel.panelId) {
+					if (result.refresh && result.panelId != panel.panelId) {
 						eval(result.init).call(window);
 						var panelConfig = eval(result.refresh);
 						
@@ -173,23 +174,30 @@ wcli.util = (function() {
 		 * @return {String} A row template for a List control
 		 */
 		gridTpl: function(cols, colvis, heads, grouped) {
+			var tpl = "";
+			tpl += "<table>";
+			
 			if (grouped) {
 				cols.shift();
 				colvis.shift();
 				heads.shift();
-			}
-			
-			var tpl = "";
-			tpl += "<table>";
-			//tpl += "<h1>{" + _esc(cols[0]) + "}</h1>";
-			//tpl += "</div><div>";
-			for (var i = 0; i < cols.length; i++) {
-				if(colvis[i]==true){
-					var c = _esc(cols[i]);
-					var h = heads[i];
-					//tpl += "<tr><th>" + h + "</th><td>{" + c + "}</td></tr>";
-					tpl += "<tr><td>{" + c + "}</td></tr>";
+				
+				for (var i = 0; i < cols.length; i++) {
+					if(colvis[i]==true){
+						var c = _esc(cols[i]);
+						var h = heads[i].colHeader;
+						tpl += "<tr><th>" + h + "</th><td>{" + c + "}</td></tr>";
+					}
 				}
+			}
+			else{
+				for (var i = 0; i < cols.length; i++) {
+					if(colvis[i]==true){
+						var c = _esc(cols[i]);
+						tpl += "<tr><td>{" + c + "}</td></tr>";
+					}
+				}
+				
 			}
 			tpl += "</table>";
 			return tpl;
