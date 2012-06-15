@@ -1,3 +1,8 @@
+
+/(!LinkArea)
+	/(!Panel:!EnableAction:Alert,Enquiry)
+/(!LinkArea)
+	
 /(!AlertsArea)
 	/(!Panel:!EnableAction:Alert,Enquiry)
 	
@@ -9,7 +14,4 @@
 		/(Embed:html)/(!ActionArg)/(Embed),
 	/(!Panel:!Action)
 	
-	/(ALERTS)
-		/(Embed:html)/(AlertMsg)/(Embed),
-	/(ALERTS)
 /(!AlertsArea)

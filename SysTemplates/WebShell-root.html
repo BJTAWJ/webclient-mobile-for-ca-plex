@@ -78,9 +78,20 @@
 					panelConfig.jsOnLoad();
 				}
 			});
+			var keepsess = false;
+			function /(!Panel:!NameID)_unload() {
+				if (!keepsess) {
+					Ext.Ajax.request({
+						url: window.location,
+						method: "POST",
+						params: { _endsess: "true" },
+					})
+				}
+			}
+			Ext.EventManager.on(window, 'beforeunload', /(!Panel:!NameID)_unload);
 		</script>
 	</head>
-	<body>	
+	<body onbeforeunload="/(!Panel:!NameID)_unload();" >
 		/(!AttachPoint:name=LinkArea)	
 	</body>
 </html>
