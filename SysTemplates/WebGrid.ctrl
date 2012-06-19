@@ -1,4 +1,4 @@
-/(!EnableAction:Grid.Clear,Grid.Insert,Grid.Remove,Grid.Update)
+/(!EnableAction:Grid.Clear,Grid.Insert,Grid.Remove,Grid.Update, SetState)
 
 /(!StatesArea)
 	/(!Action:Grid.Clear)
@@ -47,9 +47,10 @@
 	__dummy__: (function() {
 		/(!NameID)_cols = [
 			/(!AttachPoint:name=ColumnsArea:inlinetemplate:sep=,)
-				{ colHeader: /(!Text:htmlbr),
+				{ colHeader: "/(!Text:htmlbr)",
 				  dataType: "/(!Edit:!DataType)"
 				}
+			/(!EnableAction:SetState)
 			/(!AttachPoint)
 		];
 	})(),

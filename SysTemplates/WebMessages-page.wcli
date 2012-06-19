@@ -1,9 +1,11 @@
 
 /(!LinkArea)
+	/(!MobileAlerts)
 	/(!Panel:!EnableAction:Alert,Enquiry)
 /(!LinkArea)
 	
 /(!AlertsArea)
+	/(!MobileAlerts)
 	/(!Panel:!EnableAction:Alert,Enquiry)
 	
 	/(!Panel:!Action:Alert)
