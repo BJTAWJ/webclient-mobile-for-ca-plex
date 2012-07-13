@@ -25,7 +25,7 @@
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || undefined,
 	labelWidth: "40%",
-	value: /(!If:/(!DataType)=Char)/(!This)/(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)0/(!If))/(!If) /(!AttachPoint:name=Extra:inlinetemplate) + ' ' + /(!If:/(!DataType)=Char)/(!This) /(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)0/(!If)) /(!If)/(!AttachPoint) ,
+	value: /(!This),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	listeners: {
 		focus: {

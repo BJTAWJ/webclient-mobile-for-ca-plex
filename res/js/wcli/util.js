@@ -29,6 +29,15 @@ wcli.form.number = Ext.extend(Ext.form.Text, {
             '<tpl if="useMask"><div class="x-field-mask"></div></tpl>',
             '</div></tpl>',
         '<tpl if="useClearIcon"><div class="x-field-clear-container"><div class="x-field-clear x-hidden-visibility">×</div><div></tpl>'    ],
+        
+    onFocus: function(e) {
+    	wcli.form.number.superclass.onFocus.call(this, arguments);
+    	
+    	if (this.getValue() == "0") {
+    		this.setValue("");
+    	}
+    }
+
 });
 
 Ext.reg('wclinumberfield', wcli.form.number);
