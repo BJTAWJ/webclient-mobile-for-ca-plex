@@ -1,4 +1,5 @@
 Ext.ns('wcli');
+Ext.ns('wcli.form');
 
 Ext.util.JSON.decode = function(s) {
 	return eval("(" + s + ")");
@@ -6,6 +7,31 @@ Ext.util.JSON.decode = function(s) {
 
 Ext.decode = Ext.util.JSON.decode;
 
+wcli.form.number = Ext.extend(Ext.form.Text, {
+	inputType: 'text',
+    minValue : undefined,
+    maxValue : undefined,
+    stepValue : undefined,
+    renderTpl: [
+        '<tpl if="label"><div class="x-form-label"><span>{label}</span></div></tpl>',
+        '<tpl if="fieldEl"><div class="x-form-field-container">',
+            '<input id="{inputId}" type="{inputType}" name="{name}" pattern="[0-9]*" class="{fieldCls}"', 
+               '<tpl if="tabIndex">tabIndex="{tabIndex}" </tpl>',
+                '<tpl if="placeHolder">placeholder="{placeHolder}" </tpl>',
+                //'<tpl if="placeHolder">placeholder="TEST" </tpl>',
+                '<tpl if="style">style="{style}" </tpl>',
+                '<tpl if="minValue != undefined">min="{minValue}" </tpl>',
+                '<tpl if="maxValue != undefined">max="{maxValue}" </tpl>',
+                '<tpl if="stepValue != undefined">step="{stepValue}" </tpl>',
+                '<tpl if="autoComplete">autocomplete="{autoComplete}" </tpl>',
+                '<tpl if="autoCapitalize">autocapitalize="{autoCapitalize}" </tpl>',
+                '<tpl if="autoFocus">autofocus="{autoFocus}" </tpl>',            '/>',
+            '<tpl if="useMask"><div class="x-field-mask"></div></tpl>',
+            '</div></tpl>',
+        '<tpl if="useClearIcon"><div class="x-field-clear-container"><div class="x-field-clear x-hidden-visibility">×</div><div></tpl>'    ],
+});
+
+Ext.reg('wclinumberfield', wcli.form.number);
 
 wcli.util = (function() {
 	function _esc(str) {
@@ -33,6 +59,14 @@ wcli.util = (function() {
 					focus: id
 				}, params),
 				success: function(form, result) {
+					
+					/* Begin create new input field for IOS bug workaround keyboard not displaying on the first numeric field */
+					var inputField = document.createElement("INPUT");
+					document.getElementsByTagName("BODY")[0].appendChild(inputField);
+					inputField.focus();
+					document.getElementsByTagName("BODY")[0].removeChild(inputField);
+					/* End create new input field */
+					
 					if (result.alerts.length > 1) {
 						var alerts = result.alerts;
 						alerts.pop();
@@ -54,6 +88,8 @@ wcli.util = (function() {
 							
 							wcli.util.addCSSArea(panelConfig.cssArea);
 							panelConfig.jsOnLoad();
+							
+							
 						}, { single: true });
 						controller.setActiveItem(newPanel/*, 'slide'*/);
 						eval(result.postInit).call(window);

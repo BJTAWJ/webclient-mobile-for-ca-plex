@@ -16,6 +16,8 @@
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	disabled: /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
 	hidden: /(!If:/(!Property:Visible)=Yes)false/(!Else)true/(!If),
+	id: "/(!NameID)",
+	name: "/(!NameID)",
 	iconMask: true,
 	iconCls: "/(!Param:iconCls)",
 	ui: "/(!Param:ui)" || "plain",
