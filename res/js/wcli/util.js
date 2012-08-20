@@ -58,6 +58,7 @@ wcli.util = (function() {
 		 * @return {Object} An options object for an Ext.Ajax.Request
 		 */
 		evt: function(evt, id, params) {
+		    wcli.startLoading();
 			return {
 				method: "POST",
 				disableCaching: true,
@@ -68,7 +69,7 @@ wcli.util = (function() {
 					focus: id
 				}, params),
 				success: function(form, result) {
-					
+		            wcli.stopLoading();
 					/* Begin create new input field for IOS bug workaround keyboard not displaying on the first numeric field */
 					var inputField = document.createElement("INPUT");
 					document.getElementsByTagName("BODY")[0].appendChild(inputField);
@@ -387,5 +388,37 @@ wcli.util = (function() {
 		}
 	});
 	
+	   /* Timer used to display mask when data is loading. */
+	   wcli.loadTimer = null;
+
+	   /* The amount of time in milliseconds before the load mask should appear. */
+	   wcli.LOADMASK_TIME = 350;
+
+	   /**
+	    * Called when a server request is started. If the request is not finished
+	    * within LOADMASK_TIME milliseconds, then the loading mask will appear.
+	    */
+	   wcli.startLoading = function() {
+	       if (wcli.loadTimer) {
+	           clearTimeout(wcli.loadTimer);
+	       }
+	       wcli.loadTimer = setTimeout(function() {
+	           wcli.LoadMask.show();
+	           wcli.loadTimer = null;
+	       }, wcli.LOADMASK_TIME);
+	   };
+
+	   /**
+	    * Called when a server request has stopped. If the loading mask is shown
+	    * it will disappear.
+	    */
+	   wcli.stopLoading = function() {
+	       wcli.LoadMask.hide();
+	       if (wcli.loadTimer) {
+	           clearTimeout(wcli.loadTimer);
+	           wcli.loadTimer = null;
+	       }
+	   };
+
 	return new util();
 })();
