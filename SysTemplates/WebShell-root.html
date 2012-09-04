@@ -37,6 +37,7 @@
 				glossOnIcon: true,
 				standardSubmit: false,
 				onReady: function() {
+					Ext.supports.CSS3DTransform = false;
 					wcli.LoadMask = new Ext.LoadMask(Ext.getBody(), {msg:""});
 					var panelConfig = /(!If)({
 						xtype: 'smartpanel',

@@ -6,9 +6,14 @@ Ext.util.JSON.decode = function(s) {
 };
 
 Ext.decode = Ext.util.JSON.decode;
-
+if(!Ext.is.iOS){
+	var inputtype = "number";
+}
+else{
+	var inputtype =  "text";
+}
 wcli.form.number = Ext.extend(Ext.form.Text, {
-	inputType: 'text',
+	inputType: inputtype,
     minValue : undefined,
     maxValue : undefined,
     stepValue : undefined,
@@ -31,13 +36,14 @@ wcli.form.number = Ext.extend(Ext.form.Text, {
         '<tpl if="useClearIcon"><div class="x-field-clear-container"><div class="x-field-clear x-hidden-visibility">×</div><div></tpl>'    ],
         
     onFocus: function(e) {
-    	wcli.form.number.superclass.onFocus.call(this, arguments);
+    	if(!Ext.is.iOS){
+    		wcli.form.number.superclass.onFocus.call(this, arguments);
     	
-    	if (this.getValue() == "0") {
-    		this.setValue("");
+    		if (this.getValue() == "0") {
+    			this.setValue("");
+    		}
     	}
     }
-
 });
 
 Ext.reg('wclinumberfield', wcli.form.number);
@@ -71,10 +77,12 @@ wcli.util = (function() {
 				success: function(form, result) {
 		            wcli.stopLoading();
 					/* Begin create new input field for IOS bug workaround keyboard not displaying on the first numeric field */
-					var inputField = document.createElement("INPUT");
-					document.getElementsByTagName("BODY")[0].appendChild(inputField);
-					inputField.focus();
-					document.getElementsByTagName("BODY")[0].removeChild(inputField);
+		            
+		            var inputField = document.createElement("INPUT");
+		            document.getElementsByTagName("BODY")[0].appendChild(inputField);
+		            inputField.focus();
+		            document.getElementsByTagName("BODY")[0].removeChild(inputField);
+		  
 					/* End create new input field */
 					
 					if (result.alerts.length > 1) {
@@ -420,5 +428,16 @@ wcli.util = (function() {
 	       }
 	   };
 
+	   wcli.hideKeyboard = function(){
+		   var activeElement = document.activeElement;
+	        activeElement.setAttribute('readonly', 'readonly'); // Force keyboard to hide on input field.
+	        activeElement.setAttribute('disabled', 'true'); // Force keyboard to hide on textarea field.
+	        Ext.defer(function() {
+	            activeElement.blur();
+	            // Remove readonly attribute after keyboard is hidden.
+	            activeElement.removeAttribute('readonly');
+	            activeElement.removeAttribute('disabled');
+	        }, 100);
+	   };
 	return new util();
 })();

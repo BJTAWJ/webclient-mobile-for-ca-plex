@@ -37,6 +37,7 @@
 		},
 		blur: {
 			fn: function() {
+				wcli.hideKeyboard();
 				/(!If:/(!Event:phys=Lost Focus))
 				panel.submit(wcli.util.evt("Lost Focus", "/(!NameID)"));
 				/(!If)

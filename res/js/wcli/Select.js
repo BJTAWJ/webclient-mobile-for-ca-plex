@@ -38,5 +38,28 @@ wcli.Select = Ext.extend(Ext.form.Select, {
             out: true,
             scope: this
         });
+    },
+    
+    showComponent: function() {
+    	var combo = this;
+		var activeElement = document.activeElement;
+        activeElement.setAttribute('readonly', 'readonly'); // Force keyboard to hide on input field.
+        activeElement.setAttribute('disabled', 'true'); // Force keyboard to hide on textarea field.
+        Ext.defer(function() {
+            activeElement.blur();
+            // Remove readonly attribute after keyboard is hidden.
+            activeElement.removeAttribute('readonly');
+            activeElement.removeAttribute('disabled');
+            Ext.defer(function(){
+            	Ext.form.Select.prototype.showComponent.call(combo);
+            	Ext.EventManager.resizeEvent.removeListener(onresize, null);
+            },500);
+            var onresize = function() {
+            	Ext.form.Select.prototype.showComponent.call(combo);
+            	Ext.EventManager.resizeEvent.removeListener(onresize, null);
+            };
+            
+            Ext.EventManager.onWindowResize(onresize, null);
+        }, 1);
     }
 });

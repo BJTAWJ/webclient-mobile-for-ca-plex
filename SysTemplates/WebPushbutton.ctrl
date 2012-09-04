@@ -20,6 +20,7 @@
 	iconCls: "/(!Param:iconCls)",
 	ui: "/(!Param:ui)" || "plain",
 	handler: function(b, e) {
+		wcli.hideKeyboard();
 		/(!If:/(!Event:phys=Pressed))
 			panel.submit(wcli.util.evt("Pressed", "/(!NameID)"));
 		/(!If)
