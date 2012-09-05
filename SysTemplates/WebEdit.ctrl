@@ -37,7 +37,9 @@
 		},
 		blur: {
 			fn: function() {
-				wcli.hideKeyboard();
+				if(!Ext.is.iOS){
+					wcli.hideKeyboard();
+				}
 				/(!If:/(!Event:phys=Lost Focus))
 				panel.submit(wcli.util.evt("Lost Focus", "/(!NameID)"));
 				/(!If)

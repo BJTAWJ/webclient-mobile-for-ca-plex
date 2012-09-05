@@ -57,6 +57,13 @@ new wcli.Select({
 	value: /(!This:value),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	listeners: {
+		focus: function(e){
+			var combo = this;
+			wcli.hideKeyboard();
+			Ext.defer(function() {
+				combo.showComponent();
+			},500);
+		},
 		change: function(e) {
 			/(!If:/(!Event:phys=Updated))
 			panel.submit(wcli.util.evt("Updated", "/(!NameID)"));

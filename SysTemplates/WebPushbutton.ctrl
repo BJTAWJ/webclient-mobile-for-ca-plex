@@ -20,7 +20,9 @@
 	iconCls: "/(!Param:iconCls)",
 	ui: "/(!Param:ui)" || "plain",
 	handler: function(b, e) {
-		wcli.hideKeyboard();
+		if(!Ext.is.iOS){
+			wcli.hideKeyboard();
+		}
 		/(!If:/(!Event:phys=Pressed))
 			panel.submit(wcli.util.evt("Pressed", "/(!NameID)"));
 		/(!If)
