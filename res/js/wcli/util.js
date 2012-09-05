@@ -36,12 +36,10 @@ wcli.form.number = Ext.extend(Ext.form.Text, {
         '<tpl if="useClearIcon"><div class="x-field-clear-container"><div class="x-field-clear x-hidden-visibility">×</div><div></tpl>'    ],
         
     onFocus: function(e) {
-    	if(!Ext.is.iOS){
-    		wcli.form.number.superclass.onFocus.call(this, arguments);
+    	wcli.form.number.superclass.onFocus.call(this, arguments);
     	
-    		if (this.getValue() == "0") {
-    			this.setValue("");
-    		}
+    	if (this.getValue() == "0") {
+    		this.setValue("");
     	}
     }
 });
