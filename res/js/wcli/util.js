@@ -263,7 +263,41 @@ wcli.util = (function() {
 
 		     return new Date(parts[fmt['yyyy']], parts[fmt['mm']]-1, parts[fmt['dd']]);
 		},
-
+		
+		gridHdr: function(cols, colvis, heads, grouped, gridclass){
+			var tpl = "";
+			tpl += "<table class='" + gridclass + "h'><tr class='head" + "'>";
+			for (var i = 0; i < cols.length; i++){
+				if(colvis[i]==true){
+					var h = heads[i].colHeader;
+					tpl += "<th class='col" + i + "'>" + h + "</th>";
+				}
+			}
+			tpl += "</tr></table>";	
+			return tpl;
+		},
+		
+		gridCol: function(cols, colvis, heads, grouped, gridclass){		
+			var tpl = "";
+			
+			tpl += "<table class='" + gridclass + "'><tr>";
+			for (var i = 0; i < cols.length; i++){
+				if(colvis[i]==true){
+					var c = cols[i];
+					var dataType = heads[i].dataType;
+					if (dataType == "Date") {
+						c = "[wcli.util.dateConvert(values[\"" + c + "\"]).format(Ext.util.Format.defaultDateFormat)]";
+					}
+					//if (dataType == "FixedDec" || dataType == "Double"){
+					//	c = c.toFixed(2);
+					//}
+					tpl += "<td class='col" + i + "'>{" + c + "}</td>";
+				}
+			}
+			tpl += "</tr></table>";	
+			return tpl;
+		},
+		
 		gridColHdr: function(cols, colvis, heads, grouped, gridclass){
 			var tpl = "";
 			
