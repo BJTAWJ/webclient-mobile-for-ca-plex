@@ -42,7 +42,7 @@ Ext.ns('wcli');
 			var item = toolbars[i],
 				num = item.controlName.toolbarNum,
 				toolbar = _getMappedItem(num, tbMap, tbItems, {
-					num: parseInt(num),
+					num: parseInt(num) || 1,
 					items: []
 				});
 			toolbar.items.push(item);
