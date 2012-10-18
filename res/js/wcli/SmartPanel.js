@@ -52,6 +52,7 @@ Ext.ns('wcli');
 		for (var i = 0; i < tbItems.length; i++) {
 			config.dockedItems.push({
 				xtype: 'toolbar',
+				cls: 'toolbar' + tbItems[i].num,
 				dock: 'top',
 				scroll: 'horizontal',
 				items: _alignToolbar(tbItems[i])
