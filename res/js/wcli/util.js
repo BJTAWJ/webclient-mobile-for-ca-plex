@@ -471,5 +471,23 @@ wcli.util = (function() {
 	            activeElement.removeAttribute('disabled');
 	        }, 100);
 	   };
+	
+	
+	   /**
+	    * Called to automatically grow multiline edit based on input text
+	    */
+	   
+	   wcli.autoExpand = function(controlname) {
+		   var lineheight = 13;
+		   var textdiv = document.getElementById(controlname);
+		   var textarea = textdiv.firstElementChild.firstElementChild
+		   var newHeight = textarea.scrollHeight;
+		   var currentHeight = textarea.clientHeight;
+		   
+		   if(newHeight > currentHeight){
+			   textarea.style.height = newHeight + 5 * lineheight + 'px';
+		   }
+	   };
+
 	return new util();
 })();
