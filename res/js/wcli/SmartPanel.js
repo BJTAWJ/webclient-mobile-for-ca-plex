@@ -28,14 +28,16 @@ Ext.ns('wcli');
 	
 	function _buildPanelConfig(plexConfig) {
 		var config = {},
+			header = plexConfig.header,
 			body = plexConfig.body,
 			hidden = plexConfig.hidden,
 			fullscreen = plexConfig.fullscreen,
 			toolbars = plexConfig.toolbars,
-			tabs = plexConfig.tabs;
-		
+			tabs = plexConfig.tabs,
+			footer = plexConfig.footer;
 		// Toolbar items (always visible)
 		config.dockedItems = [];
+
 		var tbItems = [],
 			tbMap = {};
 		for (var i = 0; i < toolbars.length; i++) {
@@ -58,7 +60,14 @@ Ext.ns('wcli');
 				items: _alignToolbar(tbItems[i])
 			});
 		}
-		
+		// 2012-07-03 - Add header
+		for (var h=0; h < plexConfig.header.length; h++) {
+			config.dockedItems.push(plexConfig.header[h]);
+		}
+		// 2012-07-03 - Add footer
+		for (var f=0; f < plexConfig.footer.length; f++) {
+			config.dockedItems.push(plexConfig.footer[f]);
+		}
 		// Tabs (always visible if present)
 		if (tabs.length > 0) {
 			config.dockedItems.push(new Ext.TabBar({
@@ -82,7 +91,6 @@ Ext.ns('wcli');
 					});
 				fieldSet.items.push(item);
 			}
-			
 			for (var i = 0; i < bodyItems.length; i++) {
 				config.items.push({
 					xtype: 'fieldset',
@@ -90,17 +98,14 @@ Ext.ns('wcli');
 					items: bodyItems[i].items
 				});
 			}
-		}
-		
-		// Fullscreen items.  Only display the first one instantiated (can't
-		// have more than one fullscreen control at a time!)
-		else {
+		} else {
+			// Fullscreen items.  Only display the first one instantiated (can't
+			// have more than one fullscreen control at a time!)
 			var hidden = body.filter(function(n) { return n.hidden; });
 			config.bodyMargin = config.bodyPadding = 0;
 			config.scroll = false;
 			config.items = [fullscreen[0]].concat(hidden);
 		}
-		
 		return config;
 	}
 	

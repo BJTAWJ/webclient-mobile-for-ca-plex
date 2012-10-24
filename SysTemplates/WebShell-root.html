@@ -52,11 +52,13 @@
 						},
 						plexConfig: {
 						  /(Embed:js:cdata)
+							header: ([/(!AttachPoint:name=HeaderArea)]),
 							body: ([/(!AttachPoint:name=MainArea)]),
 							hidden: [/(!AttachPoint:name=HiddenArea)],
 							fullscreen: [/(!AttachPoint:name=FullscreenArea)],
 							toolbars: [/(!AttachPoint:name=ToolbarArea)],
-							tabs: [/(!AttachPoint:name=TabbarArea)]
+							tabs: [/(!AttachPoint:name=TabbarArea)],
+							footer: ([/(!AttachPoint:name=FooterArea)]),
 						  /(Embed)
 						},
 						jsOnLoad: function() {
