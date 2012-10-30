@@ -25,6 +25,14 @@
 	maxRows: /(!If:/(!Param:maxRows))/(!Param:maxRows)/(!Else)5/(!If),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	listeners: {
+		afterrender: {
+			fn: function() {
+				/(!If:/(!Param:autoExpand))
+				wcli.autoExpand("/(!NameID)");
+				/(!If)
+			},
+			scope: this
+		},
 		focus: {
 			fn: function() {
 				/(!If:/(!Event:phys=Gained Focus))
