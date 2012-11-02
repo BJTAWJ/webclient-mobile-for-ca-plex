@@ -61,13 +61,13 @@ Ext.ns('wcli');
 			});
 		}
 		// 2012-07-03 - Add header
-		for (var h=0; h < plexConfig.header.length; h++) {
+		/*for (var h=0; h < plexConfig.header.length; h++) {
 			config.dockedItems.push(plexConfig.header[h]);
 		}
 		// 2012-07-03 - Add footer
 		for (var f=0; f < plexConfig.footer.length; f++) {
 			config.dockedItems.push(plexConfig.footer[f]);
-		}
+		} */
 		// Tabs (always visible if present)
 		if (tabs.length > 0) {
 			config.dockedItems.push(new Ext.TabBar({
