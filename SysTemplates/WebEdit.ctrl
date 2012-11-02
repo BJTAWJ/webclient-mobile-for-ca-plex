@@ -16,13 +16,15 @@
 
 {	
 	/(!If:/(!DataType)=Char)
-		xtype: "textfield",
+		xtype: "wclitextfield",
 	/(!Else)
 		xtype: "wclinumberfield",
 	/(!If)
+	id: "/(!NameID)",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || undefined,
+	maxLength: /(!Length),
 	labelWidth: "40%",
 	value: /(!This),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
@@ -45,6 +47,11 @@
 				/(!If)
 			},
 			scope: this
+		},
+		keypress: {
+			fn: function() {
+				wcli.validateMaxLength("/(!NameID)");
+			},
 		},
 		keyup: {
 			fn: function() {

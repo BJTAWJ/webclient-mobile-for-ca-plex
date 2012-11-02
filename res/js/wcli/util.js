@@ -41,10 +41,50 @@ wcli.form.number = Ext.extend(Ext.form.Text, {
     	if (this.getValue() == "0") {
     		this.setValue("");
     	}
+    },
+    
+
+    initEvents: function() {
+        Ext.form.Text.prototype.initEvents.call(this);
+
+        if (this.fieldEl) {
+            this.mon(this.fieldEl, {
+                keypress: this.onKeyPress,
+                scope: this
+            });
+        }
+    },
+    
+    onKeyPress: function(e) {
+        this.fireEvent('keypress', this, e);
     }
+
 });
 
 Ext.reg('wclinumberfield', wcli.form.number);
+
+
+wcli.form.text = Ext.extend(Ext.form.Text, {
+    initEvents: function() {
+        Ext.form.Text.prototype.initEvents.call(this);
+
+        if (this.fieldEl) {
+            this.mon(this.fieldEl, {
+                keypress: this.onKeyPress,
+                scope: this
+            });
+        }
+    },
+    
+    onKeyPress: function(e) {
+        this.fireEvent('keypress', this, e);
+    }
+
+});
+
+Ext.reg('wclitextfield', wcli.form.text);
+
+
 
 wcli.util = (function() {
 	function _esc(str) {
@@ -488,6 +528,23 @@ wcli.util = (function() {
 			   textarea.style.height = newHeight + 5 * lineheight + 'px';
 		   }
 	   };
-
+	   
+	   /**
+	    * Validate input maxlength to prevent user enter more than specified length
+	    */
+	   
+	   wcli.validateMaxLength = function(controlname){
+		   var input = Ext.getCmp(controlname);
+		   var maxlength = input.maxLength; 
+		   var value = Ext.getCmp(controlname).getValue();
+		   var length = value.length;
+		   if (!maxlength){
+			   return
+		   }
+		   if (length>=maxlength){
+			   window.event.preventDefault();
+			   window.event.stopPropagation();
+		   }
+	   };
 	return new util();
 })();
