@@ -16,6 +16,7 @@
 
 {
 	xtype: "togglefield",
+	id: "/(!NameID)",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: "/(!Property:Text)" || "Field",
@@ -46,12 +47,18 @@
 				// The initial setValue is calling the change event when it shouldn't,
 				// so catch the error and ignore it
 				try {
-					/(!If:/(!Event:phys=Updated))
-					panel.submit(wcli.util.evt("Updated", "/(!NameID)"));
-					/(!If)
-					/(!If:/(!Event:phys=Modified))
-					panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
-					/(!If)
+					var control = Ext.getCmp("/(!NameID)");
+					if (control.notFirstChanged){
+						/(!If:/(!Event:phys=Updated))
+						panel.submit(wcli.util.evt("Updated", "/(!NameID)"));
+						/(!If)
+						/(!If:/(!Event:phys=Modified))
+						panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
+						/(!If)
+					}
+					else{
+						control.notFirstChanged = true;
+					}
 				}
 				catch (e) {
 				}
