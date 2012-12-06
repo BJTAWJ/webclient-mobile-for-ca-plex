@@ -146,7 +146,7 @@ wcli.util = (function() {
 							panelConfig.jsOnLoad();
 							
 							
-						}, { single: true });
+						},null, { single: true });
 						controller.setActiveItem(newPanel/*, 'slide'*/);
 						eval(result.postInit).call(window);
 					}
