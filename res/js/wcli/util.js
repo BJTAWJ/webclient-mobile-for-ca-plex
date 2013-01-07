@@ -198,6 +198,9 @@ wcli.util = (function() {
 			if (typeof state.disabled !== 'undefined') {
 				control[state.disabled ? 'disable' : 'enable']();
 			}
+			if (typeof state.visible !== 'undefined') {
+				control[state.visible ? 'show' : 'hide']();
+			}
 			
 			if (state.location) {
 				var coords = wcli.util.getCoords(state.location),
