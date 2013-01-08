@@ -6,7 +6,8 @@
 
 /(!StatesArea)
 	/(!Action:SetState)"/(!NameID)": {
-		"disabled": /(!If:/(!Mode)=Edit)false/(!Else)true/(!If)
+		"disabled": /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+		"visible": /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If)
 	},/(!Action)
 /(!StatesArea)
 

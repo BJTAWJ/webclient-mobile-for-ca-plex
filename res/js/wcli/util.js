@@ -425,15 +425,14 @@ wcli.util = (function() {
 				return null;
 			}
 			else if (dateStr.length == 8) {
-				year = parseInt(dateStr.substring(0, 4));
-				month = parseInt(dateStr.substring(4, 6));
-				day = parseInt(dateStr.substring(6, 8));
+				year = parseInt(dateStr.substring(0, 4), 10);
+				month = parseInt(dateStr.substring(4, 6), 10);
+				day = parseInt(dateStr.substring(6, 8), 10);
 			}
-			else if (/^\d{4}-\d{2}-\d{2}/.test(dateStr)) {
-				var sections = dateStr.split(/[-TZ]/g);
-				year = parseInt(sections[0]);
-				month = parseInt(sections[1]);
-				day = parseInt(sections[2]);
+			else {
+				year = parseInt(dateStr.substring(0, 4), 10);
+				month = parseInt(dateStr.substring(5, 7), 10);
+				day = parseInt(dateStr.substring(8, 10), 10);
 			}
 			
 			return new Date(year, month - 1, day);
