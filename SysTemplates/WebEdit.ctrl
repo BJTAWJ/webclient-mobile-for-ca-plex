@@ -29,6 +29,7 @@
 	labelWidth: /(!If:/(!Param:width))"/(!Param:width)" /(!Else)"40%" /(!If),
 	value: /(!If:/(!DataType)=Char)/(!This)/(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)0/(!If))/(!If) /(!AttachPoint:name=Extra:inlinetemplate) + ' ' + /(!If:/(!DataType)=Char)/(!This) /(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)0/(!If)) /(!If)/(!AttachPoint) ,
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
 	listeners: {
 		focus: {
 			fn: function() {
