@@ -136,10 +136,10 @@ wcli.util = (function() {
 						eval(result.init).call(window);
 						var panelConfig = eval(result.refresh);
 						
+						panel.destroy();
 						var newPanel = Ext.create(panelConfig);
 						
 						controller.on('cardswitch', function() {
-							panel.destroy();
 							window.panel = newPanel;
 							
 							wcli.util.addCSSArea(panelConfig.cssArea);
