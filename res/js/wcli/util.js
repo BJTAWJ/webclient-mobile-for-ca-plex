@@ -554,7 +554,6 @@ wcli.util = (function() {
 	    */
 	   
 	   wcli.autoExpand = function(controlname) {
-		   var lineheight = 10;
 		   var textdiv = document.getElementById(controlname);
 		   if (Ext.getCmp(controlname).xtype == "wclihtmlarea"){
 			   var textarea = textdiv.firstElementChild
@@ -566,7 +565,7 @@ wcli.util = (function() {
 		   var currentHeight = textarea.clientHeight;
 		   
 		   if(newHeight > currentHeight){
-			   textarea.style.height = newHeight + 5 * lineheight + 'px';
+			   textarea.style.height = newHeight + 'px';
 		   }
 	   };
 	   
