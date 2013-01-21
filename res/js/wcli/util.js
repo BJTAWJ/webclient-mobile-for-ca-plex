@@ -12,6 +12,29 @@ if(!Ext.is.iOS){
 else{
 	var inputtype =  "text";
 }
+
+wcli.form.htmlarea = Ext.extend(Ext.form.TextArea, {
+
+    setValue: function(value){
+        this.value = value;
+
+        if (this.rendered && this.fieldEl) {
+        	if (this.fieldEl.dom.parentNode) {
+        		this.htmlNode = this.fieldEl.dom.parentNode;
+        	}
+        }
+        
+        if (this.htmlNode) {
+            this.htmlNode.innerHTML = (Ext.isEmpty(value) ? '' : value);
+        }
+
+        return this;
+    }
+});
+
+Ext.reg('wclihtmlarea', wcli.form.htmlarea);
+
+
 wcli.form.number = Ext.extend(Ext.form.Text, {
 	inputType: inputtype,
     minValue : undefined,
@@ -154,6 +177,17 @@ wcli.util = (function() {
 						// No point in setting values after a refresh...
 						wcli.util.parseStates(result.states);
 						panel.setValues(result.values);
+						
+						var fields = panel.getFields();
+				        for (name in result.values) {
+				            if (result.values.hasOwnProperty(name)) {
+				                var field = fields[name];
+				                if (field) {
+				                	field.fireEvent('aftersetvalue', field);
+				                }
+				            }
+				        }
+
 					}
 				}
 			};
@@ -520,9 +554,14 @@ wcli.util = (function() {
 	    */
 	   
 	   wcli.autoExpand = function(controlname) {
-		   var lineheight = 13;
+		   var lineheight = 10;
 		   var textdiv = document.getElementById(controlname);
-		   var textarea = textdiv.firstElementChild.firstElementChild
+		   if (Ext.getCmp(controlname).xtype == "wclihtmlarea"){
+			   var textarea = textdiv.firstElementChild
+		   }
+		   else{
+			   var textarea = textdiv.firstElementChild.firstElementChild
+		   }
 		   var newHeight = textarea.scrollHeight;
 		   var currentHeight = textarea.clientHeight;
 		   

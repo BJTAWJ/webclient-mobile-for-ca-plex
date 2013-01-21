@@ -16,7 +16,11 @@
 /(!FocusArea)
 
 {
-	xtype: "textareafield",
+	/(!If:/(!Param:htmlArea))
+	  xtype: "wclihtmlarea",
+	/(!Else)
+	  xtype: "textareafield",
+	/(!If)
 	id: "/(!NameID)",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
@@ -28,6 +32,14 @@
 	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
 	listeners: {
 		afterrender: {
+			fn: function() {
+				/(!If:/(!Param:autoExpand))
+				wcli.autoExpand("/(!NameID)");
+				/(!If)
+			},
+			scope: this
+		},
+		aftersetvalue: {
 			fn: function() {
 				/(!If:/(!Param:autoExpand))
 				wcli.autoExpand("/(!NameID)");
