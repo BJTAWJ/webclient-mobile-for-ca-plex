@@ -564,6 +564,12 @@ wcli.util = (function() {
 		   var newHeight = textarea.scrollHeight;
 		   var currentHeight = textarea.clientHeight;
 		   
+		   if (newHeight == 0 && currentHeight == 0){
+			   textarea = textdiv.childNodes[1].firstElementChild;
+			   newHeight = textarea.scrollHeight;
+			   currentHeight = textarea.clientHeight;
+		   }
+		   
 		   if(newHeight > currentHeight){
 			   textarea.style.height = newHeight + 'px';
 		   }
