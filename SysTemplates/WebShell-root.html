@@ -50,7 +50,7 @@
 					wcli.LoadMask = new Ext.LoadMask(Ext.getBody(), {msg:""});
 					var panelConfig = /(!If)({
 						xtype: 'smartpanel',
-						cls: 'x-tabpanel x-tabpanel-dark',
+						cls: 'x-tabpanel x-tabpanel-dark /(!Panel:!Name)',
 						panelId: /(PNLID),
 						url: '/(WSACTION)',
 						scroll: 'vertical',
