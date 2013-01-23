@@ -28,7 +28,7 @@
 	labelWidth: /(!If:/(!Param:width))"/(!Param:width)" /(!Else)"40%" /(!If),
 	value: /(!This),
 	maxRows: /(!If:/(!Param:maxRows))/(!Param:maxRows)/(!Else)/(!If:/(!Param:autoExpand))1/(!Else)5/(!If)/(!If),
-	disabled: /(!If:/(!Mode)=Read Only)false
+	disabled: /(!If:/(!Mode)=Read Only)true
 			  /(!Else)
 			     /(!If:/(!Property:Disabled)=No)false/(!Else)true/(!If)
 			  /(!If),
