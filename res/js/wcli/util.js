@@ -405,7 +405,7 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
-		gridColTpl: function(cols, colvis, heads, grouped, gridclass, rowclass){			
+		gridColTpl: function(cols, colvis, heads, grouped, gridclass, rowclass, imgColName){			
 			var tpl = "";
 			
 			for (var i = 0; i < cols.length; i++){
@@ -421,7 +421,11 @@ wcli.util = (function() {
 					if (dataType == "FixedDec" || dataType == "Double"){
 						c = c.toFixed(2);
 					}
-					tpl += "<td class='col" + i + "'>{" + c + "}</td>";
+					if (heads[i].colHeader == imgColName) {
+						tpl += "<td class='col" + i + "'><div class='img{" + c + "}'></div></td>";
+					} else {
+						tpl += "<td class='col" + i + "'>{" + c + "}</td>";
+					}
 				}
 				if (i % 3 == 2){
 					tpl += "</tr></table>";

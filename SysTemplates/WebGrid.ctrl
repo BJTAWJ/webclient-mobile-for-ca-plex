@@ -67,7 +67,7 @@
 		renderTpl: (/(!Param:renderTplGenerator))(/(!This:!jsonCols),/(!jsonColVis), /(!NameID)_cols, "/(!Param:grouped)" === "true", "/(!Param:gridClass)","/(!Param:rowClass)"),
 	/(!If)
 	itemTpl: (/(!If:/(!Param:tplGenerator))/(!Param:tplGenerator)/(!Else)wcli.util.gridTpl/(!If))(/(!This:!jsonCols),/(!jsonColVis),
-				/(!NameID)_cols, "/(!Param:grouped)" === "true", "/(!Param:gridClass)","/(!Param:rowClass)"),
+				/(!NameID)_cols, "/(!Param:grouped)" === "true", "/(!Param:gridClass)","/(!Param:rowClass)","/(!Param:imgColName)"),
 	afterComponentLayout: function() {		
 		Ext.Component.prototype.afterComponentLayout.apply(this);		
 		if (typeof scrollerContainer == "undefined") {
