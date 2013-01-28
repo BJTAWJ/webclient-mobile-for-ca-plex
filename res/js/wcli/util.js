@@ -13,6 +13,15 @@ else{
 	var inputtype =  "text";
 }
 
+wcli.form.DatePicker = Ext.extend(Ext.form.DatePicker, {
+	
+    getValue: function(format) {
+        var value = this.value || null;
+        return (format && Ext.isDate(value)) ? value.format(Ext.util.Format.defaultDateFormat)
+        		: value.format('Ymd');
+    },
+});
+
 wcli.form.htmlarea = Ext.extend(Ext.form.TextArea, {
 
     setValue: function(value){
@@ -341,7 +350,7 @@ wcli.util = (function() {
 		     return new Date(parts[fmt['yyyy']], parts[fmt['mm']]-1, parts[fmt['dd']]);
 		},
 		
-		gridHdr: function(cols, colvis, heads, grouped, gridclass){
+		gridHdr: function(cols, colvis, heads, grouped, gridclass, rowclass){
 			var tpl = "";
 			tpl += "<table class='" + gridclass + "h'><tr class='head" + "'>";
 			for (var i = 0; i < cols.length; i++){
@@ -354,10 +363,10 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
-		gridCol: function(cols, colvis, heads, grouped, gridclass){		
+		gridCol: function(cols, colvis, heads, grouped, gridclass, rowclass){		
 			var tpl = "";
 			
-			tpl += "<table class='" + gridclass + "'><tr>";
+			tpl += "<table class='" + gridclass + "'><tr class='" + rowclass +"'>";
 			for (var i = 0; i < cols.length; i++){
 				if(colvis[i]==true){
 					var c = cols[i];
@@ -375,7 +384,7 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
-		gridColHdr: function(cols, colvis, heads, grouped, gridclass){
+		gridColHdr: function(cols, colvis, heads, grouped, gridclass, rowclass){
 			var tpl = "";
 			
 			for (var i = 0; i < cols.length; i++){
@@ -396,12 +405,12 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
-		gridColTpl: function(cols, colvis, heads, grouped, gridclass){			
+		gridColTpl: function(cols, colvis, heads, grouped, gridclass, rowclass){			
 			var tpl = "";
 			
 			for (var i = 0; i < cols.length; i++){
 				if(i %3 == 0){
-					tpl += "<table class='" + gridclass + "'><tr>";
+					tpl += "<table class='" + gridclass + "'><tr class='" + rowclass +"'>";
 				}
 				if(colvis[i]==true){
 					var c = cols[i];
