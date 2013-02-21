@@ -17,8 +17,13 @@ wcli.form.DatePicker = Ext.extend(Ext.form.DatePicker, {
 	
     getValue: function(format) {
         var value = this.value || null;
-        return (format && Ext.isDate(value)) ? value.format(Ext.util.Format.defaultDateFormat)
+        if(value == null){
+        	return value;
+        }
+        else{
+        	return (format && Ext.isDate(value)) ? value.format(Ext.util.Format.defaultDateFormat)
         		: value.format('Ymd');
+    	}
     },
 });
 
