@@ -7,13 +7,19 @@
 /(!AlertsArea)
 	/(!MobileAlerts)
 	/(!Panel:!EnableAction:Alert,Enquiry)
-	
+
 	/(!Panel:!Action:Alert)
-		/(Embed:html)/(!ActionArg)/(Embed),
+	{
+		message: /(Embed:html)/(!ActionArg)/(Embed),
+		type: /(AlertType)
+	},
 	/(!Panel:!Action)
 	
 	/(!Panel:!Action:Enquiry)
-		/(Embed:html)/(!ActionArg)/(Embed),
+	{
+		message: /(Embed:html)/(!ActionArg)/(Embed),
+		type: /(AlertType)	
+	},
 	/(!Panel:!Action)
 	
 /(!AlertsArea)

@@ -140,14 +140,19 @@ wcli.util = (function() {
 		 */
 		evt: function(evt, id, params) {
 		    wcli.startLoading();
+		    if (evt) {
+		    	if (!params) {
+		    		params = {};
+		    	}
+		    	params.ctlact = id + ":" + evt;
+		    	params.focus = id;
+		    }
 			return {
 				method: "POST",
 				disableCaching: true,
 				params: Ext.apply({
 					pnlid: panel.panelId,
-					_type: "json",
-					ctlact: id + ":" + evt,
-					focus: id
+					_type: "json"
 				}, params),
 				success: function(form, result) {
 		            wcli.stopLoading();
@@ -162,12 +167,22 @@ wcli.util = (function() {
 					
 					if (result.alerts.length > 1) {
 						var alerts = result.alerts;
-						alerts.pop();
-						(function display() {
-							if (result.alerts.length > 0) {
-								Ext.Msg.alert('', alerts.pop(), display);
+						for (var i=0; i<result.alerts.length; i++){
+							if (alerts[i].type == "dialog"){
+								Ext.Msg.alert('', alerts[i].message, function() {									
+								});
 							}
-						})();
+							if (alerts[i].type == "enquiry"){
+								Ext.Msg.confirm('', alerts[i].message, function(btn) {
+									if(btn == "yes"){
+										panel.submit(wcli.util.evt(null, null, { enqact: 1 }));
+									}
+									if(btn == "no"){
+										panel.submit(wcli.util.evt(null, null, { enqact: 2 }));
+									}
+								});
+							}
+						}
 					}
 					if (result.refresh && result.panelId != panel.panelId) {
 						eval(result.init).call(window);
