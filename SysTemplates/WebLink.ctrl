@@ -14,5 +14,5 @@
 
 {
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
-	html: '<a href="http:///(!Param:link)" target="_blank" /(!If:/(!Param:className))class="/(!Param:class)"/(!If)>/(!Property:Text) </a>'
+	html: '<a href="http:///(!Param:link)" target="_blank" /(!If:/(!Param:className))class="/(!Param:className)"/(!If)>/(!Property:Text) </a>'
 },
