@@ -1,5 +1,6 @@
 Ext.ns('wcli');
 Ext.ns('wcli.form');
+Ext.ns('wcli.msg');
 
 Ext.util.JSON.decode = function(s) {
 	return eval("(" + s + ")");
@@ -120,8 +121,35 @@ wcli.form.text = Ext.extend(Ext.form.Text, {
 });
 
 Ext.reg('wclitextfield', wcli.form.text);
+wcli.msg.alert = function(title, msg, fn, scope) {
+	return new Ext.MessageBox({
+        width: 320	
+	}).show({
+        title : title,
+        msg : msg,
+        buttons: Ext.MessageBox.OK,
+        fn: function(button) {
+            fn.call(scope, button);
+        },
+        scope : scope,
+        icon: Ext.MessageBox.INFO
+    });
+};
 
-
+wcli.msg.confirm = function(title, msg, fn, scope) {
+	return new Ext.MessageBox({
+        width: 320	
+	}).show({
+        title : title,
+        msg : msg,
+        buttons: [Ext.MessageBox.YES, Ext.MessageBox.NO, Ext.MessageBox.CANCEL],
+        fn: function(button) {
+            fn.call(scope, button);
+        },
+        scope : scope,
+        icon: Ext.MessageBox.QUESTION
+    });
+};
 
 wcli.util = (function() {
 	function _esc(str) {
@@ -169,16 +197,19 @@ wcli.util = (function() {
 						var alerts = result.alerts;
 						for (var i=0; i<result.alerts.length; i++){
 							if (alerts[i].type == "dialog"){
-								Ext.Msg.alert('', alerts[i].message, function() {									
+								wcli.msg.alert('', alerts[i].message, function() {									
 								});
 							}
 							if (alerts[i].type == "enquiry"){
-								Ext.Msg.confirm('', alerts[i].message, function(btn) {
+								wcli.msg.confirm('', alerts[i].message, function(btn) {
 									if(btn == "yes"){
 										panel.submit(wcli.util.evt(null, null, { enqact: 1 }));
 									}
 									if(btn == "no"){
 										panel.submit(wcli.util.evt(null, null, { enqact: 2 }));
+									}
+									if(btn == "cancel"){
+										panel.submit(wcli.util.evt(null, null, { enqact: 3 }));
 									}
 								});
 							}
