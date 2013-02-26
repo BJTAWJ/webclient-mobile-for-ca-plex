@@ -1,0 +1,18 @@
+/(!EnableAction:SetValue,SetState,SetFocus)
+
+/(!ValuesArea)
+	/(!Action:SetValue)"/(!NameID)": /(!This),/(!Action)
+/(!ValuesArea)
+
+/(!StatesArea)
+	/(!Action:SetState)"/(!NameID)": "",/(!Action)
+/(!StatesArea)
+
+/(!FocusArea)
+	/(!Action:SetFocus)"/(!NameID)",/(!Action)
+/(!FocusArea)
+
+{
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	html: '<a href="#" src="/(!Param:link)" /(!If:/(!Param:className))class="/(!Param:class)"/(!If)>/(!Property:Text) </a>'
+},
