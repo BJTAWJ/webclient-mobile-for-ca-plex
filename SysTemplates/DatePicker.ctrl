@@ -22,6 +22,7 @@ new wcli.form.DatePicker({
 	value: wcli.util.getDate(/(!This)),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	picker: {
+		/(!If:/(!Param:yearFrom)) yearFrom: /(!Param:yearFrom),/(!If)
 		yearTo: new Date().getFullYear() + 10,
 	},
 	listeners: {

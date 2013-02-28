@@ -16,6 +16,7 @@
 		
 		<script type="text/javascript" src="/(!WsRes)/js/sencha-touch-debug.js"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/phonegap.js"></script>
+		<script type="text/javascript" src="/(!WsRes)/js/wcli/nls.js"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/util.js"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/SmartPanel.js"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/CheckboxToggle.js"></script>
@@ -46,6 +47,7 @@
 				glossOnIcon: true,
 				standardSubmit: false,
 				onReady: function() {
+					Ext.is.Phone = true;
 					Ext.supports.CSS3DTransform = false;
 					wcli.LoadMask = new Ext.LoadMask(Ext.getBody(), {msg:""});
 					var panelConfig = /(!If)({

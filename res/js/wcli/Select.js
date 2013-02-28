@@ -1,5 +1,10 @@
 Ext.ns('wcli');
 
+wcli.ComboPicker = Ext.extend(Ext.Picker, {
+	doneButton : nls.picker.doneButton,
+	cancelButton: nls.picker.cancelButton,
+});
+
 wcli.Select = Ext.extend(Ext.form.Select, {
 	
     setValue: function(value) {
@@ -16,7 +21,28 @@ wcli.Select = Ext.extend(Ext.form.Select, {
     setValueFromData: function(value) {
 	Ext.form.Select.prototype.setValue.call(this, value);		
     },
+    
+    getPicker: function() {
+        if (!this.picker) {
+            this.picker = new wcli.ComboPicker({
+                slots: [{
+                    align       : 'center',
+                    name        : this.name,
+                    valueField  : this.valueField,
+                    displayField: this.displayField,
+                    value       : this.getValue(),
+                    store       : this.store
+                }],
+                listeners: {
+                    change: this.onPickerChange,
+                    scope: this
+                }
+            });
+        }
 
+        return this.picker;
+    },
+    
     onPickerChange: function(picker, value) {
         var currentValue = this.getValue(),
             newValue = value[this.name];

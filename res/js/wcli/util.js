@@ -14,8 +14,33 @@ else{
 	var inputtype =  "text";
 }
 
+wcli.DatePicker = Ext.extend(Ext.DatePicker, {
+	doneButton : nls.picker.doneButton,
+	cancelButton: nls.picker.cancelButton,
+});
+
 wcli.form.DatePicker = Ext.extend(Ext.form.DatePicker, {
 	
+    getDatePicker: function() {
+        if (!this.datePicker) {
+            if (this.picker instanceof wcli.DatePicker) {
+                this.datePicker = this.picker;
+            } else {
+                this.datePicker = new wcli.DatePicker(Ext.apply(this.picker || {}));
+            }
+
+            this.datePicker.setValue(this.value || null);
+
+            this.datePicker.on({
+                scope : this,
+                change: this.onPickerChange,
+                hide  : this.onPickerHide
+            });
+        }
+
+        return this.datePicker;
+    },
+
     getValue: function(format) {
         var value = this.value || null;
         if(value == null){
@@ -136,13 +161,17 @@ wcli.msg.alert = function(title, msg, fn, scope) {
     });
 };
 
+wcli.msg.YES = {text : nls.msg.yesButton,    itemId : 'yes', ui : 'action' };
+wcli.msg.NO = {text : nls.msg.noButton,    itemId : 'no'};
+wcli.msg.CANCEL = {text : nls.msg.cancelButton,    itemId : 'cancel'};
+
 wcli.msg.confirm = function(title, msg, fn, scope) {
 	return new Ext.MessageBox({
         width: 320	
 	}).show({
         title : title,
         msg : msg,
-        buttons: [Ext.MessageBox.YES, Ext.MessageBox.NO, Ext.MessageBox.CANCEL],
+        buttons: [wcli.msg.YES, wcli.msg.NO, wcli.msg.CANCEL],
         fn: function(button) {
             fn.call(scope, button);
         },
