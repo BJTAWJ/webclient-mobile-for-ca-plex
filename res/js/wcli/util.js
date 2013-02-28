@@ -13,7 +13,7 @@ if(!Ext.is.iOS){
 else{
 	var inputtype =  "text";
 }
-
+Date.monthNames = [nls.month[1], nls.month[2], nls.month[3], nls.month[4], nls.month[5], nls.month[6], nls.month[7], nls.month[8], nls.month[9], nls.month[10], nls.month[11], nls.month[12]];
 wcli.DatePicker = Ext.extend(Ext.DatePicker, {
 	doneButton : nls.picker.doneButton,
 	cancelButton: nls.picker.cancelButton,
