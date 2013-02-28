@@ -23,7 +23,7 @@ new wcli.form.DatePicker({
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	picker: {
 		/(!If:/(!Param:yearFrom)) yearFrom: /(!Param:yearFrom),/(!If)
-		yearTo: new Date().getFullYear() + 10,
+		yearTo: /(!If:/(!Param:yearTo))/(!Param:yearTo) /(!Else)new Date().getFullYear() + 10 /(!If),
 	},
 	listeners: {
 		focus: {
