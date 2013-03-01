@@ -23,3 +23,26 @@
 	/(!Panel:!Action)
 	
 /(!AlertsArea)
+
+/(!JSOnReady)
+	/(ALERTS)
+		message = "/(Embed:html)/(AlertMsg)/(Embed)"; messageType = "/(AlertType)";
+		if (messageType == "dialog"){
+			wcli.msg.alert('', message, function() {									
+			});
+		}
+		if (messageType == "enquiry"){
+			wcli.msg.confirm('', message, function(btn) {
+				if(btn == "yes"){
+					panel.submit(wcli.util.evt(null, null, { enqact: 1 }));
+				}
+				if(btn == "no"){
+					panel.submit(wcli.util.evt(null, null, { enqact: 2 }));
+				}
+				if(btn == "cancel"){
+					panel.submit(wcli.util.evt(null, null, { enqact: 3 }));
+				}
+			});
+		}
+	/(ALERTS)
+/(!JSOnReady)
