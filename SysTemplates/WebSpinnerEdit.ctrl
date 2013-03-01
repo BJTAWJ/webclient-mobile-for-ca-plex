@@ -6,7 +6,8 @@
 
 /(!StatesArea)
 	/(!Action:SetState)"/(!NameID)": {
-		"disabled": /(!If:/(!Mode)=Edit)false/(!Else)true/(!If)
+		"disabled": /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+		"visible": /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If)
 	},/(!Action)
 /(!StatesArea)
 
@@ -23,6 +24,7 @@
 	labelWidth:/(!If:/(!Param:width))"/(!Param:width)" /(!Else)"40%" /(!If),
 	value: /(!This),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
 	listeners: {
 		focus: {
 			fn: function() {
