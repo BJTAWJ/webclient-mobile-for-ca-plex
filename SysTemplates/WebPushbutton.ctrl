@@ -16,9 +16,11 @@
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	disabled: /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
 	hidden: /(!If:/(!Property:Visible)=Yes)false/(!Else)true/(!If),
+	/(!If:/(!Param:width)) width: /(!Param:width),/(!If)
 	iconMask: true,
-	iconCls: "/(!Param:iconCls)",
-	ui: "/(!Param:ui)" || "plain",
+    /(!If:/(!Param:iconCls)) iconCls: "/(!Param:iconCls)",/(!If)
+    /(!If:/(!Param:icon)) icon: /(!WsRes) + "/images/" + "/(!Param:icon)",/(!If)
+    ui: "/(!Param:ui)" || "plain",
 	handler: function(b, e) {
 		if(!Ext.is.iOS){
 			wcli.hideKeyboard();
