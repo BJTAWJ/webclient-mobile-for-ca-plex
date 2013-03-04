@@ -65,7 +65,7 @@ wcli.form.htmlarea = Ext.extend(Ext.form.TextArea, {
         }
         
         if (this.htmlNode) {
-            this.htmlNode.innerHTML = (Ext.isEmpty(value) ? '' : value);
+            this.htmlNode.innerHTML = (Ext.isEmpty(value) ? ' ' : value);
         }
 
         return this;
