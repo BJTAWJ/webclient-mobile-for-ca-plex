@@ -85,8 +85,11 @@ Ext.ns('wcli');
 			for (var i = 0; i < body.length; i++) {
 				var item = body[i];
 				if(item.hidden == false || item.hidden == undefined){
-					var	name = item.controlName.fieldSet || '',
-						fieldSet = _getMappedItem(name, bodyMap, bodyItems, {
+					var	name = item.controlName.fieldSet || '';
+					if (name.substr(0,1) == "$"){
+						name = customNLS.title[name];
+					}
+					var	fieldSet = _getMappedItem(name, bodyMap, bodyItems, {
 							name: name,
 							items: []
 						});
