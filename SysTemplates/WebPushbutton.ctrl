@@ -2,7 +2,7 @@
 
 /(!StatesArea)
 	/(!Action:SetState)"/(!NameID)": {
-		"disabled": /(!If:/(!Property:Disabled)=Yes)true,/(!Else)false,/(!If)
+		"disabled": /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
 		"hidden": /(!If:/(!Property:Visible)=Yes)false/(!Else)true/(!If)
 	},/(!Action)
 /(!StatesArea)
