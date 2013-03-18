@@ -83,13 +83,15 @@ Ext.ns('wcli');
 			var bodyItems = [],
 				bodyMap = {};
 			for (var i = 0; i < body.length; i++) {
-				var item = body[i],
-					name = item.controlName.fieldSet || '',
-					fieldSet = _getMappedItem(name, bodyMap, bodyItems, {
-						name: name,
-						items: []
-					});
-				fieldSet.items.push(item);
+				var item = body[i];
+				if(item.hidden == false || item.hidden == undefined){
+					var	name = item.controlName.fieldSet || '',
+						fieldSet = _getMappedItem(name, bodyMap, bodyItems, {
+							name: name,
+							items: []
+						});
+					fieldSet.items.push(item);
+				}
 			}
 			for (var i = 0; i < bodyItems.length; i++) {
 				config.items.push({
