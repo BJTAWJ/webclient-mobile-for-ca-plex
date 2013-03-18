@@ -20,8 +20,9 @@ new wcli.form.DatePicker({
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || undefined,
 	labelWidth: /(!If:/(!Param:width))"/(!Param:width)" /(!Else)"40%" /(!If),
-	value: wcli.util.getDate(/(!This)),
+	value: wcli.util.getDate(/(!This)) /(!AttachPoint:name=Extra:inlinetemplate)/(!This) /(!AttachPoint),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
 	picker: {
 		/(!If:/(!Param:yearFrom)) yearFrom: /(!Param:yearFrom),/(!If)
 		yearTo: /(!If:/(!Param:yearTo))/(!Param:yearTo) /(!Else)new Date().getFullYear() + 10 /(!If),
