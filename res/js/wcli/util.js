@@ -244,7 +244,7 @@ wcli.util = (function() {
 							}
 						}
 					}
-					if (result.refresh && result.panelId != panel.panelId) {
+					if (result.refresh) {
 						eval(result.init).call(window);
 						var panelConfig = eval(result.refresh);
 						
