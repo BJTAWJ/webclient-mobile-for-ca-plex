@@ -28,6 +28,7 @@
 	maxLength: /(!Length),
 	labelWidth: /(!If:/(!Param:width))"/(!Param:width)" /(!Else)"40%" /(!If),
 	value: /(!If:/(!DataType)=Char)/(!This)/(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)0/(!If))/(!If) /(!AttachPoint:name=Extra:inlinetemplate) + ' ' + /(!If:/(!DataType)=Char)/(!This) /(!Else)/(!If:/(!DataType)=Date)wcli.util.getDate(/(!This)).format(Ext.util.Format.defaultDateFormat)/(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)0/(!If)) /(!If)/(!If)/(!AttachPoint) ,
+	extraControl: ([/(!AttachPoint:name=ExtraControl)]),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
 	listeners: {

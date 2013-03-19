@@ -75,7 +75,21 @@ wcli.form.htmlarea = Ext.extend(Ext.form.TextArea, {
 Ext.reg('wclihtmlarea', wcli.form.htmlarea);
 
 
-wcli.form.number = Ext.extend(Ext.form.Text, {
+wcli.form.BaseText = Ext.extend(Ext.form.Text, {
+	afterRender: function() {
+        wcli.form.BaseText.superclass.afterRender.call(this);
+
+        var me = this;
+    	var extraControl = this.extraControl;
+    	if (extraControl) {
+    		Ext.each(extraControl, function(ctl) {
+    			ctl.render(me.el);
+    		});
+    	}
+	}
+});
+
+wcli.form.number = Ext.extend(wcli.form.BaseText, {
 	inputType: inputtype,
     minValue : undefined,
     maxValue : undefined,
@@ -127,9 +141,9 @@ wcli.form.number = Ext.extend(Ext.form.Text, {
 Ext.reg('wclinumberfield', wcli.form.number);
 
 
-wcli.form.text = Ext.extend(Ext.form.Text, {
+wcli.form.text = Ext.extend(wcli.form.BaseText, {
     initEvents: function() {
-        Ext.form.Text.prototype.initEvents.call(this);
+    	wcli.form.BaseText.prototype.initEvents.call(this);
 
         if (this.fieldEl) {
             this.mon(this.fieldEl, {
