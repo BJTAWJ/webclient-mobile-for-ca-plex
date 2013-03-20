@@ -177,7 +177,7 @@ wcli.msg.alert = function(title, msg, fn, scope) {
 
 wcli.msg.YES = {text : nls.msg.yesButton,    itemId : 'yes', ui : 'action' };
 wcli.msg.NO = {text : nls.msg.noButton,    itemId : 'no'};
-wcli.msg.CANCEL = {text : nls.msg.cancelButton,    itemId : 'cancel'};
+//wcli.msg.CANCEL = {text : nls.msg.cancelButton,    itemId : 'cancel'};
 
 wcli.msg.confirm = function(title, msg, fn, scope) {
 	return new Ext.MessageBox({
@@ -185,7 +185,7 @@ wcli.msg.confirm = function(title, msg, fn, scope) {
 	}).show({
         title : title,
         msg : msg,
-        buttons: [wcli.msg.YES, wcli.msg.NO, wcli.msg.CANCEL],
+        buttons: [wcli.msg.YES, wcli.msg.NO],
         fn: function(button) {
             fn.call(scope, button);
         },
