@@ -130,6 +130,15 @@ Ext.ns('wcli');
 	        	bodyFields = base.call(this, byName),
 	        	toolbarFields = base.call({ items: this.dockedItems }, byName);
 			
+			for (ctlName in bodyFields) {
+				var ctl = bodyFields[ctlName];
+				if (ctl.extraControl) {
+					Ext.each(ctl.extraControl, function(xtraCtl) {
+						bodyFields[xtraCtl.name] = xtraCtl;
+					});
+				}
+			}
+			
 	        return Ext.apply(bodyFields, toolbarFields);
 	    }
 	});

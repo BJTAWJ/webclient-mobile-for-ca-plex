@@ -101,7 +101,7 @@
 				}, this);
 				/(!If)
 			},
-			scop: this
+			scope: this
 		}
 	}
 },
