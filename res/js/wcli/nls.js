@@ -6,7 +6,7 @@ Ext.ns('nls.month');
 nls.language = window.navigator.language.substr(0, 2);
 
 nls.msg.en = {
-		yesButton: 'Yes',
+		yesButton: 'OK',
 		noButton: 'No',
 		cancelButton: 'Cancel',
 		okButton: 'OK'

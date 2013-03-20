@@ -36,8 +36,8 @@
 				if(btn == "yes"){
 					panel.submit(wcli.util.evt(null, null, { enqact: 1 }));
 				}
-				if(btn == "no"){
-					panel.submit(wcli.util.evt(null, null, { enqact: 2 }));
+				if(btn == "cancel"){
+					panel.submit(wcli.util.evt(null, null, { enqact: 3 }));
 				}
 			});
 		}
