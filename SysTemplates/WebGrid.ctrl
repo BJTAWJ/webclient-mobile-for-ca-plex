@@ -92,13 +92,15 @@
 		afterrender: {
 			fn: function() {
 				/(!If:/(!Event:phys=Load Grid))
-				this.scroller.on('scrollend', function() {
-					var offsetBoundary = this.scroller.offsetBoundary;
-					var offset = this.scroller.offset;
-					if (offset >= offsetBoundary) {
-						panel.submit(wcli.util.evt("LoadGrid", "/(!NameID)"));
-					}
-				}, this);
+				if(this.scroller){
+					this.scroller.on('scrollend', function() {
+						var offsetBoundary = this.scroller.offsetBoundary;
+						var offset = this.scroller.offset;
+						if (offset >= offsetBoundary) {
+							panel.submit(wcli.util.evt("LoadGrid", "/(!NameID)"));
+						}
+					}, this);
+				}
 				/(!If)
 			},
 			scope: this
