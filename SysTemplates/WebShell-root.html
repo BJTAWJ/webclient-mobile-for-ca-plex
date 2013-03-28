@@ -23,6 +23,7 @@
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/Select.js"></script>
 		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/BrowserCheck.js"></script>
+		<script type="text/javascript" src="/(!WsRes)/js/wcli/TreeMenu.js"></script>
 		
 		/(!AttachPoint:name=HeadArea)
 		<script type="text/javascript">
@@ -40,6 +41,8 @@
     			}, false);
 			}
 			/(!AttachPoint:name=JSInit)
+			
+			
 		/(Embed)
 			Ext.setup({
 				tabletStartupScreen: '/(!WsRes)/images/tablet_startup.png',
@@ -51,6 +54,7 @@
 					Ext.is.Phone = true;
 					Ext.supports.CSS3DTransform = false;
 					wcli.LoadMask = new Ext.LoadMask(Ext.getBody(), {msg:""});
+					window.panelFullscreen = 'true';
 					/(!AttachPoint:name=JSOnReady)
 					var panelConfig = /(!If)({
 						xtype: 'smartpanel',
@@ -58,7 +62,7 @@
 						panelId: /(PNLID),
 						url: '/(WSACTION)',
 						scroll: 'vertical',
-						fullscreen: 'true',
+						fullscreen: window.panelFullscreen,
 						layout: {
 							type : 'vbox',
 							align: 'stretch'
@@ -85,11 +89,16 @@
 
 					window.panel = Ext.create(panelConfig);
 					
+					/(!AttachPoint:name=ExtraController)
+
 					window.controller = new Ext.Panel({
-						fullscreen: true,
 						layout: 'card',
+						height: '100%',
 						items: [panel]
 					});
+					
+					/(!AttachPoint:name=Container)	
+					
 					panel.show();
 					
 					wcli.util.addCSSArea(panelConfig.cssArea);
