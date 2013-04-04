@@ -273,6 +273,7 @@ wcli.util = (function() {
 							
 							
 						},null, { single: true });
+						controller.getLayout();
 						controller.setActiveItem(newPanel/*, 'slide'*/);
 						eval(result.postInit).call(window);
 					}
