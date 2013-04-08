@@ -28,8 +28,19 @@ wcli.form.CalendarPicker = Ext.extend(Ext.form.DatePicker, {
             if (this.picker instanceof wcli.DatePicker) {
                 this.datePicker = this.picker;
             } else {
+            	var minDate, maxDate;
+            	
+            	if (this.picker.yearFrom) {
+            		minDate = new Date(this.picker.yearFrom, 0, 1);
+            	}
+            	
+            	if (this.picker.yearTo){
+            		maxDate = new Date(this.picker.yearTo, 12, 0);
+            	}
             	var uxDatePicker = new Ext.ux.DatePicker(Ext.apply(this.picker || {}, {
-                	dock: 'bottom'
+                	dock: 'bottom',
+                	minDate: minDate,
+                	maxDate: maxDate
                 }));
             	
                 this.datePicker = new Ext.Sheet({
