@@ -14,9 +14,79 @@ else{
 	var inputtype =  "text";
 }
 Date.monthNames = [nls.month[1], nls.month[2], nls.month[3], nls.month[4], nls.month[5], nls.month[6], nls.month[7], nls.month[8], nls.month[9], nls.month[10], nls.month[11], nls.month[12]];
+Ext.ux.DatePicker.prototype.months = [nls.month[1], nls.month[2], nls.month[3], nls.month[4], nls.month[5], nls.month[6], nls.month[7], nls.month[8], nls.month[9], nls.month[10], nls.month[11], nls.month[12]];
+Ext.ux.DatePicker.prototype.days = [nls.day[1], nls.day[2], nls.day[3], nls.day[4], nls.day[5], nls.day[6], nls.day[7]];
 wcli.DatePicker = Ext.extend(Ext.DatePicker, {
 	doneButton : nls.picker.doneButton,
 	cancelButton: nls.picker.cancelButton,
+});
+
+wcli.form.CalendarPicker = Ext.extend(Ext.form.DatePicker, {
+	
+    getDatePicker: function() {
+        if (!this.datePicker) {
+            if (this.picker instanceof wcli.DatePicker) {
+                this.datePicker = this.picker;
+            } else {
+            	var uxDatePicker = new Ext.ux.DatePicker(Ext.apply(this.picker || {}, {
+                	dock: 'bottom'
+                }));
+            	
+                this.datePicker = new Ext.Sheet({
+                    height  : 200,
+                    stretchX: true,
+                    stretchY: true,
+                    
+                    layout: {
+                        type: 'hbox',
+                        align: 'stretch'
+                    },
+                    
+                    dockedItems: [
+                        uxDatePicker
+                	],
+                	
+                	setValue: function(val) {
+                		uxDatePicker.setValue(val);
+                	},
+                    
+                    getValue: function() {
+                    	return uxDatePicker.getValue();
+                    }
+                });
+            }
+
+            //this.datePicker.setValue(this.value || null);
+            
+            uxDatePicker.on({
+                scope: this,
+                select: function() {
+                	this.onPickerChange(this, uxDatePicker.getValue());
+                	this.datePicker.hide();
+                	this.onPickerHide();
+                }
+            });
+
+            this.datePicker.on({
+                scope : this,
+                change: this.onPickerChange,
+                hide  : this.onPickerHide
+            });
+        }
+
+        return this.datePicker;
+    },
+
+    getValue: function(format) {
+        var value = this.value || null;
+        if(value == null){
+        	return value;
+        }
+        else{
+        	return (format && Ext.isDate(value)) ? value.format(Ext.util.Format.defaultDateFormat)
+        		: value.format('Ymd');
+    	}
+    },
 });
 
 wcli.form.DatePicker = Ext.extend(Ext.form.DatePicker, {

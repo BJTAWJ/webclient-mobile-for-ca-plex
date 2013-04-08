@@ -2,6 +2,7 @@ Ext.ns('nls');
 Ext.ns('nls.msg');
 Ext.ns('nls.picker');
 Ext.ns('nls.month');
+Ext.ns('nls.day');
 
 nls.language = window.navigator.language.substr(0, 2);
 
@@ -67,6 +68,58 @@ nls.picker.nl = {
 };
 
 Ext.apply(nls.picker, nls.picker[nls.language]);
+
+nls.day.en = {
+		1: "Sun",
+        2: "Mon",
+        3: "Tue",
+        4: "Wed",
+        5: "Thu",
+        6: "Fri",
+        7: "Sat"
+};
+
+nls.day.de = {
+		1: "So",
+        2: "Mo",
+        3: "Di",
+        4: "Mi",
+        5: "Do",
+        6: "Fr",
+        7: "Sa"
+};
+
+nls.day.it = {
+		1: "Dom",
+        2: "Lun",
+        3: "Mar",
+        4: "Mer",
+        5: "Gio",
+        6: "Ven",
+        7: "Sab"
+};
+
+nls.day.fr = {
+		1: "di",
+        2: "lu",
+        3: "ma",
+        4: "me",
+        5: "je",
+        6: "ve",
+        7: "sa"
+};
+
+nls.day.nl = {
+		1: "Zo",
+        2: "Ma",
+        3: "Di",
+        4: "Woe",
+        5: "Do",
+        6: "Vrij",
+        7: "Za"
+};
+
+Ext.apply(nls.day, nls.day[nls.language]);
 
 nls.month.en = {
 		1: "January",

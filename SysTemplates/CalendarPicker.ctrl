@@ -1,0 +1,61 @@
+/(!EnableAction:SetValue,SetState,SetFocus)
+
+/(!ValuesArea)
+	/(!Action:SetValue)"/(!NameID)": wcli.util.getDate(/(!This)),/(!Action)
+/(!ValuesArea)
+
+/(!StatesArea)
+	/(!Action:SetState)"/(!NameID)": {
+		"disabled": /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+		"hidden" : /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If)
+	},/(!Action)
+/(!StatesArea)
+
+/(!FocusArea)
+	/(!Action:SetFocus)"/(!NameID)",/(!Action)
+/(!FocusArea)
+
+new wcli.form.CalendarPicker({
+	name: "/(!NameID)",
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || undefined,
+	labelWidth: /(!If:/(!Param:width))"/(!Param:width)" /(!Else)"40%" /(!If),
+	value: wcli.util.getDate(/(!This)),
+	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
+	picker: {
+		/(!If:/(!Param:yearFrom)) yearFrom: /(!Param:yearFrom),/(!If)
+		yearTo: /(!If:/(!Param:yearTo))/(!Param:yearTo) /(!Else)new Date().getFullYear() + 10 /(!If),
+	},
+	listeners: {
+		focus: {
+			fn: function(e) {
+				/(!If:/(!Event:phys=Gained Focus))
+				panel.submit(wcli.util.evt("Gained Focus", "/(!NameID)"));
+				/(!If)
+			},
+			scope: this
+		},
+		blur: {
+			fn: function(e) {
+				/(!If:/(!Event:phys=Lost Focus))
+				panel.submit(wcli.util.evt("Lost Focus", "/(!NameID)"));
+				/(!If)
+			},
+			scope: this
+		},
+		change: {
+			fn: function(e) {
+				/(!If:/(!Event:phys=Updated))
+				panel.submit(wcli.util.evt("Updated", "/(!NameID)"));
+				/(!If)
+				/(!If:/(!Event:phys=Modified))
+				panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
+				/(!If)
+			},
+			scope: this
+		}
+	}
+}),
+
+
