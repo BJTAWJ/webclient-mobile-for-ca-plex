@@ -40,7 +40,8 @@ wcli.form.CalendarPicker = Ext.extend(Ext.form.DatePicker, {
             	var uxDatePicker = new Ext.ux.DatePicker(Ext.apply(this.picker || {}, {
                 	dock: 'bottom',
                 	minDate: minDate,
-                	maxDate: maxDate
+                	maxDate: maxDate,
+                	value: this.value
                 }));
             	
                 this.datePicker = new Ext.Sheet({
@@ -66,13 +67,15 @@ wcli.form.CalendarPicker = Ext.extend(Ext.form.DatePicker, {
                     }
                 });
             }
-
-            //this.datePicker.setValue(this.value || null);
             
             uxDatePicker.on({
                 scope: this,
                 select: function() {
                 	this.onPickerChange(this, uxDatePicker.getValue());
+                	this.datePicker.hide();
+                	this.onPickerHide();
+                },
+                cancel: function() {
                 	this.datePicker.hide();
                 	this.onPickerHide();
                 }
