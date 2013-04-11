@@ -168,6 +168,9 @@ wcli.form.BaseText = Ext.extend(Ext.form.Text, {
     	var extraControl = this.extraControl;
     	if (extraControl) {
     		Ext.each(extraControl, function(ctl) {
+    			if(!ctl.render) {
+    				ctl = Ext.create(ctl);	
+    			}
     			ctl.render(me.el);
     		});
     	}
