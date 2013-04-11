@@ -41,7 +41,8 @@ wcli.form.CalendarPicker = Ext.extend(Ext.form.DatePicker, {
                 	dock: 'bottom',
                 	minDate: minDate,
                 	maxDate: maxDate,
-                	value: this.value
+                	value: this.value,
+                	cancelButton: nls.picker.cancelButton
                 }));
             	
                 this.datePicker = new Ext.Sheet({
