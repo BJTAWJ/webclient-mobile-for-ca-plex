@@ -14,7 +14,7 @@ nls.msg.en = {
 };
 
 nls.msg.de = {
-		yesButton: 'Ja',
+		yesButton: 'OK',
 		noButton: 'Nein',
 		cancelButton: 'Abbrechen',
 		okButton: 'OK'
@@ -35,7 +35,7 @@ nls.msg.fr = {
 };
 
 nls.msg.nl = {
-		yesButton: 'Ja',
+		yesButton: 'OK',
 		noButton: 'Nee',
 		cancelButton: 'Annuleren',
 		okButton: 'OK'
