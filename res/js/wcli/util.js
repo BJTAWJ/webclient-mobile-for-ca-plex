@@ -146,6 +146,7 @@ wcli.form.htmlarea = Ext.extend(Ext.form.TextArea, {
         if (this.rendered && this.fieldEl) {
         	if (this.fieldEl.dom.parentNode) {
         		this.htmlNode = this.fieldEl.dom.parentNode;
+        		this.htmlNode.className = "x-form-field-container wcliHTMLArea";
         	}
         }
         
@@ -389,7 +390,7 @@ wcli.util = (function() {
 			states = states || {};
 			for (var key in states) {
 				if (states.hasOwnProperty(key)) {
-					var ctl = panel.getFields(key);
+					var ctl = panel.getFields()[key];
 					if (!ctl || ctl.length === 0) {
 						ctl = Ext.getCmp(key);
 					}
