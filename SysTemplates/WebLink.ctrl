@@ -14,5 +14,5 @@
 
 {
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
-	html: '<a href=/(!If:/(!Param:link))"http:///(!Param:link)"/(!Else)/(!This)/(!If) target="_blank" /(!If:/(!Param:className))class="/(!Param:className)"/(!If)> /(!If:/(!Param:label))/(!Param:label)/(!Else)/(!Property:Text)/(!If)</a>'
+	html: '<a href=/(!If:/(!Param:link))"http:///(!Param:link)"/(!Else)/(!This)/(!If) target="_blank" /(!If:/(!Param:className))class="/(!Param:className)"/(!If) onmouseup="window.event.stopPropagation(); return false;" onmousedown="window.event.stopPropagation(); return false;"> /(!If:/(!Param:label))/(!Param:label)/(!Else)/(!Property:Text)/(!If)</a>'
 },
