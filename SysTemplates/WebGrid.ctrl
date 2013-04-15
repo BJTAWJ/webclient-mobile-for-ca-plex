@@ -97,14 +97,13 @@
 					this.scroller.on('scrollend', function() {
 						var offsetBoundary = this.scroller.offsetBoundary;
 						var offset = this.scroller.offset;
-						if (offset >= offsetBoundary) {
-							panel.submit(wcli.util.evt("LoadGrid", "/(!NameID)"));
+						if (offset >= offsetBoundary || offset.y >= offsetBoundary.top) {
+							panel.submit(wcli.util.evt("Load Grid", "/(!NameID)"));
 						}
 					}, this);
 				}
 				/(!If)
 			},
-			scope: this
 		}
 	}
 },
