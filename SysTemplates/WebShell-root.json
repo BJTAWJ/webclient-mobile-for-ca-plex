@@ -45,10 +45,10 @@
 		})
 /(OutTo)
 
-/(OutTo:json.refresh)
-	[/(!Panel:!Action:Refresh)
+/(!Panel:!Action:Refresh)
+	/(OutTo:json.refresh)
 		/(Embed:html)
 			/(!Render:_type=html:_panelConfig=true)
 		/(Embed)
-	/(!Panel:!Action)][0]
-/(OutTo)
+	/(OutTo)
+/(!Panel:!Action)
