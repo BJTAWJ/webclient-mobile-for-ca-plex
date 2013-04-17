@@ -41,13 +41,15 @@ Ext.ns('wcli');
 		var tbItems = [],
 			tbMap = {};
 		for (var i = 0; i < toolbars.length; i++) {
-			var item = toolbars[i],
-				num = item.controlName.toolbarNum,
-				toolbar = _getMappedItem(num, tbMap, tbItems, {
-					num: parseInt(num) || 1,
-					items: []
-				});
-			toolbar.items.push(item);
+			var item = toolbars[i];
+			if(item.hidden == false){
+				var	num = item.controlName.toolbarNum,
+					toolbar = _getMappedItem(num, tbMap, tbItems, {
+						num: parseInt(num) || 1,
+						items: []
+					});
+				toolbar.items.push(item);
+			}
 		}
 		tbItems.sort(function(a, b) { return a.num - b.num; });
 		
