@@ -427,6 +427,24 @@ wcli.util = (function() {
 			}
 			if (typeof state.visible !== 'undefined') {
 				control[state.visible ? 'show' : 'hide']();
+				var parent = control.up();
+				if (parent.xtype == 'toolbar') {
+					var tbItemVisible = false;
+					parent.items.each(function(tbItem) {
+						if (tbItem.xtype != 'spacer' && !tbItem.hidden) {
+							tbItemVisible = true;
+						}
+					});
+					if (tbItemVisible == false) {
+						parent.setHeight(0);
+						window.panel.doComponentLayout();
+					} else {
+						if (parent.getHeight() < 40) {
+							parent.setHeight(40);
+							window.panel.doComponentLayout();
+						}
+					}
+				}
 			}
 			
 			if (state.location) {
