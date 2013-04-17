@@ -20,5 +20,5 @@
 	handler: function(b, e) {
 		window.location = /(!This);
 	},
-	text: "/(!Param:label)" || "Link"
+	text: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || "Link"
 },
