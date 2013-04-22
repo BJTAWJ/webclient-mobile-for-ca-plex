@@ -607,7 +607,7 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
-		gridColTpl: function(cols, colvis, heads, grouped, gridclass, rowclass, imgColName){			
+		gridColTpl: function(cols, colvis, heads, grouped, gridclass, rowclass, imgColNum){			
 			var tpl = "";
 			
 			for (var i = 0; i < cols.length; i++){
@@ -623,7 +623,7 @@ wcli.util = (function() {
 					if (dataType == "FixedDec" || dataType == "Double"){
 						c = c.toFixed(2);
 					}
-					if (heads[i].colHeader == imgColName) {
+					if (i+1 == parseInt(imgColNum)) {
 						tpl += "<td class='col" + i + "'><div class='img{" + c + "}'></div></td>";
 					} else {
 						tpl += "<td class='col" + i + "'>{" + c + "}</td>";
