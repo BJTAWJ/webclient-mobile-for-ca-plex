@@ -97,11 +97,20 @@ Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
 			}
 		}, this, {delegate: 'th'});
 		
+		/*
 		var uxdatepicker = this;
 		var cancelButton = this.body.child("button");
 		cancelButton.on("click", function(e, t) {
 			uxdatepicker.fireEvent('cancel');
 		});
+		*/
+		this.body.on("click", function(e, t) {
+			t = Ext.fly(t);
+			
+			if (t.hasCls("cancelBtn")) {
+				this.fireEvent('cancel');
+			}
+		}, this, {delegate: 'button'});
 	},
 
 	refresh: function() {
@@ -163,7 +172,7 @@ Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
 
 		var dm = this.monthLength(month, year);
 
-		var this_month = '<table cellspacing="0"><tr><button type="button">' + this.cancelButton +'</button></tr><thead><tr>';
+		var this_month = '<table cellspacing="0"><tr><button class="cancelBtn" type="button">' + this.cancelButton +'</button></tr><thead><tr>';
 		this_month += '<th class="goto-prevmonth">' + this.days[(0+x)%7]+'</th>';
 		this_month += '<th>' + this.days[(1+x)%7]+'</th>';
 		this_month += '<th>' + this.days[(2+x)%7]+'</th>';
