@@ -1,0 +1,29 @@
+/(!MainArea)
+new wcli.Component({
+	id: 'embeddedPage',
+	flex: 1,
+	html: '',
+	controlName: wcli.util.parseControlName('/(!Panel:!NameID)'),
+}),
+new wcli.ExternalURL({
+	controlName: wcli.util.parseControlName('pagelink'),
+	listeners: {
+		painted: function() { 
+			var url = /(!If:/(!Panel:!Title)=)/(!Panel:!Property:Title)/(!Else)/(!Panel:!Title)/(!If) ;
+			if (Ext.os.is.Desktop) {
+				Ext.getCmp('embeddedPage').updateHtml('<iframe src="' + url + '" frameborder="0" style="width:100%;height:100%"/>');	
+			} else {
+				var self = this;
+				setTimeout(function() {
+					self.getClosePnl().call('/(!Panel:!NameID)');	
+					//if (Ext.os.is.iOS) {
+						window.location.href=url + '#phonegap=external';
+					//} else {
+					//	navigator.app.loadUrl(url, { openExternal:true });
+					//}	
+				}, 1000);
+			}
+		}
+	}
+}),
+/(!MainArea)

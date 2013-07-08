@@ -1,0 +1,33 @@
+/(!EnableAction:SetState,SetValue,SetFocus)
+
+/(!ValuesArea)
+	/(!Action:SetValue)"/(!NameID)": /(!This),/(!Action)
+/(!ValuesArea)
+
+/(!StatesArea)
+	/(!Action:SetState)"/(!NameID)": {
+		'disabled': /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
+		'visible': /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If)
+	},/(!Action)
+/(!StatesArea)
+
+/(!FocusArea)
+	/(!Action:SetFocus)"/(!NameID)",/(!Action)
+/(!FocusArea)
+new wcli.ContactButton({
+	id: '/(!NameID)',
+	name: '/(!NameID)',
+	controlName: wcli.util.parseControlName('/(!Property:ControlName)'),
+	cls: '/(!Param:class)',
+	disabled: /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
+	hidden: /(!If:/(!Property:Visible)=Yes)false/(!Else)true/(!If),
+	iconMask: true,
+	iconCls: '/(!Param:iconCls)',
+	ui: '/(!Param:ui)' || 'normal',
+	text: /(!This),
+	contactType: 'Phone',
+	contactUrl: 'tel:' + /(!This),
+	contactName: /(!AttachPoint:name=Contact:inlinetemplate)/(!This) || /(!AttachPoint) /(!If:/(!Param:contact))'/(!Param:contact)'/(!Else)/(!This)/(!If),
+	confirmContact: /(!If:/(!Param:confirm))true/(!Else)false/(!If),
+	label: /(!AttachPoint:name=Label:inlinetemplate)'/(!Text)' || /(!AttachPoint) '/(!Param:label)' || undefined,
+}),

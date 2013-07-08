@@ -1,0 +1,66 @@
+/(!HeadArea:once)
+/(!AttachPoint:name=HeadArea)
+<script>
+	/*	This template provides access to mobile device features available through the cordova.js library
+		To use: Download the latest Cordova release from phonegap.com
+		create the following folders in your web project's WebContent folder
+	 		device/ios
+			device/android
+			device/blackberry
+	 	Locate the cordova*.js files in the Cordova folder for each device and copy to the appropriate WebContent folder
+	 	Rename the files to cordova.js
+	 */
+	if (navigator.userAgent.toLowerCase().match(/android/)) {
+		document.write('<script type="text\/javascript" src="\/(!WsRes)\/device\/android\/cordova.js"><\/script>');
+	} else { 
+		if (navigator.userAgent.toLowerCase().match(/(iphone|ipod|ipad)/)) {
+			document.write('<script type="text\/javascript" src="\/(!WsRes)\/device\/ios\/cordova.js"><\/script>');
+		} else { 
+			if (navigator.userAgent.toLowerCase().match(/(blackberry)/)) {
+				document.write('<script type="text\/javascript" src="\/(!WsRes)\/device\/blackberry\/cordova.js"><\/script>');
+			} else {
+				document.write('<script type="text\/javascript" src="\/(!WsRes)\/device\/android\/cordova.js"><\/script>');
+			}
+		}
+	}
+</script>
+/(!HeadArea)
+/(!JSInit)
+	deviceEventsRegistered = false;
+	function deviceIsReady() {
+		// for mobile devices
+		if (typeof device != 'undefined') {
+			document.addEventListener("backbutton", processBackButton, false);
+			document.addEventListener("menubutton", processMenuButton, false);
+		}
+		/(!AttachPoint:name=DeviceReady)
+	}
+	function processBackButton() {
+		// for android devices, execute when device back button is pressed
+		/(!AttachPoint:name=ProcessBackButton)
+		// Find the first button with ui=back, and trigger the pressed event
+		Ext.each(panel.query('button'), function(btn, idx) {
+			if (!btn.getHidden() && !btn.getDisabled()) {
+				if (btn.getUi()=="back") {
+					btn.getHandler().call() ;
+					return false;
+				}
+			} 
+		});
+	}
+	function processMenuButton() {
+		// for android devices, execute when device menu/settings button is pressed
+		Ext.Msg.alert('Debug','Processing Menu Button');
+		/(!AttachPoint:name=ProcessMenuButton)
+	}
+/(!JSInit)
+/(!JSOnLoad:once)
+if (!deviceEventsRegistered) {
+	if (Ext.os.is.iOS || Ext.os.is.Android || Ext.os.is.Blackberry) {
+		document.addEventListener("deviceready", deviceIsReady, false);
+	} else {
+		deviceIsReady();
+	}
+	deviceEventsRegistered = true;
+}
+/(!JSOnLoad)

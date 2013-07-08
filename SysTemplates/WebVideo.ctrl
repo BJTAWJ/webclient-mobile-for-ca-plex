@@ -1,0 +1,25 @@
+/(!EnableAction:SetValue,SetState,SetFocus)
+
+/(!ValuesArea)
+	/(!Action:SetValue)"/(!NameID)": /(!This),/(!Action)
+/(!ValuesArea)
+
+/(!StatesArea)
+	/(!Action:SetState)'/(!NameID)': {
+		'disabled': /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
+		'visible': /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If)
+	},/(!Action)
+/(!StatesArea)
+
+/(!FocusArea)
+	/(!Action:SetFocus)"/(!NameID)",/(!Action)
+/(!FocusArea)
+
+new wcli.Video({
+	id: '/(!NameID)',
+	name: '/(!NameID)',
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	url: /(!This),
+	disabled: /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
+	hidden: /(!If:/(!Property:Visible)=Yes)false/(!Else)true/(!If)
+}),

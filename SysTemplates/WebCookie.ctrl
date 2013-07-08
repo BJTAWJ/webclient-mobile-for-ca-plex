@@ -1,0 +1,15 @@
+/(!EnableAction:SetValue)
+
+/(!ValuesArea)
+	/(!Action:SetValue)"/(!NameID)": panel.getFields("/(!NameID)").setPlexCookie.call(panel.getFields("/(!NameID)"), "/(!NameID)", /(!This)),/(!Action)
+/(!ValuesArea)
+
+/(!JSOnLoad)
+	/(!WebCookie-init:nameID=/(!NameID):nc)
+/(!JSOnLoad)
+new wcli.Cookie ({
+	id: '/(!NameID)',
+	name: '/(!NameID)',
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	value: null
+}),

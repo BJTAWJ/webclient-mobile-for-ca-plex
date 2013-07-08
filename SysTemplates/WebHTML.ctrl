@@ -1,0 +1,48 @@
+/(!EnableAction:SetValue,SetState,SetFocus)
+
+/(!ValuesArea)
+	/(!Action:SetValue)"/(!NameID)": /(!This),/(!Action)
+/(!ValuesArea)
+
+/(!StatesArea)
+	/(!Action:SetState)"/(!NameID)": {
+		'disabled': /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+		'visible': /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If)
+	},/(!Action)
+/(!StatesArea)
+
+/(!FocusArea)
+	/(!Action:SetFocus)"/(!NameID)",/(!Action)
+/(!FocusArea)
+
+new wcli.Component({
+	id: '/(!NameID)',	
+	name: '/(!NameID)',
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	cls: "/(!Param:class)",
+	html: /(!This),
+	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
+	listeners: {
+		focus: function() {
+				/(!If:/(!Event:phys=Gained Focus))
+				panel.submit(wcli.util.evt("Gained Focus", "/(!NameID)"));
+				/(!If)
+		},
+		blur: function() {
+				/(!If:/(!Event:phys=Lost Focus))
+				panel.submit(wcli.util.evt("Lost Focus", "/(!NameID)"));
+				/(!If)
+		},
+		keyup: function() {
+				/(!If:/(!Event:phys=Modified))
+				panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
+				/(!If)
+		},
+		change: function() {
+				/(!If:/(!Event:phys=Updated))
+				panel.submit(wcli.util.evt("Updated", "/(!NameID)"));
+				/(!If)
+		}
+	}
+}),
