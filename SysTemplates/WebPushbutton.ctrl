@@ -24,9 +24,6 @@ new wcli.Button({
 			/(!If:/(!Param:direction))panel.transdir="/(!Param:direction)";/(!If)
 			panel.submit(wcli.util.evt("Pressed", "/(!NameID)"));
 		/(!If)
-		/(!If:/(!Event:phys=Pressed))
-			panel.submit(wcli.util.evt("Pressed", "/(!NameID)"));
-		/(!If)
 	},
 	/(!If:/(!Property:Text)=)/(!Else)
 		text: "/(!Property:Text)"
