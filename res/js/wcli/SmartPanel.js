@@ -62,14 +62,18 @@ Ext.ns('wcli');
 				items: _alignToolbar(tbItems[i])
 			});
 		}
-		// 2012-07-03 - Add header
-		/*for (var h=0; h < plexConfig.header.length; h++) {
-			config.dockedItems.push(plexConfig.header[h]);
+		if(plexConfig.header){
+			// 2012-07-03 - Add header
+			for (var h=0; h < plexConfig.header.length; h++) {
+				config.dockedItems.push(plexConfig.header[h]);
+			}
 		}
-		// 2012-07-03 - Add footer
-		for (var f=0; f < plexConfig.footer.length; f++) {
-			config.dockedItems.push(plexConfig.footer[f]);
-		} */
+		if(plexConfig.footer){
+			// 2012-07-03 - Add footer
+			for (var f=0; f < plexConfig.footer.length; f++) {
+				config.dockedItems.push(plexConfig.footer[f]);
+			}
+		}
 		// Tabs (always visible if present)
 		if (tabs.length > 0) {
 			config.dockedItems.push(new Ext.TabBar({
