@@ -47,7 +47,7 @@ new wcli.field.Select({
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	cls: '/(!Param:class)',
-	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || "Field",
+	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)",
 	labelWidth: "40%",
 	options: (function() {
 		var value = /(!jsonValues);
