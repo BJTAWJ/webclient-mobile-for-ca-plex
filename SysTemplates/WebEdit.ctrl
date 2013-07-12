@@ -6,8 +6,8 @@
 
 /(!StatesArea)
 	/(!Action:SetState)"/(!NameID)": {
-		"disabled": /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
-		"visible": /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If)
+		'disabled': /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+		'visible': /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If)
 	},/(!Action)
 /(!StatesArea)
 
@@ -15,62 +15,47 @@
 	/(!Action:SetFocus)"/(!NameID)",/(!Action)
 /(!FocusArea)
 
-{	
-	/(!If:/(!DataType)=Char)
-		xtype: "wclitextfield",
-	/(!Else)
-		xtype: "wclinumberfield",
-	/(!If)
+/(!If:/(!DataType)=Char)
+new wcli.field.Text({
+/(!Else)
+new wcli.field.Number({
+/(!If)
 	id: "/(!NameID)",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	cls: '/(!Param:class)',
 	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || undefined,
 	maxLength: /(!Length),
-	labelWidth: /(!If:/(!Param:width))"/(!Param:width)" /(!Else)"40%" /(!If),
-	value: /(!If:/(!DataType)=Char)/(!This)/(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)0/(!If))/(!If) /(!AttachPoint:name=Extra:inlinetemplate) + ' ' + /(!If:/(!DataType)=Char)/(!This) /(!Else)/(!If:/(!DataType)=Date)wcli.util.getDate(/(!This)).format(Ext.util.Format.defaultDateFormat)/(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)0/(!If)) /(!If)/(!If)/(!AttachPoint) ,
-	extraControl: ([/(!AttachPoint:name=ExtraControl)]),
+	labelWidth: "40%",
+	// /(!LabelStyle:width=/(!Param:labelWidth):align=/(!Param:labelAlign):nc) 
+	value: /(!If:/(!DataType)=Char)/(!This)/(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)0/(!If))/(!If) /(!AttachPoint:name=Extra:inlinetemplate) + ' ' + /(!If:/(!DataType)=Char)/(!This) /(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)0/(!If)) /(!If)/(!AttachPoint) ,
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+	extraControl: ([/(!AttachPoint:name=ExtraControl)]),
 	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
+	placeHolder: '/(!Param:hint)',
 	listeners: {
-		focus: {
-			fn: function() {
+		focus: function() {
 				/(!If:/(!Event:phys=Gained Focus))
 				panel.submit(wcli.util.evt("Gained Focus", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		},
-		blur: {
-			fn: function() {
-				if(!Ext.is.iOS){
-					wcli.hideKeyboard();
-				}
+		blur: function() {
 				/(!If:/(!Event:phys=Lost Focus))
 				panel.submit(wcli.util.evt("Lost Focus", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		},
-		keypress: {
-			fn: function() {
+		keypress: function() {
 				wcli.validateMaxLength("/(!NameID)");
-			},
 		},
-		keyup: {
-			fn: function() {
+		keyup: function() {
 				/(!If:/(!Event:phys=Modified))
 				panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		},
-		change: {
-			fn: function() {
+		change: function() {
 				/(!If:/(!Event:phys=Updated))
 				panel.submit(wcli.util.evt("Updated", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		}
 	}
-},
+}),

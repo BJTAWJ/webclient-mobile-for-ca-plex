@@ -28,13 +28,16 @@
 	/(ALERTS)
 		message = "/(Embed:html)/(AlertMsg)/(Embed)"; messageType = "/(AlertType)";
 		if (messageType == "dialog"){
-			wcli.msg.alert('', message, function() {									
+			Ext.Msg.alert('', message, function() {									
 			});
 		}
 		if (messageType == "enquiry"){
-			wcli.msg.confirm('', message, function(btn) {
+			wcli.msg.confirm('', alerts[i].message, [wcli.msg.YES,wcli.msg.CANCEL],function(btn) {
 				if(btn == "yes"){
 					panel.submit(wcli.util.evt(null, null, { enqact: 1 }));
+				}
+				if(btn == "no"){
+					panel.submit(wcli.util.evt(null, null, { enqact: 2 }));
 				}
 				if(btn == "cancel"){
 					panel.submit(wcli.util.evt(null, null, { enqact: 3 }));

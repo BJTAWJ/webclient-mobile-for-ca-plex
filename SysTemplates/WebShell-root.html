@@ -15,23 +15,28 @@
 		<link rel="stylesheet" href="/(!WsRes)/css/wcli.css" type="text/css">
 		<link rel="stylesheet" href="/(!WsRes)/css/ux-date-picker.css" type="text/css">
 		
-		<script type="text/javascript" src="/(!WsRes)/js/sencha-touch-debug.js"></script>
-		<script type="text/javascript" src="/(!WsRes)/js/phonegap.js"></script>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>		
+		<script type="text/javascript" src="/(!WsRes)/js/sencha-touch-all-debug.js"></script>
+		<!-- <script type="text/javascript" src="/(!WsRes)/js/phonegap.js"></script>  -->
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/nls.js"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/ux-date-picker.js"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/util.js"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/SmartPanel.js"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/CheckboxToggle.js"></script>
 		<script type="text/javascript" src="/(!WsRes)/js/wcli/Select.js"></script>
-		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-		<script type="text/javascript" src="/(!WsRes)/js/wcli/BrowserCheck.js"></script>
-		<script type="text/javascript" src="/(!WsRes)/js/wcli/TreeMenu.js"></script>
-		
+		<script type="text/javascript" src="/(!WsRes)/js/wcli/Edit.js"></script>
+		<script type="text/javascript" src="/(!WsRes)/js/wcli/Password.js"></script>
+		<script type="text/javascript" src="/(!WsRes)/js/wcli/Button.js"></script>
+		<script type="text/javascript" src="/(!WsRes)/js/wcli/List.js"></script>
+		<script type="text/javascript" src="/(!WsRes)/js/wcli/DatePicker.js"></script>
+		<script type="text/javascript" src="/(!WsRes)/js/wcli/Extras.js"></script>
+		<script type="text/javascript" src="/(!WsRes)/js/wcli/Link.js"></script>
+
 		/(!AttachPoint:name=HeadArea)
 		<script type="text/javascript">
 		/(Embed:js:cdata)
-			if(window.navigator.userAgent.indexOf("AppleWebKit") == -1){
-				window.alert("This application only works in Google Chrome or Safari Browser");
+			if(window.navigator.userAgent.indexOf("AppleWebKit") == -1 && window.navigator.userAgent.indexOf("MSIE 10.0") == -1){
+				window.alert("This application only works in Google Chrome or Safari Browser or Internet Explorer 10");
 			}
 			function hideURLbar() {
 				window.scrollTo(0, 1);
@@ -43,28 +48,28 @@
     			}, false);
 			}
 			/(!AttachPoint:name=JSInit)
-			
-			
 		/(Embed)
 			Ext.setup({
+				requires: ['Ext.Anim'],
 				tabletStartupScreen: '/(!WsRes)/images/tablet_startup.png',
 				phoneStartupScreen: '/(!WsRes)/images/phone_startup.png',
 				icon: '/(!WsRes)/images/icon.png',
 				glossOnIcon: true,
 				standardSubmit: false,
 				onReady: function() {
-					Ext.is.Phone = true;
-					Ext.supports.CSS3DTransform = false;
-					wcli.LoadMask = new Ext.LoadMask(Ext.getBody(), {msg:""});
-					window.panelFullscreen = 'true';
-					/(!AttachPoint:name=JSOnReady)
+					Ext.os.deviceType = "Phone";
 					var panelConfig = /(!If)({
 						xtype: 'smartpanel',
-						cls: 'x-tabpanel x-tabpanel-dark /(!Panel:!Name)',
+						cls: 'x-tabpanel x-tabpanel-dark',
 						panelId: /(PNLID),
 						url: '/(WSACTION)',
 						scroll: 'vertical',
-						fullscreen: window.panelFullscreen,
+						fullscreen: 'true',
+						/(!If:/(!IsDefined:transition))
+						transition: '/(transition)',
+						transdir: '/(transdirection)',
+						transduration: /(transduration),
+						/(!If)
 						layout: {
 							type : 'vbox',
 							align: 'stretch'
@@ -82,29 +87,27 @@
 						},
 						jsOnLoad: function() {
 					      /(Embed:js:cdata)
-							/(!AttachPoint:name=JSOnLoad)
+								/(!AttachPoint:name=JSOnLoad)
 						  /(Embed)  
 						},
 						cssArea: [ /(!AttachPoint:name=CSSArea:sep=,) ]
 					})
 					/(!If:/(!Req:_panelConfig))/(!Else)									
 
-					window.panel = Ext.create(panelConfig);
+					window.panel = Ext.create('wcli.SmartPanel',panelConfig);
+					window.panel.panelId = /(PNLID);
 					
-					/(!AttachPoint:name=ExtraController)
-
 					window.controller = new Ext.Panel({
+						fullscreen: true,
 						layout: 'card',
-						height: '100%',
 						items: [panel]
 					});
-					
-					/(!AttachPoint:name=Container)	
-					
 					panel.show();
 					
 					wcli.util.addCSSArea(panelConfig.cssArea);
 					panelConfig.jsOnLoad();
+					
+					/(!AttachPoint:name=JSOnReady)
 				}
 			});
 			var keepsess = false;
@@ -117,7 +120,7 @@
 					})
 				}
 			}
-			Ext.EventManager.on(window, 'beforeunload', /(!Panel:!NameID)_unload);
+			window.beforeunload = /(!Panel:!NameID)_unload;
 		</script>
 	</head>
 	<body onbeforeunload="/(!Panel:!NameID)_unload();" >

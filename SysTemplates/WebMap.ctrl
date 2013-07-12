@@ -1,30 +1,31 @@
-/(!EnableAction:SetValue,SetState,SetFocus)
-
-/(!StatesArea)
-	/(!Action:SetState)/(!Action)
-	/(!Action:SetValue)"/(!NameID)": {
-		"location": /(!This)
-	},/(!Action)
-/(!StatesArea)
-
-/(!FocusArea)
-	/(!Action:SetFocus)"/(!NameID)",/(!Action)
-/(!FocusArea)
-
-/(!JSOnLoad)
-	/(!WebMap-marker.inc)
-/(!JSOnLoad)
-
-/(!JSPost)
-	/(!WebMap-marker.inc)
-/(!JSPost)
-
-{
-	xtype: "map",
+/(!HeadArea:once)
+<!-- This template requires 4 fields on the Plex panel to control the map - all fields must use edit controls on the panel:
+	An edit control to set the map size, and specify the coordinates in the format "latitude,longitude", e.g. 30.238339,-97.879745
+		locMap:MainArea:template=WebMap
+	A combo control with ID 'gMapType' to set the map type.  Values are 'roadmap', 'satellite', 'hybrid', 'terrain' (literals are lower-case)
+		mapType:locMap.MapType
+	A numeric edit field with ID 'gMapZoom' to set the zoom level: 0 = Planet -> 21 = House
+		mapZoom:locMap.Zoom
+	A text edit field with ID 'gMarkerText' to set the text for the marker
+		mapText:locMap.MarkerText
+		
+	Currently requires WebShell to contain a link to google maps api
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>	
+-->
+/(!HeadArea)
+/(!EnableAction:SetValue)
+/(!ValuesArea)
+	/(!Action:SetValue)"/(!NameID)": Ext.getCmp("/(!NameID)").updateMap(wcli.util.getCoords(/(!This)), 
+		/(!AttachPoint:name=MarkerText:inlinetemplate)/(!This) || /(!AttachPoint) 'roadmap',
+		parseFloat(/(!AttachPoint:name=Zoom:inlinetemplate)/(!This) || /(!AttachPoint) 10)),/(!Action)
+/(!ValuesArea)
+new wcli.Map ({
 	id: "/(!NameID)",
-	flex: 1,
+	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
-	mapOptions: {
-		center: wcli.util.getCoords(/(!This))
-	}
-},
+	flex: 1,
+	mapType: /(!AttachPoint:name=MapType:inlinetemplate)/(!This) || /(!AttachPoint) 'roadmap',
+	centerCoords: wcli.util.getCoords(/(!This)),
+	zoomLevel: parseFloat(/(!AttachPoint:name=Zoom:inlinetemplate)/(!This) || /(!AttachPoint) 10),
+	markerText: /(!AttachPoint:name=MarkerText:inlinetemplate)/(!This) || /(!AttachPoint) '',
+}),

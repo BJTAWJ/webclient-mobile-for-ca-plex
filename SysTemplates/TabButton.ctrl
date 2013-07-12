@@ -12,6 +12,7 @@
 
 {
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	cls: '/(!Param:class)',
 	disabled: /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
 	iconCls: "/(!Param:iconCls)",
 	handler: function(b, e) {

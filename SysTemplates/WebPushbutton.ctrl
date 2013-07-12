@@ -2,7 +2,7 @@
 
 /(!StatesArea)
 	/(!Action:SetState)"/(!NameID)": {
-		"disabled": /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
+		"disabled": /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If)
 		"hidden": /(!If:/(!Property:Visible)=Yes)false/(!Else)true/(!If)
 	},/(!Action)
 /(!StatesArea)
@@ -11,20 +11,19 @@
 	/(!Action:SetFocus)"/(!NameID)",/(!Action)
 /(!FocusArea)
 
-{
-	xtype: "button",
+new wcli.Button({
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	cls: '/(!Param:class)',
 	disabled: /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
 	hidden: /(!If:/(!Property:Visible)=Yes)false/(!Else)true/(!If),
-	/(!If:/(!Param:width)) width: /(!Param:width),/(!If)
-	iconMask: true,
-    /(!If:/(!Param:iconCls)) iconCls: "/(!Param:iconCls)",/(!If)
-    /(!If:/(!Param:icon)) icon: /(!WsRes) + "/images/" + "/(!Param:icon)",/(!If)
-    ui: "/(!Param:ui)" || "plain",
+	iconCls: "/(!Param:iconCls)",
+	ui: "/(!Param:ui)" || "plain",
 	handler: function(b, e) {
-		if(!Ext.is.iOS){
-			wcli.hideKeyboard();
-		}
+		/(!If:/(!Event:phys=Pressed))
+			/(!If:/(!Param:transition))panel.transition="/(!Param:transition)";/(!If)
+			/(!If:/(!Param:direction))panel.transdir="/(!Param:direction)";/(!If)
+			panel.submit(wcli.util.evt("Pressed", "/(!NameID)"));
+		/(!If)
 		/(!If:/(!Event:phys=Pressed))
 			panel.submit(wcli.util.evt("Pressed", "/(!NameID)"));
 		/(!If)
@@ -32,4 +31,4 @@
 	/(!If:/(!Property:Text)=)/(!Else)
 		text: "/(!Property:Text)"
 	/(!If)
-},
+}),
