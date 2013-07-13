@@ -396,6 +396,12 @@ wcli.util = (function() {
 				/*sorters: _esc(cols[0]),*/
 				data: []
 			};
+			
+			if (grouped) {
+				store.groupField = _esc(cols[0]);
+				store.sorters = _esc(cols[0]);
+			}
+			
 			for (var i = 0; i < rows.length; i++) {
 				var row = rows[i],
 					item = {};
