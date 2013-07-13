@@ -18,14 +18,18 @@ Ext.ns('Ext.ux');
  * @cfg {Date} minDate The lowest selectable date.
  * @cfg {Date} maxDate The highest selectable date.
  */
-Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
-
+Ext.define('Ext.ux.DatePicker', {
+	extend: 'Ext.Panel',
 	days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], 
 	months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], 
-	cls: 'ux-date-picker',
 	minDate: null,
 	maxDate: null,
 	autoHeight: true,
+	
+	config: {
+		cls: 'ux-date-picker'
+	},
+
 
 	/**
 	 * Create new date picker.
@@ -37,15 +41,14 @@ Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
 			weekstart: 1
 		});
 
-
 		this.addEvents('refresh');
 		this.addEvents('select');
 		this.addEvents('cancel');
-
-		Ext.ux.DatePicker.superclass.constructor.call(this, config);
-
-		this.minDate = this.minDate ? this.minDate.clearTime(true) : null;
-		this.maxDate = this.maxDate ? this.maxDate.clearTime(true) : null;
+		
+		//Ext.ux.DatePicker.superclass.constructor.call(this, config);
+		this.callParent(arguments);
+		this.minDate = this.minDate ? Ext.DateExtras.clearTime(this.minDate, true) : null;
+		this.maxDate = this.maxDate ? Ext.DateExtras.clearTime(this.maxDate, true) : null;
 	},
 
 	/**
@@ -70,13 +73,13 @@ Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
 		return this.value;
 	},
 
-	onRender: function(ct, position) {
-		Ext.ux.DatePicker.superclass.onRender.apply(this, arguments);
+	initialize: function(ct, position) {
+		//Ext.ux.DatePicker.superclass.onRender.apply(this, arguments);
 
 		this.refresh();
 
 		// handle events
-		this.body.on("click", function(e, t) {
+		this.bodyElement.on("click", function(e, t) {
 			t = Ext.fly(t);
 
 			if (!t.hasCls('unselectable')) {
@@ -85,7 +88,7 @@ Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
 			}
 		}, this, {delegate: 'td'});
 
-		this.body.on("click", function(e, t) {
+		this.bodyElement.on("click", function(e, t) {
 			t = Ext.fly(t);
 
 			if (t.hasCls("goto-prevmonth")) {
@@ -97,14 +100,7 @@ Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
 			}
 		}, this, {delegate: 'th'});
 		
-		/*
-		var uxdatepicker = this;
-		var cancelButton = this.body.child("button");
-		cancelButton.on("click", function(e, t) {
-			uxdatepicker.fireEvent('cancel');
-		});
-		*/
-		this.body.on("click", function(e, t) {
+		this.bodyElement.on("click", function(e, t) {
 			t = Ext.fly(t);
 			
 			if (t.hasCls("cancelBtn")) {
@@ -115,9 +111,10 @@ Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
 
 	refresh: function() {
 		var d = this.value || new Date();
-		this.body.update(this.generateCalendar(d.getMonth(), d.getFullYear()));
+		//this.bodyElement.update(this.generateCalendar(d.getMonth(), d.getFullYear()));
+		this.bodyElement.setHtml(this.generateCalendar(d.getMonth(), d.getFullYear()));
 		// will force repaint() on iPod Touch 4G
-		this.body.getHeight();
+		this.bodyElement.getHeight();
 
 		this.setToday();
 		if (this.value) {
@@ -237,12 +234,12 @@ Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
 	},
 
 	removeSelectedCell: function() {
-		this.body.select('.selected').removeCls('selected');
+		this.bodyElement.select('.selected').removeCls('selected');
 	},
 
 	setToday: function() {
 		var date = new Date();
-		this.body.select('td[datetime="' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '"]').addCls('today');
+		this.bodyElement.select('td[datetime="' + date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '"]').addCls('today');
 	},
 
 	sameDay: function(date1, date2) {
@@ -252,7 +249,7 @@ Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
 	setSelected: function(date) {
 		this.removeSelectedCell();
 		
-		this.body.select('td').each(function(td) {
+		this.bodyElement.select('td').each(function(td) {
 			var clickedDate = this.getCellDate(td);
 			if (!td.hasCls("prevmonth") && !td.hasCls("nextmonth") && this.sameDay(date, clickedDate)) {
 				td.addCls('selected');
@@ -265,7 +262,7 @@ Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
 	loadMonthDelta: function(delta) {
 		var day;
 
-		var selected = this.body.down('.selected');
+		var selected = this.bodyElement.down('.selected');
 		if (selected) {
 			day = this.stringToDate(selected.dom.getAttribute('datetime')).getDate();
 		} else {
@@ -276,14 +273,14 @@ Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
 
 		var newDay = new Date(v.getFullYear(), v.getMonth() + delta, day);
 
-		if (this.minDate && newDay.getLastDateOfMonth() < this.minDate) {
+		if (this.minDate && Ext.Date.getLastDateOfMonth(newDay) < this.minDate) {
 			return;
 		}
 
-		if (this.maxDate && newDay.getFirstDateOfMonth() > this.maxDate) {
+		if (this.maxDate && Ext.Date.getFirstDateOfMonth(newDay) > this.maxDate) {
 			return;
 		}
-
+		
 		if (this.minDate && newDay < this.minDate) {
 			newDay = this.minDate.clone();
 		}
@@ -291,7 +288,7 @@ Ext.ux.DatePicker = Ext.extend(Ext.Panel, {
 		if (this.maxDate && newDay > this.maxDate) {
 			newDay = this.maxDate.clone();
 		}
-
+		
 		this.setValue(newDay);
 	}
 });

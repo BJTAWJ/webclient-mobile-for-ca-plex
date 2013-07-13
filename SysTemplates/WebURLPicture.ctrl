@@ -1,5 +1,5 @@
 /(!HeadArea)
-	<script type="text/javascript" src="/(!WsRes)/js/wcli/picture.js"></script>
+	<script type="text/javascript" src="/(!WsRes)/js/wcli/Picture.js"></script>
 /(!HeadArea)
 
 /(!EnableAction:SetValue,SetState,SetFocus)
@@ -16,25 +16,17 @@
 	/(!Action:SetFocus)"/(!NameID)",/(!Action)
 /(!FocusArea)
 
-{
-
-	xtype: "imagecomponent",
+new wcli.ImageComponent({
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
-	disabled: /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
-
-	/(!If:/(!Param:height)=)/(!Else)height: "/(!Param:height)",/(!If) 
-	/(!If:/(!Param:width)=)/(!Else)width: "/(!Param:width)",/(!If) 
-
-	imageData: {
-		imageCls: "/(!Param:imageCls)" || "x-image-component",
-		imageSrc: /(!WsRes)+ "/images/" + /(!This),
-		imageAlign: "/(!Param:imageAlign)" || "left"
-	},
-
-	handler: function(b, e) {
-		/(!If:/(!Event:phys=Pressed))
-			panel.submit(wcli.util.evt("Pressed", "/(!NameID)"));
-		/(!If)
-	},
-
-},
+	mode: "",
+	src:  /(!WsRes)+ "/images/" + /(!This),
+	imageCls: "/(!Param:imageCls)" || "x-image-component",
+	imageAlign: "/(!Param:imageAlign)" || "left",
+	listeners: {
+		tap: function() {
+			/(!If:/(!Event:phys=Pressed))
+				panel.submit(wcli.util.evt("Pressed", "/(!NameID)"));
+			/(!If)
+		}
+	}
+}),

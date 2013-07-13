@@ -15,11 +15,11 @@
 	/(!Action:SetFocus)"/(!NameID)",/(!Action)
 /(!FocusArea)
 
-{
-	xtype: "togglefield",
+new wcli.field.CheckboxToggle({
 	id: "/(!NameID)",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	cls: '/(!Param:class)',
 	label: "/(!Property:Text)" || "Field",
 	labelWidth: /(!If:/(!Param:width))"/(!Param:width)" /(!Else)"40%" /(!If),
 	uncheckedValue: "/(!UncheckedValue)",
@@ -28,24 +28,17 @@
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
 	listeners: {
-		focus: {
-			fn: function(e) {
+		focus: function(e) {
 				/(!If:/(!Event:phys=Gained Focus))
 				panel.submit(wcli.util.evt("Gained Focus", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		},
-		blur: {
-			fn: function(e) {
+		blur: function(e) {
 				/(!If:/(!Event:phys=Lost Focus))
 				panel.submit(wcli.util.evt("Lost Focus", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		},
-		change: {
-			fn: function(e) {
+		change: function(e) {
 				// The initial setValue is calling the change event when it shouldn't,
 				// so catch the error and ignore it
 				try {
@@ -64,8 +57,6 @@
 				}
 				catch (e) {
 				}
-			},
-			scope: this
 		}
 	}
-},
+}),

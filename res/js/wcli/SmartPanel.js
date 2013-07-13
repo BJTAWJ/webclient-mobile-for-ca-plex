@@ -11,13 +11,13 @@ Ext.ns('wcli');
 	
 	function _alignToolbar(toolbar) {
 		var left = toolbar.items.filter(function(n) {
-			return (n.controlName.align||'left') === 'left';
+			return (n.getControlName().align||'left') === 'left';
 		});
 		var center = toolbar.items.filter(function(n) {
-			return n.controlName.align === 'center';
+			return n.getControlName().align === 'center';
 		});
 		var right = toolbar.items.filter(function(n) {
-			return n.controlName.align === 'right';
+			return n.getControlName().align === 'right';
 		});
 		var spacer = { xtype: 'spacer' };
 		
@@ -36,34 +36,32 @@ Ext.ns('wcli');
 			tabs = plexConfig.tabs,
 			footer = plexConfig.footer;
 		// Toolbar items (always visible)
-		config.dockedItems = [];
+		config.items = [];
 
 		var tbItems = [],
 			tbMap = {};
 		for (var i = 0; i < toolbars.length; i++) {
-			var item = toolbars[i];
-			if(item.hidden == false){
-				var	num = item.controlName.toolbarNum,
-					toolbar = _getMappedItem(num, tbMap, tbItems, {
-						num: parseInt(num) || 1,
-						items: []
-					});
-				toolbar.items.push(item);
-			}
+			var item = toolbars[i],
+				num = item.getControlName().toolbarNum,
+				toolbar = _getMappedItem(num, tbMap, tbItems, {
+					num: parseInt(num) || 1,
+					items: []
+				});
+			toolbar.items.push(item);
 		}
 		tbItems.sort(function(a, b) { return a.num - b.num; });
 		
 		for (var i = 0; i < tbItems.length; i++) {
-			config.dockedItems.push({
+			config.items.push({
 				xtype: 'toolbar',
 				cls: 'toolbar' + tbItems[i].num,
-				dock: 'top',
+				docked: 'top',
 				scroll: 'horizontal',
 				items: _alignToolbar(tbItems[i])
 			});
 		}
 		if(plexConfig.header){
-			// 2012-07-03 - Add header
+		// 2012-07-03 - Add header
 			for (var h=0; h < plexConfig.header.length; h++) {
 				config.dockedItems.push(plexConfig.header[h]);
 			}
@@ -76,31 +74,28 @@ Ext.ns('wcli');
 		}
 		// Tabs (always visible if present)
 		if (tabs.length > 0) {
-			config.dockedItems.push(new Ext.TabBar({
-				dock: 'bottom',
+			config.items.push(new Ext.TabBar({
+				docked: 'bottom',
 				ui: 'dark',
 				items: tabs
 			}));
 		}
 		
 		// Body items (only visible if the panel isn't "fullscreen")
-		config.items = hidden.slice(0);
+		hidden.slice(0).forEach(function(item) {
+			config.items.push(item);
+		});
 		if (fullscreen.length === 0) {
 			var bodyItems = [],
 				bodyMap = {};
 			for (var i = 0; i < body.length; i++) {
-				var item = body[i];
-				if(item.hidden == false || item.hidden == undefined){
-					var	name = item.controlName.fieldSet || '';
-					if (name.substr(0,1) == "$"){
-						name = customNLS.title[name];
-					}
-					var	fieldSet = _getMappedItem(name, bodyMap, bodyItems, {
-							name: name,
-							items: []
-						});
-					fieldSet.items.push(item);
-				}
+				var item = body[i],
+					name = item.getControlName().fieldSet || '',
+					fieldSet = _getMappedItem(name, bodyMap, bodyItems, {
+						name: name,
+						items: []
+					});
+				fieldSet.items.push(item);
 			}
 			for (var i = 0; i < bodyItems.length; i++) {
 				config.items.push({
@@ -114,13 +109,22 @@ Ext.ns('wcli');
 			// have more than one fullscreen control at a time!)
 			var hidden = body.filter(function(n) { return n.hidden; });
 			config.bodyMargin = config.bodyPadding = 0;
-			config.scroll = false;
-			config.items = [fullscreen[0]].concat(hidden);
+			config.scrollable = false;
+			config.height = "100%";
+			config.width = "100%";
+			config.layout = "vbox";
+			config.flex = 1;
+			config.items.push(fullscreen[0]);
+			hidden.forEach(function(item) {
+				config.items.push(item);
+			});
 		}
 		return config;
 	}
 	
-	wcli.SmartPanel = Ext.extend(Ext.form.FormPanel, {
+	Ext.define('wcli.SmartPanel', {
+		extend: 'Ext.form.FormPanel',
+
 		submitOnAction: false,
 		
 		constructor: function(config) {
@@ -132,22 +136,23 @@ Ext.ns('wcli');
 		
 		// The default getFields does not include docked items
 		getFields: function (byName) {
+			var pnl = this;
 			var base = wcli.SmartPanel.superclass.getFields,
 	        	bodyFields = base.call(this, byName),
-	        	toolbarFields = base.call({ items: this.dockedItems }, byName);
-			
-			for (ctlName in bodyFields) {
-				var ctl = bodyFields[ctlName];
-				if (ctl.extraControl) {
-					Ext.each(ctl.extraControl, function(xtraCtl) {
-						bodyFields[xtraCtl.name] = xtraCtl;
-					});
-				}
-			}
+	        	toolbarFields = base.call({ getItems: function() {
+	        		var dockedItems = new Ext.ItemCollection();
+	        		pnl.getDockedItems().forEach(function(item) {
+	        			dockedItems.add(item);
+	        		});
+	        		return dockedItems;
+	        	}}, byName);
 			
 	        return Ext.apply(bodyFields, toolbarFields);
+	    },
+	    
+	    // Not using the mask feature in Sencha Touch 2.2
+	    setMasked: function() {
+	    	// Do nothing
 	    }
 	});
 })();
-
-Ext.reg('smartpanel', wcli.SmartPanel);

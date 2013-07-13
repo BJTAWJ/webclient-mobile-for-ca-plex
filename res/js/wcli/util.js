@@ -1,5 +1,4 @@
 Ext.ns('wcli');
-Ext.ns('wcli.form');
 Ext.ns('wcli.msg');
 
 Ext.util.JSON.decode = function(s) {
@@ -7,279 +6,36 @@ Ext.util.JSON.decode = function(s) {
 };
 
 Ext.decode = Ext.util.JSON.decode;
-if(!Ext.is.iOS){
-	var inputtype = "number";
-}
-else{
-	var inputtype =  "text";
-}
-Date.monthNames = [nls.month[1], nls.month[2], nls.month[3], nls.month[4], nls.month[5], nls.month[6], nls.month[7], nls.month[8], nls.month[9], nls.month[10], nls.month[11], nls.month[12]];
-Ext.ux.DatePicker.prototype.months = [nls.month[1], nls.month[2], nls.month[3], nls.month[4], nls.month[5], nls.month[6], nls.month[7], nls.month[8], nls.month[9], nls.month[10], nls.month[11], nls.month[12]];
-Ext.ux.DatePicker.prototype.days = [nls.day[1], nls.day[2], nls.day[3], nls.day[4], nls.day[5], nls.day[6], nls.day[7]];
-wcli.DatePicker = Ext.extend(Ext.DatePicker, {
-	doneButton : nls.picker.doneButton,
-	cancelButton: nls.picker.cancelButton,
-});
-
-wcli.form.CalendarPicker = Ext.extend(Ext.form.DatePicker, {
-	
-    getDatePicker: function() {
-        if (!this.datePicker) {
-            if (this.picker instanceof wcli.DatePicker) {
-                this.datePicker = this.picker;
-            } else {
-            	var minDate, maxDate;
-            	
-            	if (this.picker.yearFrom) {
-            		minDate = new Date(this.picker.yearFrom, 0, 1);
-            	}
-            	
-            	if (this.picker.yearTo){
-            		maxDate = new Date(this.picker.yearTo, 12, 0);
-            	}
-            	var uxDatePicker = new Ext.ux.DatePicker(Ext.apply(this.picker || {}, {
-                	dock: 'bottom',
-                	minDate: minDate,
-                	maxDate: maxDate,
-                	value: this.value,
-                	cancelButton: nls.picker.cancelButton
-                }));
-            	
-                this.datePicker = new Ext.Sheet({
-                    height  : 200,
-                    stretchX: true,
-                    stretchY: true,
-                    
-                    layout: {
-                        type: 'hbox',
-                        align: 'stretch'
-                    },
-                    
-                    dockedItems: [
-                        uxDatePicker
-                	],
-                	
-                	setValue: function(val) {
-                		uxDatePicker.setValue(val);
-                	},
-                    
-                    getValue: function() {
-                    	return uxDatePicker.getValue();
-                    }
-                });
-            }
-            
-            uxDatePicker.on({
-                scope: this,
-                select: function() {
-                	this.onPickerChange(this, uxDatePicker.getValue());
-                	this.datePicker.hide();
-                	this.onPickerHide();
-                },
-                cancel: function() {
-                	this.datePicker.hide();
-                	this.onPickerHide();
-                }
-            });
-
-            this.datePicker.on({
-                scope : this,
-                change: this.onPickerChange,
-                hide  : this.onPickerHide
-            });
-        }
-
-        return this.datePicker;
-    },
-
-    getValue: function(format) {
-        var value = this.value || null;
-        if(value == null){
-        	return value;
-        }
-        else{
-        	return (format && Ext.isDate(value)) ? value.format(Ext.util.Format.defaultDateFormat)
-        		: value.format('Ymd');
-    	}
-    },
-});
-
-wcli.form.DatePicker = Ext.extend(Ext.form.DatePicker, {
-	
-    getDatePicker: function() {
-        if (!this.datePicker) {
-            if (this.picker instanceof wcli.DatePicker) {
-                this.datePicker = this.picker;
-            } else {
-                this.datePicker = new wcli.DatePicker(Ext.apply(this.picker || {}));
-            }
-
-            this.datePicker.setValue(this.value || null);
-
-            this.datePicker.on({
-                scope : this,
-                change: this.onPickerChange,
-                hide  : this.onPickerHide
-            });
-        }
-
-        return this.datePicker;
-    },
-
-    getValue: function(format) {
-        var value = this.value || null;
-        if(value == null){
-        	return value;
-        }
-        else{
-        	return (format && Ext.isDate(value)) ? value.format(Ext.util.Format.defaultDateFormat)
-        		: value.format('Ymd');
-    	}
-    },
-});
-
-wcli.form.htmlarea = Ext.extend(Ext.form.TextArea, {
-
-    setValue: function(value){
-        this.value = value;
-
-        if (this.rendered && this.fieldEl) {
-        	if (this.fieldEl.dom.parentNode) {
-        		this.htmlNode = this.fieldEl.dom.parentNode;
-        		this.htmlNode.className = "x-form-field-container wcliHTMLArea";
-        	}
-        }
-        
-        if (this.htmlNode) {
-            this.htmlNode.innerHTML = (Ext.isEmpty(value) ? ' ' : value);
-        }
-
-        return this;
-    }
-});
-
-Ext.reg('wclihtmlarea', wcli.form.htmlarea);
-
-
-wcli.form.BaseText = Ext.extend(Ext.form.Text, {
-	afterRender: function() {
-        wcli.form.BaseText.superclass.afterRender.call(this);
-
-        var me = this;
-    	var extraControl = this.extraControl;
-    	if (extraControl) {
-    		Ext.each(extraControl, function(ctl) {
-    			if(!ctl.render) {
-    				ctl = Ext.create(ctl);	
-    			}
-    			ctl.render(me.el);
-    		});
-    	}
-	}
-});
-
-wcli.form.number = Ext.extend(wcli.form.BaseText, {
-	inputType: inputtype,
-    minValue : undefined,
-    maxValue : undefined,
-    stepValue : undefined,
-    renderTpl: [
-        '<tpl if="label"><div class="x-form-label"><span>{label}</span></div></tpl>',
-        '<tpl if="fieldEl"><div class="x-form-field-container">',
-            '<input id="{inputId}" type="{inputType}" name="{name}" pattern="[0-9]*" class="{fieldCls}"', 
-               '<tpl if="tabIndex">tabIndex="{tabIndex}" </tpl>',
-                '<tpl if="placeHolder">placeholder="{placeHolder}" </tpl>',
-                //'<tpl if="placeHolder">placeholder="TEST" </tpl>',
-                '<tpl if="style">style="{style}" </tpl>',
-                '<tpl if="minValue != undefined">min="{minValue}" </tpl>',
-                '<tpl if="maxValue != undefined">max="{maxValue}" </tpl>',
-                '<tpl if="stepValue != undefined">step="{stepValue}" </tpl>',
-                '<tpl if="autoComplete">autocomplete="{autoComplete}" </tpl>',
-                '<tpl if="autoCapitalize">autocapitalize="{autoCapitalize}" </tpl>',
-                '<tpl if="autoFocus">autofocus="{autoFocus}" </tpl>',            '/>',
-            '<tpl if="useMask"><div class="x-field-mask"></div></tpl>',
-            '</div></tpl>',
-        '<tpl if="useClearIcon"><div class="x-field-clear-container"><div class="x-field-clear x-hidden-visibility">×</div><div></tpl>'    ],
-        
-    onFocus: function(e) {
-    	wcli.form.number.superclass.onFocus.call(this, arguments);
-    	
-    	if (this.getValue() == "0") {
-    		this.setValue("");
-    	}
-    },
-    
-
-    initEvents: function() {
-        Ext.form.Text.prototype.initEvents.call(this);
-
-        if (this.fieldEl) {
-            this.mon(this.fieldEl, {
-                keypress: this.onKeyPress,
-                scope: this
-            });
-        }
-    },
-    
-    onKeyPress: function(e) {
-        this.fireEvent('keypress', this, e);
-    }
-
-});
-
-Ext.reg('wclinumberfield', wcli.form.number);
-
-
-wcli.form.text = Ext.extend(wcli.form.BaseText, {
-    initEvents: function() {
-    	wcli.form.BaseText.prototype.initEvents.call(this);
-
-        if (this.fieldEl) {
-            this.mon(this.fieldEl, {
-                keypress: this.onKeyPress,
-                scope: this
-            });
-        }
-    },
-    
-    onKeyPress: function(e) {
-        this.fireEvent('keypress', this, e);
-    }
-
-});
-
-Ext.reg('wclitextfield', wcli.form.text);
+/*
 wcli.msg.alert = function(title, msg, fn, scope) {
-	return new Ext.MessageBox({
-        width: 320	
-	}).show({
+	return new Ext.Msg.alert({
+        width: 320,	
         title : title,
         msg : msg,
         buttons: Ext.MessageBox.OK,
         fn: function(button) {
             fn.call(scope, button);
         },
-        scope : scope,
-        icon: Ext.MessageBox.INFO
+        scope : scope
     });
 };
-
+*/
 wcli.msg.YES = {text : nls.msg.yesButton,    itemId : 'yes', ui : 'action' };
 //wcli.msg.NO = {text : nls.msg.noButton,    itemId : 'no'};
 wcli.msg.CANCEL = {text : nls.msg.cancelButton,    itemId : 'cancel'};
 
-wcli.msg.confirm = function(title, msg, fn, scope) {
-	return new Ext.MessageBox({
-        width: 320	
-	}).show({
-        title : title,
-        msg : msg,
-        buttons: [wcli.msg.YES, wcli.msg.CANCEL],
-        fn: function(button) {
-            fn.call(scope, button);
-        },
-        scope : scope,
-        icon: Ext.MessageBox.QUESTION
+wcli.msg.confirm = function(title, message, buttons, fn, scope) {
+    return Ext.Msg.show({
+        title       : title || null,
+        message     : message || null,
+        buttons     : buttons,
+        promptConfig: false,
+        scope       : scope,
+        fn: function() {
+            if (fn) {
+                fn.apply(scope, arguments);
+            }
+        }
     });
 };
 
@@ -300,40 +56,45 @@ wcli.util = (function() {
 		 */
 		evt: function(evt, id, params) {
 		    wcli.startLoading();
-		    if (evt) {
-		    	if (!params) {
-		    		params = {};
-		    	}
-		    	params.ctlact = id + ":" + evt;
-		    	params.focus = id;
-		    }
 			return {
 				method: "POST",
 				disableCaching: true,
 				params: Ext.apply({
 					pnlid: panel.panelId,
-					_type: "json"
+					_type: "json",
+					ctlact: id + ":" + evt,
+					focus: id
 				}, params),
 				success: function(form, result) {
 		            wcli.stopLoading();
 					/* Begin create new input field for IOS bug workaround keyboard not displaying on the first numeric field */
 		            
-		            var inputField = document.createElement("INPUT");
-		            document.getElementsByTagName("BODY")[0].appendChild(inputField);
-		            inputField.focus();
-		            document.getElementsByTagName("BODY")[0].removeChild(inputField);
+		            //var inputField = document.createElement("INPUT");
+		            //document.getElementsByTagName("BODY")[0].appendChild(inputField);
+		            //inputField.focus();
+		            //document.getElementsByTagName("BODY")[0].removeChild(inputField);
 		  
 					/* End create new input field */
 					
 					if (result.alerts.length > 1) {
 						var alerts = result.alerts;
-						for (var i=0; i<result.alerts.length; i++){
+						var allmessages = "";
+						for (var i=0; i<alerts.length; i++){
 							if (alerts[i].type == "dialog"){
-								wcli.msg.alert('', alerts[i].message, function() {									
-								});
+								//for (var j=0; j<alerts.length;j++) {
+									if (alerts[i].message != undefined){
+										allmessages = allmessages +  alerts[i].message + "</br>";
+										alerts.pop();
+									}
+								//}
+								if(i == alerts.length){
+									Ext.Msg.alert('', allmessages, function() {									
+									});
+								}
 							}
+							
 							if (alerts[i].type == "enquiry"){
-								wcli.msg.confirm('', alerts[i].message, function(btn) {
+								wcli.msg.confirm('', alerts[i].message, [wcli.msg.YES,wcli.msg.CANCEL],function(btn) {
 									if(btn == "yes"){
 										panel.submit(wcli.util.evt(null, null, { enqact: 1 }));
 									}
@@ -347,40 +108,39 @@ wcli.util = (function() {
 							}
 						}
 					}
-					if (result.refresh) {
+					if (result.refresh && result.panelId != panel.panelId) {
 						eval(result.init).call(window);
 						var panelConfig = eval(result.refresh);
 						
-						panel.destroy();
-						var newPanel = Ext.create(panelConfig);
-						
-						controller.on('cardswitch', function() {
+						var newPanel = Ext.create('wcli.SmartPanel',panelConfig);
+						newPanel.panelId = panelConfig.panelId;
+						controller.on('activeitemchange', function() {
+							console.log("WCLI: panel " + panel.id + " destroyed");
+							panel.destroy();
+							delete panel.link;	// sencha touch 2.2 bug
 							window.panel = newPanel;
+							console.log("WCLI: new panel " + panel.id);
 							
 							wcli.util.addCSSArea(panelConfig.cssArea);
 							panelConfig.jsOnLoad();
 							
 							
 						},null, { single: true });
-						controller.getLayout();
-						controller.setActiveItem(newPanel/*, 'slide'*/);
+						if (typeof panel.config.transition != "undefined") {
+							controller.animateActiveItem(newPanel, {
+								type: panel.config.transition, 
+								direction: panel.config.transdir, 
+								duration: parseInt(panel.config.transduration)
+							});	
+						} else {
+							controller.setActiveItem(newPanel);
+						}
 						eval(result.postInit).call(window);
 					}
 					else {
 						// No point in setting values after a refresh...
 						wcli.util.parseStates(result.states);
 						panel.setValues(result.values);
-						
-						var fields = panel.getFields();
-				        for (name in result.values) {
-				            if (result.values.hasOwnProperty(name)) {
-				                var field = fields[name];
-				                if (field) {
-				                	field.fireEvent('aftersetvalue', field);
-				                }
-				            }
-				        }
-
 					}
 				}
 			};
@@ -390,7 +150,7 @@ wcli.util = (function() {
 			states = states || {};
 			for (var key in states) {
 				if (states.hasOwnProperty(key)) {
-					var ctl = panel.getFields()[key];
+					var ctl = panel.getFields(key);
 					if (!ctl || ctl.length === 0) {
 						ctl = Ext.getCmp(key);
 					}
@@ -416,10 +176,11 @@ wcli.util = (function() {
 			}
 			
 			if (state.gridCols && state.gridRows) {
-				var store = window[control.name + '_store'],
-					storeConf = wcli.util.gridStore(control.name,
-						state.gridCols, state.gridRows);
-				store.loadData(storeConf.data);
+				var store = window[control.getName() + '_store'],
+					storeConf = wcli.util.gridStore(control.getName(),
+						state.gridCols, state.gridRows, false);
+				store.clearData();
+				store.addData(storeConf.data);
 			}
 			
 			if (typeof state.disabled !== 'undefined') {
@@ -427,24 +188,6 @@ wcli.util = (function() {
 			}
 			if (typeof state.visible !== 'undefined') {
 				control[state.visible ? 'show' : 'hide']();
-				var parent = control.up();
-				if (parent.xtype == 'toolbar') {
-					var tbItemVisible = false;
-					parent.items.each(function(tbItem) {
-						if (tbItem.xtype != 'spacer' && !tbItem.hidden) {
-							tbItemVisible = true;
-						}
-					});
-					if (tbItemVisible == false) {
-						parent.setHeight(0);
-						window.panel.doComponentLayout();
-					} else {
-						if (parent.getHeight() < 40) {
-							parent.setHeight(40);
-							window.panel.doComponentLayout();
-						}
-					}
-				}
 			}
 			
 			if (state.location) {
@@ -495,17 +238,21 @@ wcli.util = (function() {
 		regModel: function(name, cols) {
 
 			var model = {
-				fields: [{
-					name: '$$idx$$',
-					type: 'number'
-				}]
+				extend: 'Ext.data.Model',
+				
+				config: {
+					fields: [{
+						name: '$$idx$$',
+						type: 'number'
+					}]
+				}
 			};
 			
 			for (var i = 0; i < cols.length; i++) {
-				model.fields.push({ name: cols[i], type: 'string' });
+				model.config.fields.push({ name: cols[i], type: 'string' });
 			}
 			
-			Ext.regModel(name, model);
+			Ext.define(name,model);
 		},
 		
 		/**
@@ -552,7 +299,7 @@ wcli.util = (function() {
 		     return new Date(parts[fmt['yyyy']], parts[fmt['mm']]-1, parts[fmt['dd']]);
 		},
 		
-		gridHdr: function(cols, colvis, heads, grouped, gridclass, rowclass){
+		gridHdr: function(cols, colvis, heads, grouped, gridclass){
 			var tpl = "";
 			tpl += "<table class='" + gridclass + "h'><tr class='head" + "'>";
 			for (var i = 0; i < cols.length; i++){
@@ -565,16 +312,16 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
-		gridCol: function(cols, colvis, heads, grouped, gridclass, rowclass){		
+		gridCol: function(cols, colvis, heads, grouped, gridclass){		
 			var tpl = "";
 			
-			tpl += "<table class='" + gridclass + "'><tr class='" + rowclass +"'>";
+			tpl += "<table class='" + gridclass + "'><tr>";
 			for (var i = 0; i < cols.length; i++){
 				if(colvis[i]==true){
 					var c = cols[i];
 					var dataType = heads[i].dataType;
 					if (dataType == "Date") {
-						c = "[wcli.util.dateConvert(values[\"" + c + "\"]).format(Ext.util.Format.defaultDateFormat)]";
+						c = "[Ext.Date.format(wcli.util.dateConvert(values[\"" + c + "\"]), Ext.util.Format.defaultDateFormat)]";
 					}
 					//if (dataType == "FixedDec" || dataType == "Double"){
 					//	c = c.toFixed(2);
@@ -586,7 +333,7 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
-		gridColHdr: function(cols, colvis, heads, grouped, gridclass, rowclass){
+		gridColHdr: function(cols, colvis, heads, grouped, gridclass){
 			var tpl = "";
 			
 			for (var i = 0; i < cols.length; i++){
@@ -607,27 +354,23 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
-		gridColTpl: function(cols, colvis, heads, grouped, gridclass, rowclass, imgColNum){			
+		gridColTpl: function(cols, colvis, heads, grouped, gridclass){			
 			var tpl = "";
 			
 			for (var i = 0; i < cols.length; i++){
 				if(i %3 == 0){
-					tpl += "<table class='" + gridclass + "'><tr class='" + rowclass +"'>";
+					tpl += "<table class='" + gridclass + "'><tr>";
 				}
 				if(colvis[i]==true){
 					var c = cols[i];
 					var dataType = heads[i].dataType;
 					if (dataType == "Date") {
-						c = "[wcli.util.dateConvert(values[\"" + c + "\"]).format(Ext.util.Format.defaultDateFormat)]";
+						c = "[Ext.Date.format(wcli.util.dateConvert(values[\"" + c + "\"]), Ext.util.Format.defaultDateFormat)]";
 					}
 					if (dataType == "FixedDec" || dataType == "Double"){
 						c = c.toFixed(2);
 					}
-					if (i+1 == parseInt(imgColNum)) {
-						tpl += "<td class='col" + i + "'><div class='img{" + c + "}'></div></td>";
-					} else {
-						tpl += "<td class='col" + i + "'>{" + c + "}</td>";
-					}
+					tpl += "<td class='col" + i + "'>{" + c + "}</td>";
 				}
 				if (i % 3 == 2){
 					tpl += "</tr></table>";
@@ -639,7 +382,7 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
-		gridStore: function(model, cols, rows) {
+		gridStore: function(model, cols, rows, grouped) {
 			if (typeof cols === 'string') {
 				cols = JSON.parse(cols);
 			}
@@ -649,10 +392,16 @@ wcli.util = (function() {
 			
 			var store = {
 				model: model,
-				groupField: _esc(cols[0]),
+				/*groupField: _esc(cols[0]),*/
 				/*sorters: _esc(cols[0]),*/
 				data: []
 			};
+			
+			if (grouped) {
+				store.groupField = _esc(cols[0]);
+				store.sorters = _esc(cols[0]);
+			}
+			
 			for (var i = 0; i < rows.length; i++) {
 				var row = rows[i],
 					item = {};
@@ -720,37 +469,45 @@ wcli.util = (function() {
 	});
 	
 	   /* Timer used to display mask when data is loading. */
-	   wcli.loadTimer = null;
+	   //wcli.loadTimer = null;
 
 	   /* The amount of time in milliseconds before the load mask should appear. */
-	   wcli.LOADMASK_TIME = 350;
+	   //wcli.LOADMASK_TIME = 350;
 
 	   /**
 	    * Called when a server request is started. If the request is not finished
 	    * within LOADMASK_TIME milliseconds, then the loading mask will appear.
 	    */
+	
+		
 	   wcli.startLoading = function() {
 	       if (wcli.loadTimer) {
 	           clearTimeout(wcli.loadTimer);
 	       }
 	       wcli.loadTimer = setTimeout(function() {
-	           wcli.LoadMask.show();
+	           Ext.Viewport.setMasked({
+	        	   xtype:'loadmask',
+	        	   message:'',
+	           });
 	           wcli.loadTimer = null;
 	       }, wcli.LOADMASK_TIME);
 	   };
-
+	
+	
 	   /**
 	    * Called when a server request has stopped. If the loading mask is shown
 	    * it will disappear.
 	    */
+	   
 	   wcli.stopLoading = function() {
-	       wcli.LoadMask.hide();
+	       Ext.Viewport.setMasked(false);
 	       if (wcli.loadTimer) {
 	           clearTimeout(wcli.loadTimer);
 	           wcli.loadTimer = null;
 	       }
 	   };
-
+	   
+	   /*
 	   wcli.hideKeyboard = function(){
 		   var activeElement = document.activeElement;
 	        activeElement.setAttribute('readonly', 'readonly'); // Force keyboard to hide on input field.
@@ -762,33 +519,9 @@ wcli.util = (function() {
 	            activeElement.removeAttribute('disabled');
 	        }, 100);
 	   };
+	   */
 	
-	
-	   /**
-	    * Called to automatically grow multiline edit based on input text
-	    */
-	   
-	   wcli.autoExpand = function(controlname) {
-		   var textdiv = document.getElementById(controlname);
-		   if (Ext.getCmp(controlname).xtype == "wclihtmlarea"){
-			   var textarea = textdiv.firstElementChild
-		   }
-		   else{
-			   var textarea = textdiv.firstElementChild.firstElementChild
-		   }
-		   var newHeight = textarea.scrollHeight;
-		   var currentHeight = textarea.clientHeight;
-		   
-		   if (newHeight == 0 && currentHeight == 0){
-			   textarea = textdiv.childNodes[1].firstElementChild;
-			   newHeight = textarea.scrollHeight;
-			   currentHeight = textarea.clientHeight;
-		   }
-		   
-		   if(newHeight > currentHeight){
-			   textarea.style.height = newHeight + 'px';
-		   }
-	   };
+	  
 	   
 	   /**
 	    * Validate input maxlength to prevent user enter more than specified length

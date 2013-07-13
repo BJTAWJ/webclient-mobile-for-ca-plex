@@ -14,46 +14,35 @@
 	/(!Action:SetFocus)"/(!NameID)",/(!Action)
 /(!FocusArea)
 
-{
+new wcli.field.SearchField({
 	xtype: "searchfield",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	cls: '/(!Param:class)',
 	label: "/(!Param:label)" || undefined,
 	value: /(!This),
 	width: 150,
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	listeners: {
-		focus: {
-			fn: function() {
+		focus: function() {
 				/(!If:/(!Event:phys=Gained Focus))
 				panel.submit(wcli.util.evt("Gained Focus", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		},
-		blur: {
-			fn: function() {
+		blur: function() {
 				/(!If:/(!Event:phys=Lost Focus))
 				panel.submit(wcli.util.evt("Lost Focus", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		},
-		keyup: {
-			fn: function() {
+		keyup: function() {
 				/(!If:/(!Event:phys=Modified))
 				panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		},
-		change: {
-			fn: function() {
+		change: function() {
 				/(!If:/(!Event:phys=Updated))
 				panel.submit(wcli.util.evt("Updated", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		}
 	}
-},
+}),

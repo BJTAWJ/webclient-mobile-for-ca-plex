@@ -28,10 +28,12 @@
 /(!StatesArea)
 
 /(!JSInit)
+	 var grouped = "/(!Param:grouped)" === "true";
 	/(!WebGrid-model.inc)
 /(!JSInit)
 
 /(!JS)
+	 var grouped = "/(!Param:grouped)" === "true";
 	/(!WebGrid-model.inc)
 /(!JS)
 
@@ -43,8 +45,7 @@
 },
 /(!MainArea)
 
-{
-	__dummy__: (function() {
+(function() {
 		/(!NameID)_cols = [
 			/(!AttachPoint:name=ColumnsArea:inlinetemplate:sep=,)
 				{ colHeader: "/(!Text:htmlbr)",
@@ -53,57 +54,47 @@
 			/(!EnableAction:SetState)
 			/(!AttachPoint)
 		];
-	})(),
-	
-	xtype: "list",
+})() ||
+
+/(!If:/(!Param:renderTplGenerator))
+new Ext.Panel({
+	layout: "vbox",
+	flex: 1,
+	items: [
+	  {
+		html: (/(!Param:renderTplGenerator))(/(!This:!jsonCols),/(!jsonColVis), /(!NameID)_cols, "/(!Param:grouped)" === "true", "/(!Param:gridClass)")
+	  },	  
+/(!If)
+
+new wcli.List({
 	baseCls: "/(!Param:gridClass)",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	cls: '/(!Param:class)',
 	flex: 1,
 	onItemDisclosure: "/(!Param:disclose)" === "true",
 	grouped: "/(!Param:grouped)" === "true",
 	indexBar: "/(!Param:indexBar)" === "true",
-	/(!If:/(!Param:renderTplGenerator))
-		renderTpl: (/(!Param:renderTplGenerator))(/(!This:!jsonCols),/(!jsonColVis), /(!NameID)_cols, "/(!Param:grouped)" === "true", "/(!Param:gridClass)","/(!Param:rowClass)"),
-	/(!If)
 	itemTpl: (/(!If:/(!Param:tplGenerator))/(!Param:tplGenerator)/(!Else)wcli.util.gridTpl/(!If))(/(!This:!jsonCols),/(!jsonColVis),
-				/(!NameID)_cols, "/(!Param:grouped)" === "true", "/(!Param:gridClass)","/(!Param:rowClass)","/(!Param:imgColNum)"),
+				/(!NameID)_cols, "/(!Param:grouped)" === "true", "/(!Param:gridClass)"),
 	itemCls: "/(!Param:itemClass)",
-	afterComponentLayout: function() {		
-		Ext.Component.prototype.afterComponentLayout.apply(this);		
-		if (typeof scrollerContainer == "undefined") {
-			return;
-		}
-		var pageBox = this.el.parent().getPageBox();		
-		this.scroller.container = scrollerContainer(pageBox);	
-	},
 	store: window["/(!NameID)_store"],
 	disabled: "/(!Mode)" === "Read Only",
 	listeners: {
-		itemtap: {
-			fn: function(view, index) {
-				/(!If:/(!Event:phys=Select))
-				index = view.getStore().getAt(index).get('$$idx$$');
-				panel.setValues({ "/(!NameID)": index });
-				panel.submit(wcli.util.evt("Select", "/(!NameID)"));
-				/(!If)
-			},
-			scope: this
-		},
-		afterrender: {
-			fn: function() {
-				/(!If:/(!Event:phys=Load Grid))
-				if(this.scroller){
-					this.scroller.on('scrollend', function() {
-						var offsetBoundary = this.scroller.offsetBoundary;
-						var offset = this.scroller.offset;
-						if (offset >= offsetBoundary || offset.y >= offsetBoundary.top) {
-							panel.submit(wcli.util.evt("Load Grid", "/(!NameID)"));
-						}
-					}, this);
-				}
-				/(!If)
-			},
+		itemtap: function(view, index) {
+			/(!If:/(!Event:phys=Select))
+			index = view.getStore().getAt(index).get('$$idx$$');
+			panel.setValues({ "/(!NameID)": index });
+			panel.submit(wcli.util.evt("Select", "/(!NameID)"));
+			/(!If)
 		}
 	}
-},
+})
+
+/(!If:/(!Param:renderTplGenerator))
+	]
+})	
+/(!If)
+,
+
+

@@ -15,17 +15,13 @@
 	/(!Action:SetFocus)"/(!NameID)",/(!Action)
 /(!FocusArea)
 
-{
-	/(!If:/(!Param:htmlArea))
-	  xtype: "wclihtmlarea",
-	/(!Else)
-	  xtype: "textareafield",
-	/(!If)
+new wcli.field.TextArea({
 	id: "/(!NameID)",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	cls: '/(!Param:class)',
 	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || undefined,
-	labelWidth: /(!If:/(!Param:width))"/(!Param:width)" /(!Else)"40%" /(!If),
+	labelWidth: "40%",
 	value: /(!This),
 	maxRows: /(!If:/(!Param:maxRows))/(!Param:maxRows)/(!Else)/(!If:/(!Param:autoExpand))1/(!Else)5/(!If)/(!If),
 	disabled: /(!If:/(!Mode)=Read Only)true
@@ -33,57 +29,35 @@
 			     /(!If:/(!Property:Disabled)=No)false/(!Else)true/(!If)
 			  /(!If),
 	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
+	placeHolder: '/(!Param:hint)',
 	listeners: {
-		afterrender: {
-			fn: function() {
+		afterrender: function() {
 				/(!If:/(!Param:autoExpand))
 				wcli.autoExpand("/(!NameID)");
 				/(!If)
-			},
-			scope: this
 		},
-		aftersetvalue: {
-			fn: function() {
-				/(!If:/(!Param:autoExpand))
-				wcli.autoExpand("/(!NameID)");
-				/(!If)
-			},
-			scope: this
-		},
-		focus: {
-			fn: function() {
+		focus: function() {
 				/(!If:/(!Event:phys=Gained Focus))
 				panel.submit(wcli.util.evt("Gained Focus", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		},
-		blur: {
-			fn: function() {
+		blur: function() {
 				/(!If:/(!Event:phys=Lost Focus))
 				panel.submit(wcli.util.evt("Lost Focus", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		},
-		keyup: {
-			fn: function() {
+		keyup: function() {
 				/(!If:/(!Param:autoExpand))
 				wcli.autoExpand("/(!NameID)");
 				/(!If)
 				/(!If:/(!Event:phys=Modified))
 				panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		},
-		change: {
-			fn: function() {
+		change: function() {
 				/(!If:/(!Event:phys=Updated))
 				panel.submit(wcli.util.evt("Updated", "/(!NameID)"));
 				/(!If)
-			},
-			scope: this
 		}
 	}
-},
+}),

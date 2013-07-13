@@ -1,19 +1,20 @@
 Ext.ns('wcli');
+Ext.ns('wcli.field');
 
-wcli.ComboPicker = Ext.extend(Ext.Picker, {
-	doneButton : nls.picker.doneButton,
-	cancelButton: nls.picker.cancelButton,
-});
-
-wcli.Select = Ext.extend(Ext.form.Select, {
+Ext.define('wcli.field.Select',{
+	extend: 'Ext.field.Select',
+	
+	config: {
+		controlName: {}
+	},
 	
     setValue: function(value) {
 	var idx = 0, record;
 		
 	if (value) {
-            idx = this.store.findExact("text", value);
+            idx = this.getStore().findExact("text", value);
         }
-	record = this.store.getAt(idx);
+	record = this.getStore().getAt(idx);
 		
 	Ext.form.Select.prototype.setValue.call(this, record && record.get('value'));
     },
@@ -21,31 +22,10 @@ wcli.Select = Ext.extend(Ext.form.Select, {
     setValueFromData: function(value) {
 	Ext.form.Select.prototype.setValue.call(this, value);		
     },
-    
-    getPicker: function() {
-        if (!this.picker) {
-            this.picker = new wcli.ComboPicker({
-                slots: [{
-                    align       : 'center',
-                    name        : this.name,
-                    valueField  : this.valueField,
-                    displayField: this.displayField,
-                    value       : this.getValue(),
-                    store       : this.store
-                }],
-                listeners: {
-                    change: this.onPickerChange,
-                    scope: this
-                }
-            });
-        }
 
-        return this.picker;
-    },
-    
     onPickerChange: function(picker, value) {
-        var currentValue = this.getValue(),
-            newValue = value[this.name];
+        //var currentValue = this.getValue(),
+          var newValue = value[this.getName()];
 
         //if (newValue != currentValue) {
             this.setValueFromData(newValue);
@@ -64,13 +44,14 @@ wcli.Select = Ext.extend(Ext.form.Select, {
             out: true,
             scope: this
         });
-    },
+    }/*,
     
     showComponent: function() {
     	var combo = this;
 		var activeElement = document.activeElement;
         activeElement.setAttribute('readonly', 'readonly'); // Force keyboard to hide on input field.
         activeElement.setAttribute('disabled', 'true'); // Force keyboard to hide on textarea field.
+
         Ext.defer(function() {
             activeElement.blur();
             // Remove readonly attribute after keyboard is hidden.
@@ -87,5 +68,5 @@ wcli.Select = Ext.extend(Ext.form.Select, {
             
             Ext.EventManager.onWindowResize(onresize, null);
         }, 1);
-    }
+    }*/
 });

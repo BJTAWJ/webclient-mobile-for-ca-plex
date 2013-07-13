@@ -8,7 +8,7 @@
 	/(!Action:SetState)
 	"/(!NameID)": {
 		"disabled": /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
-		"hidden": /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
+		'visible': /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If),
 		"optionNames": /(!jsonOptions),
 		"optionValues": /(!jsonValues) 
 	},
@@ -16,6 +16,7 @@
 	/(!Action:Combo.Clear)
 	"/(!NameID)": {
 		"disabled": /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+		'visible': /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If),
 		"optionNames": /(!jsonOptions),
 		"optionValues": /(!jsonValues) 
 	},
@@ -23,6 +24,7 @@
 	/(!Action:Combo.Remove)
 	"/(!NameID)": {
 		"disabled": /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+		'visible': /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If),
 		"optionNames": /(!jsonOptions),
 		"optionValues": /(!jsonValues) 
 	},
@@ -30,6 +32,7 @@
 	/(!Action:Combo.Add)
 	"/(!NameID)": {
 		"disabled": /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+		'visible': /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If),
 		"optionNames": /(!jsonOptions),
 		"optionValues": /(!jsonValues) 
 	},
@@ -40,11 +43,12 @@
 	/(!Action:SetFocus)"/(!NameID)",/(!Action)
 /(!FocusArea)
 
-new wcli.Select({
+new wcli.field.Select({
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	cls: '/(!Param:class)',
 	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)",
-	labelWidth: /(!If:/(!Param:width))"/(!Param:width)" /(!Else)"40%" /(!If),
+	labelWidth: "40%",
 	options: (function() {
 		var value = /(!jsonValues);
 		var name = /(!jsonOptions);
@@ -57,14 +61,18 @@ new wcli.Select({
 	})(),
 	value: /(!This:value),
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
-	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
+	hidden: /(!If:/(!Property:Visible)=Yes)false/(!Else)true/(!If),
 	listeners: {
-		focus: function(e){
+		focus: function(e){/*
 			var combo = this;
-			wcli.hideKeyboard();
+			//wcli.hideKeyboard();
 			Ext.defer(function() {
 				combo.showComponent();
 			},500);
+			*/
+			/(!If:/(!Event:phys=Gained Focus))
+			panel.submit(wcli.util.evt("Gained Focus", "/(!NameID)"));
+			/(!If)
 		},
 		change: function(e) {
 			/(!If:/(!Event:phys=Updated))
