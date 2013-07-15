@@ -63,13 +63,14 @@ Ext.ns('wcli');
 		if(plexConfig.header){
 		// 2012-07-03 - Add header
 			for (var h=0; h < plexConfig.header.length; h++) {
-				config.dockedItems.push(plexConfig.header[h]);
+				config.items.push(plexConfig.header[h]);
 			}
 		}
 		if(plexConfig.footer){
 			// 2012-07-03 - Add footer
 			for (var f=0; f < plexConfig.footer.length; f++) {
-				config.dockedItems.push(plexConfig.footer[f]);
+				config.items.push(plexConfig.footer[f]);
+				plexConfig.footer[f].docked = "bottom";
 			}
 		}
 		// Tabs (always visible if present)
