@@ -1,7 +1,3 @@
-/(!HeadArea)
-	<script type="text/javascript" src="/(!WsRes)/js/wcli/Picture.js"></script>
-/(!HeadArea)
-
 /(!EnableAction:SetValue,SetState,SetFocus)
 
 /(!ValuesArea)
@@ -19,7 +15,11 @@
 new wcli.ImageComponent({
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	mode: "",
-	src:  /(!WsRes)+ "/images/" + /(!This),
+	/(!If:/(!BitmapFile))
+	src: /(!WsRes)+ "/images/" + "/(!BitmapFile)",
+	/(!Else)
+	src: /(!WsRes)+ "/images/" + /(!This),
+	/(!If)
 	imageCls: "/(!Param:imageCls)" || "x-image-component",
 	imageAlign: "/(!Param:imageAlign)" || "left",
 	listeners: {
