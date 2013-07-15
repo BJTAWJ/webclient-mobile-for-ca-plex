@@ -78,16 +78,14 @@ wcli.util = (function() {
 					
 					if (result.alerts.length > 1) {
 						var alerts = result.alerts;
+						alerts.pop();
 						var allmessages = "";
 						for (var i=0; i<alerts.length; i++){
 							if (alerts[i].type == "dialog"){
-								//for (var j=0; j<alerts.length;j++) {
-									if (alerts[i].message != undefined){
-										allmessages = allmessages +  alerts[i].message + "</br>";
-										alerts.pop();
-									}
-								//}
-								if(i == alerts.length){
+								if (alerts[i].message != undefined){
+									allmessages = allmessages +  alerts[i].message + "</br>";
+								}
+								if(i == (alerts.length-1)){
 									Ext.Msg.alert('', allmessages, function() {									
 									});
 								}
