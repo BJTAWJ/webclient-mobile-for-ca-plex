@@ -11,5 +11,5 @@ new wcli.Cookie ({
 	id: '/(!NameID)',
 	name: '/(!NameID)',
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
-	value: null
+	value: /(!This)
 }),
