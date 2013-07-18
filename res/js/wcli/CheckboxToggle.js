@@ -9,17 +9,20 @@ Ext.ns('wcli.field');
 Ext.define('wcli.field.CheckboxToggle',{
 	extend: 'Ext.field.Toggle', 
 	config: {
-		controlName: {}
+		controlName: {},
+		uncheckedValue: "",
+		checkedValue: "",
 	},
-	checkedValue: 1,
-	uncheckedValue: 0,
+	
+	maxValue: 1,
+	minValue: 0,
 	
 	getString: function(value) {
-		return value === this.maxValue ? this.checkedValue : this.uncheckedValue;
+		return value === this.maxValue ? this.getCheckedValue() : this.getUncheckedValue();
 	},
 	
 	getNumber: function(value) {
-		return value === this.checkedValue ? this.maxValue : this.minValue;
+		return value === this.getCheckedValue() ? this.maxValue : this.minValue;
 	},
 	
 	constrain: function(value) {
