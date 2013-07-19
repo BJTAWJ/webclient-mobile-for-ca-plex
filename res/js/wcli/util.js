@@ -7,12 +7,12 @@ Ext.util.JSON.decode = function(s) {
 };
 
 Ext.decode = Ext.util.JSON.decode;
-if(!Ext.is.iOS){
+//if(!Ext.is.iOS){
 	var inputtype = "number";
-}
-else{
-	var inputtype =  "text";
-}
+//}
+//else{
+//	var inputtype =  "text";
+//}
 Date.monthNames = [nls.month[1], nls.month[2], nls.month[3], nls.month[4], nls.month[5], nls.month[6], nls.month[7], nls.month[8], nls.month[9], nls.month[10], nls.month[11], nls.month[12]];
 Ext.ux.DatePicker.prototype.months = [nls.month[1], nls.month[2], nls.month[3], nls.month[4], nls.month[5], nls.month[6], nls.month[7], nls.month[8], nls.month[9], nls.month[10], nls.month[11], nls.month[12]];
 Ext.ux.DatePicker.prototype.days = [nls.day[1], nls.day[2], nls.day[3], nls.day[4], nls.day[5], nls.day[6], nls.day[7]];
@@ -179,27 +179,29 @@ wcli.form.BaseText = Ext.extend(Ext.form.Text, {
 });
 
 wcli.form.number = Ext.extend(wcli.form.BaseText, {
+	ui: 'number',
 	inputType: inputtype,
     minValue : undefined,
     maxValue : undefined,
-    stepValue : undefined,
+    stepValue : 0.01,
     renderTpl: [
-        '<tpl if="label"><div class="x-form-label"><span>{label}</span></div></tpl>',
-        '<tpl if="fieldEl"><div class="x-form-field-container">',
-            '<input id="{inputId}" type="{inputType}" name="{name}" pattern="[0-9]*" class="{fieldCls}"', 
-               '<tpl if="tabIndex">tabIndex="{tabIndex}" </tpl>',
-                '<tpl if="placeHolder">placeholder="{placeHolder}" </tpl>',
-                //'<tpl if="placeHolder">placeholder="TEST" </tpl>',
-                '<tpl if="style">style="{style}" </tpl>',
-                '<tpl if="minValue != undefined">min="{minValue}" </tpl>',
-                '<tpl if="maxValue != undefined">max="{maxValue}" </tpl>',
-                '<tpl if="stepValue != undefined">step="{stepValue}" </tpl>',
-                '<tpl if="autoComplete">autocomplete="{autoComplete}" </tpl>',
-                '<tpl if="autoCapitalize">autocapitalize="{autoCapitalize}" </tpl>',
-                '<tpl if="autoFocus">autofocus="{autoFocus}" </tpl>',            '/>',
-            '<tpl if="useMask"><div class="x-field-mask"></div></tpl>',
-            '</div></tpl>',
-        '<tpl if="useClearIcon"><div class="x-field-clear-container"><div class="x-field-clear x-hidden-visibility">×</div><div></tpl>'    ],
+                '<tpl if="label"><div class="x-form-label"><span>{label}</span></div></tpl>',
+                '<tpl if="fieldEl"><div class="x-form-field-container">',
+                    '<input id="{inputId}" type="{inputType}" name="{name}" class="{fieldCls}" step="0.01"',
+                        '<tpl if="tabIndex">tabIndex="{tabIndex}" </tpl>',
+                        '<tpl if="placeHolder">placeholder="{placeHolder}" </tpl>',
+                        '<tpl if="style">style="{style}" </tpl>',
+                        '<tpl if="minValue != undefined">min="{minValue}" </tpl>',
+                        '<tpl if="maxValue != undefined">max="{maxValue}" </tpl>',
+                        '<tpl if="stepValue != undefined">step="{stepValue}" </tpl>',
+                        '<tpl if="autoComplete">autocomplete="{autoComplete}" </tpl>',
+                        '<tpl if="autoCapitalize">autocapitalize="{autoCapitalize}" </tpl>',
+                        '<tpl if="autoFocus">autofocus="{autoFocus}" </tpl>',
+                    '/>',
+                    '<tpl if="useMask"><div class="x-field-mask"></div></tpl>',
+                    '</div></tpl>',
+                '<tpl if="useClearIcon"><div class="x-field-clear-container"><div class="x-field-clear x-hidden-visibility">&#215;</div><div></tpl>'
+            ],
         
     onFocus: function(e) {
     	wcli.form.number.superclass.onFocus.call(this, arguments);
