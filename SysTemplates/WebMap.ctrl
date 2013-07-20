@@ -15,7 +15,7 @@
 /(!HeadArea)
 /(!EnableAction:SetValue)
 /(!ValuesArea)
-	/(!Action:SetValue)"/(!NameID)": Ext.getCmp("/(!NameID)").updateMap(wcli.util.getCoords(/(!This)), 
+	/(!Action:SetValue)"/(!NameID)": Ext.getCmp("/(!NameID)").setMapCenter(wcli.util.getCoords(/(!This)), 
 		/(!AttachPoint:name=MarkerText:inlinetemplate)/(!This) || /(!AttachPoint) 'roadmap',
 		parseFloat(/(!AttachPoint:name=Zoom:inlinetemplate)/(!This) || /(!AttachPoint) 10)),/(!Action)
 /(!ValuesArea)
@@ -26,6 +26,6 @@ new wcli.Map ({
 	flex: 1,
 	mapType: /(!AttachPoint:name=MapType:inlinetemplate)/(!This) || /(!AttachPoint) 'roadmap',
 	centerCoords: wcli.util.getCoords(/(!This)),
-	zoomLevel: parseFloat(/(!AttachPoint:name=Zoom:inlinetemplate)/(!This) || /(!AttachPoint) 10),
+	zoomLevel: parseFloat(/(!AttachPoint:name=Zoom:inlinetemplate)/(!This) || /(!AttachPoint) 12),
 	markerText: /(!AttachPoint:name=MarkerText:inlinetemplate)/(!This) || /(!AttachPoint) '',
 }),

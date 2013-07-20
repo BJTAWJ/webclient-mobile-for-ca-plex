@@ -117,47 +117,49 @@ Ext.define('wcli.Map', {
 		centerCoords: {},
 		zoomLevel: {},
 		markerText: {},
-		centerMarker: {},
-		updateMap: function(newCoords, newType, newZoom) {
-			mapCtrl = this.getMap();
-			if (newZoom != mapCtrl.getZoom()) {
-				this.setZoomLevel(newZoom);
-				mapCtrl.setZoom(newZoom);
-			}
-			if (newType != mapCtrl.getMapTypeId()) {
-				this.setMapType(newType);
-				mapCtrl.setMapTypeId(newType);
-			}
-			this.setCenterCoords(newCoords) ;
-			mapCtrl.setCenter(newCoords);
-			this.getCenterMarker().setPosition(newCoords);
-		},
-		listeners: {
-			initialize: function() {
-				this.setCenterMarker(new google.maps.Marker({
-					position: this.getCenterCoords(),
-					map: this.getMap(),
-					title: this.getMarkerText(),
-					animation: "drop",
-					infoWindow: new google.maps.InfoWindow({
-				    	content: this.getMarkerText()
-					})
-				}));
-			},
-			maprender: function() {
-				//this.getCenterMarker().setMap(this.map);
-				google.maps.event.addListener(this.getCenterMarker(), 'click', function() {
-					this.infoWindow.open(this.map, this);
-				});
-				// Fix for not repositioning correctly
-				self = this;
-				Ext.defer(self.getUpdateMap().call(self), 300, self, [self.getCenterCoords(), self.getMapType(), parseFloat(self.getZoom())]);
-				// Fix for when map is not redrawn correctly
-				//setTimeout('google.maps.event.trigger(Ext.getCmp("/(!NameID)").map, "resize")', 100);
-				setTimeout('google.maps.event.trigger(this.getMap(), "resize")', 100);
-			}
+		centerMarker: {}
+	},
+	
+	initialize: function() {
+		this.config.mapOptions = {
+			center: this.getCenterCoords(),
+			mapTypeId: this.getMapType(),
+			zoom: this.getZoomLevel(),
 		}
-	}
+		this.renderMap();
+		var marker = new google.maps.Marker({
+			map: this.getMap(),
+			animation: google.maps.Animation.DROP,
+			position: this.getCenterCoords()
+		});
+		var info = new google.maps.InfoWindow({
+			content: this.getMarkerText()
+		});
+	},
+	
+	updateUseCurrentLocation: function(useCurrentLocation) {
+        this.setGeo(useCurrentLocation);
+        if (!useCurrentLocation) {
+            this.setMapCenter(this.getCenterCoords());
+        }
+    },
+    
+    doMapCenter: function() {
+        this.setMapCenter(this.getCenterCoords());
+        this.maprender();
+    },
+    
+    maprender: function(){
+    	this.renderMap();
+		var marker = new google.maps.Marker({
+			map: this.getMap(),
+			animation: google.maps.Animation.DROP,
+			position: this.getCenterCoords()
+		});
+		var info = new google.maps.InfoWindow({
+			content: this.getMarkerText()
+		});
+    }
 });
 
 /*
