@@ -18,7 +18,11 @@ new wcli.Button({
 	iconCls: "/(!Param:iconCls)",
 	ui: "/(!Param:ui)" || "plain",
 	handler: function(b, e) {
+		/(!If:/(!Param:newWindow)=Yes)
+		window.open(/(!This));
+		/(!Else)
 		window.location = /(!This);
+		/(!If)
 	},
 	text: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || "Link"
 }),
