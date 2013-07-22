@@ -18,5 +18,5 @@ if (typeof /(!NameID)Val != "undefined") {
 	xtype: 'hiddenfield',
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
-	value: null
+	value: /(!This)
 },
