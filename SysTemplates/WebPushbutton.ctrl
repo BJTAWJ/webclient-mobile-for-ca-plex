@@ -18,6 +18,7 @@
 	hidden: /(!If:/(!Property:Visible)=Yes)false/(!Else)true/(!If),
 	/(!If:/(!Param:width)) width: /(!Param:width),/(!If)
 	iconMask: true,
+	/(!If:/(!Param:cls)) cls: "/(!Param:cls)",/(!If)
     /(!If:/(!Param:iconCls)) iconCls: "/(!Param:iconCls)",/(!If)
     /(!If:/(!Param:icon)) icon: /(!WsRes) + "/images/" + "/(!Param:icon)",/(!If)
     ui: "/(!Param:ui)" || "plain",
