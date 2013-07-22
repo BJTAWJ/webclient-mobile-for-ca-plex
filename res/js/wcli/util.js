@@ -13,6 +13,46 @@ Ext.decode = Ext.util.JSON.decode;
 //else{
 //	var inputtype =  "text";
 //}
+
+function setPlexCookie(ckName, ckValue) {
+      // Save the value as a cookie, or clear if empty string
+      panel.setValues({ ckName: ckValue });
+      if (ckValue=="") {
+            clearCookie(ckName);
+      } else {
+            setCookie(ckName, ckValue, 1000);
+      }
+      // signal to application that Cookie was saved
+      panel.submit(wcli.util.evt("Updated", ckName));
+      return ckValue;
+}
+	            
+function setCookie(ckName, ckValue, expDays) {
+      var expDate = new Date();
+      expDate.setDate(expDate.getDate() + expDays);
+      var ckValue = escape(ckValue) + ((expDays==null) ? "" : "; expires=" + expDate.toUTCString());
+      document.cookie=ckName + "=" + ckValue;
+}
+	            
+function getCookie(ckName) {
+      ckName += "=" ;
+      var ckArray = document.cookie.split(';');
+    for(var i = 0; i < ckArray.length; i++) {
+            var ck = ckArray[i];
+            while (ck.charAt(0)==' ') {
+                  ck = unescape(ck.substring(1,ck.length));
+            }
+            if (ck.indexOf(ckName) == 0) {
+                  return unescape(ck.substring(ckName.length,ck.length));
+            }
+      }
+      return null;
+}
+	            
+function clearCookie(ckName) {
+      setCookie(ckName, "", -1) ;
+}
+
 Date.monthNames = [nls.month[1], nls.month[2], nls.month[3], nls.month[4], nls.month[5], nls.month[6], nls.month[7], nls.month[8], nls.month[9], nls.month[10], nls.month[11], nls.month[12]];
 Ext.ux.DatePicker.prototype.months = [nls.month[1], nls.month[2], nls.month[3], nls.month[4], nls.month[5], nls.month[6], nls.month[7], nls.month[8], nls.month[9], nls.month[10], nls.month[11], nls.month[12]];
 Ext.ux.DatePicker.prototype.days = [nls.day[1], nls.day[2], nls.day[3], nls.day[4], nls.day[5], nls.day[6], nls.day[7]];

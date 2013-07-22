@@ -1,0 +1,22 @@
+/(!EnableAction:SetValue)
+
+/(!ValuesArea)
+	/(!Action:SetValue)"/(!NameID)": setPlexCookie("/(!NameID)", /(!This)),/(!Action)
+/(!ValuesArea)
+
+/(!JSOnLoad)
+// Set the field value to the value in the cookie if anything, and send the modified event
+var /(!NameID)Val = panel.getFields("/(!NameID)");
+if (typeof /(!NameID)Val != "undefined") {
+	panel.setValues({ "/(!NameID)": getCookie("/(!NameID)")});
+	if (/(!NameID)Val.value) {
+		panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
+	}	
+}
+/(!JSOnLoad)
+{
+	xtype: 'hiddenfield',
+	name: "/(!NameID)",
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	value: null
+},
