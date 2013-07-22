@@ -55,10 +55,11 @@ Ext.define('wcli.Video', { // reserved for future use
 	config: {
 		controlName: {},
 		url: {},
-		layout: 'fit',
+		//layout: 'fit',
+		//flex: 1,
 		enableControls: true,
-		preload: false,
-		width: '100%'
+		preload: true
+		//fullscreen: true
 	}
 });
 
