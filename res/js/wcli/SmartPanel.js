@@ -134,10 +134,12 @@ Ext.ns('wcli');
 			
 			for (ctlName in bodyFields) {
 				var ctl = bodyFields[ctlName];
-				if (ctl.extraControl) {
-					Ext.each(ctl.extraControl, function(xtraCtl) {
-						bodyFields[xtraCtl.name] = xtraCtl;
-					});
+				if(ctl){
+					if (ctl.extraControl) {
+						Ext.each(ctl.extraControl, function(xtraCtl) {
+							bodyFields[xtraCtl.name] = xtraCtl;
+						});
+					}
 				}
 			}
 			
