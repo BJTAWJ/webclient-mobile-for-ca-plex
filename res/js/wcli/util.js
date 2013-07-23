@@ -271,6 +271,58 @@ wcli.form.number = Ext.extend(wcli.form.BaseText, {
 
 Ext.reg('wclinumberfield', wcli.form.number);
 
+wcli.form.int = Ext.extend(wcli.form.BaseText, {
+	ui: 'number',
+	inputType: inputtype,
+    minValue : undefined,
+    maxValue : undefined,
+    stepValue : 0.01,
+    renderTpl: [
+                '<tpl if="label"><div class="x-form-label"><span>{label}</span></div></tpl>',
+                '<tpl if="fieldEl"><div class="x-form-field-container">',
+                    '<input id="{inputId}" type="{inputType}" name="{name}" class="{fieldCls}" pattern="[0-9]*"',
+                        '<tpl if="tabIndex">tabIndex="{tabIndex}" </tpl>',
+                        '<tpl if="placeHolder">placeholder="{placeHolder}" </tpl>',
+                        '<tpl if="style">style="{style}" </tpl>',
+                        '<tpl if="minValue != undefined">min="{minValue}" </tpl>',
+                        '<tpl if="maxValue != undefined">max="{maxValue}" </tpl>',
+                        '<tpl if="stepValue != undefined">step="{stepValue}" </tpl>',
+                        '<tpl if="autoComplete">autocomplete="{autoComplete}" </tpl>',
+                        '<tpl if="autoCapitalize">autocapitalize="{autoCapitalize}" </tpl>',
+                        '<tpl if="autoFocus">autofocus="{autoFocus}" </tpl>',
+                    '/>',
+                    '<tpl if="useMask"><div class="x-field-mask"></div></tpl>',
+                    '</div></tpl>',
+                '<tpl if="useClearIcon"><div class="x-field-clear-container"><div class="x-field-clear x-hidden-visibility">&#215;</div><div></tpl>'
+            ],
+        
+    onFocus: function(e) {
+    	wcli.form.number.superclass.onFocus.call(this, arguments);
+    	
+    	if (this.getValue() == "0") {
+    		this.setValue("");
+    	}
+    },
+    
+
+    initEvents: function() {
+        Ext.form.Text.prototype.initEvents.call(this);
+
+        if (this.fieldEl) {
+            this.mon(this.fieldEl, {
+                keypress: this.onKeyPress,
+                scope: this
+            });
+        }
+    },
+    
+    onKeyPress: function(e) {
+        this.fireEvent('keypress', this, e);
+    }
+
+});
+
+Ext.reg('wcliintfield', wcli.form.int);
 
 wcli.form.text = Ext.extend(wcli.form.BaseText, {
     initEvents: function() {

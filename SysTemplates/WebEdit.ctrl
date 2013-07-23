@@ -19,7 +19,11 @@
 	/(!If:/(!DataType)=Char)
 		xtype: "wclitextfield",
 	/(!Else)
+		/(!If:/(!DataType)=Double)
 		xtype: "wclinumberfield",
+		/(!Else)
+		xtype: "wcliintfield",
+		/(!If)
 	/(!If)
 	id: "/(!NameID)",
 	name: "/(!NameID)",
