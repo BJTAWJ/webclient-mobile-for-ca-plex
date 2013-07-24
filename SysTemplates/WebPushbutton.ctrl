@@ -13,7 +13,7 @@
 
 new wcli.Button({
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
-	cls: '/(!Param:class)',
+	cls: '/(!Param:cls)',
 	disabled: /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
 	hidden: /(!If:/(!Property:Visible)=Yes)false/(!Else)true/(!If),
 	iconCls: "/(!Param:iconCls)",

@@ -98,13 +98,19 @@
 					window.panel = Ext.create('wcli.SmartPanel',panelConfig);
 					window.panel.panelId = /(PNLID);
 					
+					/(!AttachPoint:name=ExtraController)
+					
 					window.controller = new Ext.Panel({
 						fullscreen: true,
 						layout: 'card',
 						items: [panel]
 					});
-					panel.show();
 					
+					/(!AttachPoint:name=Container)	
+					
+					panel.show();
+					window.controller.show();
+									
 					wcli.util.addCSSArea(panelConfig.cssArea);
 					panelConfig.jsOnLoad();
 					

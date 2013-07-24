@@ -4,14 +4,8 @@ wcli.TreeMenu.parseMenu = function(menuStr) {
 	//take a string and return a store
 	return new Ext.data.TreeStore({
 		model: 'ListItem',
-		root: wcli.TreeMenu.parseNode(menuStr).rootItems,
-		proxy: {
-			type: 'ajax',
-			reader: {
-				type: 'tree',
-				root: 'items'
-			}
-		}
+		defaultRootProperty: 'items',
+		root: wcli.TreeMenu.parseNode(menuStr).rootItems
 	});
 };
 
