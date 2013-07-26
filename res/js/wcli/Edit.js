@@ -63,65 +63,86 @@ Ext.define('wcli.field.BaseText', {
 });
 
 /* wcli.form.number and wcli.form.text are currently not used. Needs to be revisited */
-if(!Ext.os.is.iOS){
-	var inputtype = "number";
-}
-else{
-	var inputtype =  "text";
-}
-Ext.define('wcli.field.number', {
-	extend: 'wcli.field.BaseText',
-	xtype: ['wclinumberfield'],
-	config: {
-		controlName: {}
-	},
-	inputType: inputtype,
-    minValue : undefined,
-    maxValue : undefined,
-    stepValue : undefined,
-    renderTpl: [
-        '<tpl if="label"><div class="x-form-label"><span>{label}</span></div></tpl>',
-        '<tpl if="fieldEl"><div class="x-form-field-container">',
-            '<input id="{inputId}" type="{inputType}" name="{name}" pattern="[0-9]*" class="{fieldCls}"', 
-               '<tpl if="tabIndex">tabIndex="{tabIndex}" </tpl>',
-                '<tpl if="placeHolder">placeholder="{placeHolder}" </tpl>',
-                //'<tpl if="placeHolder">placeholder="TEST" </tpl>',
-                '<tpl if="style">style="{style}" </tpl>',
-                '<tpl if="minValue != undefined">min="{minValue}" </tpl>',
-                '<tpl if="maxValue != undefined">max="{maxValue}" </tpl>',
-                '<tpl if="stepValue != undefined">step="{stepValue}" </tpl>',
-                '<tpl if="autoComplete">autocomplete="{autoComplete}" </tpl>',
-                '<tpl if="autoCapitalize">autocapitalize="{autoCapitalize}" </tpl>',
-                '<tpl if="autoFocus">autofocus="{autoFocus}" </tpl>',            '/>',
-            '<tpl if="useMask"><div class="x-field-mask"></div></tpl>',
-            '</div></tpl>',
-        '<tpl if="useClearIcon"><div class="x-field-clear-container"><div class="x-field-clear x-hidden-visibility">×</div><div></tpl>'    ],
-        
-    onFocus: function(e) {
-    	wcli.form.number.superclass.onFocus.call(this, arguments);
-    	
-    	if (this.getValue() == "0") {
-    		this.setValue("");
-    	}
+Ext.define('Ext.field.Integer', {
+    extend:  Ext.field.Text ,
+    xtype: 'integerfield',
+
+    config: {
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        component: {
+            type: 'number'
+        },
+
+        /**
+         * @cfg
+         * @inheritdoc
+         */
+        ui: 'number'
     },
-    
 
-    initEvents: function() {
-        Ext.form.Text.prototype.initEvents.call(this);
+    proxyConfig: {
+        /**
+         * @cfg {Number} minValue The minimum value that this Number field can accept
+         * @accessor
+         */
+        minValue: null,
 
-        if (this.fieldEl) {
-            this.mon(this.fieldEl, {
-                keypress: this.onKeyPress,
-                scope: this
-            });
+        /**
+         * @cfg {Number} maxValue The maximum value that this Number field can accept
+         * @accessor
+         */
+        maxValue: null,
+
+        /**
+         * @cfg {Number} stepValue The amount by which the field is incremented or decremented each time the spinner is tapped.
+         * Defaults to undefined, which means that the field goes up or down by 1 each time the spinner is tapped
+         * @accessor
+         */
+        stepValue: null
+    },
+
+    doInitValue : function() {
+        var value = this.getInitialConfig().value;
+
+        if (value) {
+            value = this.applyValue(value);
         }
-    },
-    
-    onKeyPress: function(e) {
-        this.fireEvent('keypress', this, e);
-    }
 
+        this.originalValue = value;
+        this.getComponent().element.dom.firstChild.setAttribute("pattern","[0-9]*");
+    },
+
+    applyValue: function(value) {
+        var minValue = this.getMinValue(),
+            maxValue = this.getMaxValue();
+
+        if (Ext.isNumber(minValue) && Ext.isNumber(value)) {
+            value = Math.max(value, minValue);
+        }
+
+        if (Ext.isNumber(maxValue) && Ext.isNumber(value)) {
+            value = Math.min(value, maxValue);
+        }
+
+        value = parseFloat(value);
+        return (isNaN(value)) ? '' : value;
+    },
+
+    getValue: function() {
+        var value = parseFloat(this.callParent(), 10);
+        return (isNaN(value)) ? null : value;
+    },
+
+    doClearIconTap: function(me, e) {
+        me.getComponent().setValue('');
+        me.getValue();
+        me.hideClearIcon();
+    }
 });
+
 
 Ext.define('wcli.form.htmlarea',{
 	extend:'Ext.form.TextArea',
@@ -179,6 +200,13 @@ Ext.define('wcli.field.Text',{
 
 Ext.define('wcli.field.Number',{
 	extend: 'Ext.field.Number', 
+	config: {
+		controlName: {}
+	},
+});
+
+Ext.define('wcli.field.Integer',{
+	extend: 'Ext.field.Integer', 
 	config: {
 		controlName: {}
 	},
