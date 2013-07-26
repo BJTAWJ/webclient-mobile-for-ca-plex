@@ -46,3 +46,27 @@ Ext.define('wcli.field.CheckboxToggle',{
 		return this.getString(value);
 	}
 });
+
+Ext.define('wcli.field.Checkbox',{
+	extend: 'Ext.field.Checkbox', 
+	config: {
+		controlName: {},
+		uncheckedValue: "",
+		checkedValue: "",
+	},
+	
+	setChecked: function(value) {
+		var newChecked = false;
+		if(this.getCheckedValue() == value){
+			newChecked = true;
+		}
+		this.updateChecked(newChecked);
+		this._checked = newChecked;
+    },
+    
+    getChecked: function() {
+        // we need to get the latest value from the {@link #input} and then update the value
+        this._checked = this.getComponent().getChecked();
+        return this._checked;
+    }
+});
