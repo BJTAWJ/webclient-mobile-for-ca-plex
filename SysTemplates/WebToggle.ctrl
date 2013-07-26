@@ -15,16 +15,15 @@
 	/(!Action:SetFocus)"/(!NameID)",/(!Action)
 /(!FocusArea)
 
-new wcli.field.Checkbox({
+new wcli.field.CheckboxToggle({
 	id: "/(!NameID)",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
-	cls: '/(!Param:cls)',
+	cls: '/(!Param:class)',
 	label: "/(!Property:Text)" || "Field",
 	labelWidth: /(!If:/(!Param:width))"/(!Param:width)" /(!Else)"40%" /(!If),
 	uncheckedValue: "/(!UncheckedValue)",
 	checkedValue: "/(!CheckedValue)",
-	checked: /(!This) === "/(!CheckedValue)",
 	value: /(!This) || "/(!UncheckedValue)",
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
