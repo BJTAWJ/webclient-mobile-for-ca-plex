@@ -18,12 +18,16 @@
 /(!If:/(!DataType)=Char)
 new wcli.field.Text({
 /(!Else)
-new wcli.field.Number({
+	/(!If:/(!DataType)=Double)
+	new wcli.field.Number({
+	/(!Else)
+	new wcli.field.Integer({
+	/(!If)
 /(!If)
 	id: "/(!NameID)",
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
-	cls: '/(!Param:class)',
+	cls: '/(!Param:cls)',
 	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || undefined,
 	maxLength: /(!Length),
 	labelWidth: "40%",
