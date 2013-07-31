@@ -26,7 +26,7 @@
 
 /(!JSOnReady)
 	/(ALERTS)
-		message = "/(Embed:html)/(AlertMsg)/(Embed)"; messageType = "/(AlertType)";
+		message = /(Embed:html)/(AlertMsg)/(Embed); messageType = /(AlertType);
 		if (messageType == "dialog"){
 			wcli.msg.alert('', message, function() {									
 			});
