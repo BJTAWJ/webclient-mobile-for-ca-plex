@@ -44,8 +44,6 @@
 			}
 			/(!AttachPoint:name=JSInit)
 			
-			
-		/(Embed:js)
 			Ext.setup({
 				tabletStartupScreen: '/(!WsRes)/images/tablet_startup.png',
 				phoneStartupScreen: '/(!WsRes)/images/phone_startup.png',
@@ -58,11 +56,13 @@
 					wcli.LoadMask = new Ext.LoadMask(Ext.getBody(), {msg:""});
 					window.panelFullscreen = 'true';
 					/(!AttachPoint:name=JSOnReady)
+			/(Embed)
 					var panelConfig = /(!If)({
+			/(Embed:js:cdata)
 						xtype: 'smartpanel',
 						cls: 'x-tabpanel x-tabpanel-dark /(!Panel:!Name)',
 						panelId: /(PNLID),
-						url: '/(WSACTION)',
+						url: /(WSACTION),
 						scroll: 'vertical',
 						fullscreen: window.panelFullscreen,
 						layout: {
@@ -118,6 +118,7 @@
 				}
 			}
 			Ext.EventManager.on(window, 'beforeunload', /(!Panel:!NameID)_unload);
+		/(Embed)
 		</script>
 	</head>
 	<body onbeforeunload="/(!Panel:!NameID)_unload();" >
