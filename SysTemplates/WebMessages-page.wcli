@@ -21,7 +21,12 @@
 		type: /(AlertType)	
 	},
 	/(!Panel:!Action)
-	
+	/(ALERTS)
+	{
+		message: /(Embed:html)/(!ActionArg)/(Embed),
+		type: /(AlertType)
+	},
+	/(ALERTS)
 /(!AlertsArea)
 
 /(!JSOnReady)
