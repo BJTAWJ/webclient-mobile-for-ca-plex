@@ -19,6 +19,7 @@
 	name: "/(!NameID)",
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	label: "/(!Param:label)" || undefined,
+	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
 	value: /(!This),
 	width: 150,
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
