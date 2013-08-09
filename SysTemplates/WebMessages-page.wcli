@@ -23,7 +23,7 @@
 	/(!Panel:!Action)
 	/(ALERTS)
 	{
-		message: /(Embed:html)/(!ActionArg)/(Embed),
+		message: /(Embed:html)/(AlertMsg)/(Embed),
 		type: /(AlertType)
 	},
 	/(ALERTS)
