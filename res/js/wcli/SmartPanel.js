@@ -86,7 +86,7 @@ Ext.ns('wcli');
 				bodyMap = {};
 			for (var i = 0; i < body.length; i++) {
 				var item = body[i];
-				if(item.hidden == false || item.hidden == undefined){
+				//if(item.hidden == false || item.hidden == undefined){
 					var	name = item.controlName.fieldSet || '';
 					if (name.substr(0,1) == "$"){
 						name = customNLS.title[name];
@@ -96,7 +96,7 @@ Ext.ns('wcli');
 							items: []
 						});
 					fieldSet.items.push(item);
-				}
+				//}
 			}
 			for (var i = 0; i < bodyItems.length; i++) {
 				config.items.push({
