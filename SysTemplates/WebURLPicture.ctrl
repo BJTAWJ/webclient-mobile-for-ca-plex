@@ -15,8 +15,8 @@
 new wcli.ImageComponent({
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	mode: "",
-	/(!If:/(!BitmapFile))
-	src: /(!WsRes)+ "/images/" + "/(!BitmapFile)",
+	/(!If:/(!Param:BitmapFile))
+	src: /(!WsRes)+ "/images/" + "/(!Param:BitmapFile)",
 	/(!Else)
 	src: /(!WsRes)+ "/images/" + /(!This),
 	/(!If)

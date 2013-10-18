@@ -32,7 +32,7 @@ new wcli.field.Text({
 	maxLength: /(!Length),
 	labelWidth: "40%",
 	// /(!LabelStyle:width=/(!Param:labelWidth):align=/(!Param:labelAlign):nc) 
-	value: /(!If:/(!DataType)=Char)/(!This)/(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)0/(!If))/(!If) /(!AttachPoint:name=Extra:inlinetemplate) + ' ' + /(!If:/(!DataType)=Char)/(!This) /(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)0/(!If)) /(!If)/(!AttachPoint) ,
+	value: /(!If:/(!DataType)=Char)/(!This)/(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)/(!DecLength)/(!If))/(!If) /(!AttachPoint:name=Extra:inlinetemplate) + ' ' + /(!If:/(!DataType)=Char)/(!This) /(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)/(!DecLength)/(!If)) /(!If)/(!AttachPoint) ,
 	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
 	extraControl: ([/(!AttachPoint:name=ExtraControl)]),
 	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
