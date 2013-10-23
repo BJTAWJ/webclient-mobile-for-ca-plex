@@ -390,14 +390,42 @@ wcli.util = (function() {
 			
 			var store = {
 				model: model,
-				/*groupField: _esc(cols[0]),*/
-				/*sorters: _esc(cols[0]),*/
 				data: []
 			};
 			
 			if (grouped) {
-				store.groupField = _esc(cols[0]);
-				store.sorters = _esc(cols[0]);
+		    	var property = _esc(cols[0]);
+
+		    	store.grouper = Ext.create('Ext.util.Grouper', {
+		    		property: property,
+		    		direction: 'ASC',
+		    		sorterFn: function(item1, item2) {
+		    			return 0;
+		    		}
+		    	});
+				store.sorters = [
+				  /*  {
+				    	sorterFn: function(record1,record2) {
+				    		var name1 = record1.data[property].charAt(0);
+				    		var name2 = record2.data[property].charAt(0);
+				    		if (isNaN(parseInt(name1)) == true && isNaN(name2) == false) {
+				    			return 1;
+				    		} else if (isNaN(name1) == false && isNaN(parseInt(name2)) == true) {
+				    			return -1;
+				    		} else {
+					    		if(name1 < name2){
+					    			return 1
+					    		}
+					    		else if(name1 > name2){
+					    			return -1
+					    		}
+					    		else{
+					    			return 0
+					    		}
+				    		}
+				    	}
+				    } */
+				];
 			}
 			
 			for (var i = 0; i < rows.length; i++) {
