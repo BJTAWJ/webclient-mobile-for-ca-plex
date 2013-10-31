@@ -4,7 +4,12 @@ Ext.ns('nls.picker');
 Ext.ns('nls.month');
 Ext.ns('nls.day');
 
-nls.language = window.navigator.language.substr(0, 2);
+if(window.navigator.language){
+	nls.language = window.navigator.language.substr(0, 2);
+}
+if(window.navigator.userLanguage){
+	nls.language = window.navigator.userLanguage.substr(0,2);
+}
 
 nls.msg.en = {
 		yesButton: 'OK',
