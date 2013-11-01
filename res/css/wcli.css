@@ -51,6 +51,9 @@
 	font-size: 0.75em;
 }
 
+.x-ie .x-image-component{
+	height: auto;
+}
 .x-image-component {
 	background-color: #c03;
 	background-position: center center;
