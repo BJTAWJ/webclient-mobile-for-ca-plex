@@ -236,7 +236,7 @@ Ext.define('wcli.field.SpinnerEdit',{
 	   var currentHeight = textarea.clientHeight;
 	   
 	   if (newHeight == 0 && currentHeight == 0){
-		   textarea = textdiv.childNodes[1].firstElementChild;
+		   textarea = textdiv.childNodes[1].firstElementChild.childNodes[0];
 		   newHeight = textarea.scrollHeight;
 		   currentHeight = textarea.clientHeight;
 	   }

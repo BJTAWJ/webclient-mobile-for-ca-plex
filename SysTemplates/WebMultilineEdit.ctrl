@@ -31,7 +31,7 @@ new wcli.field.TextArea({
 	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
 	placeHolder: '/(!Param:hint)',
 	listeners: {
-		afterrender: function() {
+		painted: function() {
 				/(!If:/(!Param:autoExpand))
 				wcli.autoExpand("/(!NameID)");
 				/(!If)
