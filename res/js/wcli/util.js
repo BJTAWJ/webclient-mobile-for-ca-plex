@@ -125,10 +125,10 @@ wcli.util = (function() {
 							if(Ext.browser.is.IE){
 								setTimeout(function() {
 									Ext.DomQuery.select('.x-translatable-hboxfix').forEach(function(dom) { dom.style.height = '0'; }); 
-								}, 10);
+								}, 100);
 								setTimeout(function() {
 									Ext.DomQuery.select('.x-translatable-hboxfix').forEach(function(dom) { dom.style.height = '100%'; });
-								}, 20);
+								}, 200);
 							}
 							
 						},null, { single: true });
