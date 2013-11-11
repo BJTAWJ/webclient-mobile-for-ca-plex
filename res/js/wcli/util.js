@@ -408,7 +408,7 @@ wcli.util = (function() {
 		    		property: property,
 		    		direction: 'ASC',
 		    		sorterFn: function(item1, item2) {
-		    			return 0;
+		    			return item1.get('$$idx$$') - item2.get('$$idx$$');
 		    		}
 		    	});
 				store.sorters = [
