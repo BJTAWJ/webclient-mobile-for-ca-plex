@@ -58,7 +58,7 @@
 					/(!AttachPoint:name=JSOnReady)
 			/(Embed)
 					var panelConfig = /(!If)({
-			/(Embed:js:cdata)
+					/(Embed:js:cdata)
 						xtype: 'smartpanel',
 						cls: 'x-tabpanel x-tabpanel-dark /(!Panel:!Name)',
 						panelId: /(PNLID),
@@ -70,7 +70,6 @@
 							align: 'stretch'
 						},
 						plexConfig: {
-						  /(Embed:js:cdata)
 							header: ([/(!AttachPoint:name=HeaderArea)]),
 							body: ([/(!AttachPoint:name=MainArea)]),
 							hidden: [/(!AttachPoint:name=HiddenArea)],
@@ -78,17 +77,16 @@
 							toolbars: [/(!AttachPoint:name=ToolbarArea)],
 							tabs: [/(!AttachPoint:name=TabbarArea)],
 							footer: ([/(!AttachPoint:name=FooterArea)]),
-						  /(Embed)
 						},
 						jsOnLoad: function() {
-					      /(Embed:js:cdata)
 							/(!AttachPoint:name=JSOnLoad)
-						  /(Embed)  
 						},
 						cssArea: [ /(!AttachPoint:name=CSSArea:sep=,) ]
 					})
+					/(Embed)
 					/(!If:/(!Req:_panelConfig))/(!Else)									
-
+					/(Embed:js:cdata)
+					
 					window.panel = Ext.create(panelConfig);
 					
 					/(!AttachPoint:name=ExtraController)

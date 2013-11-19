@@ -1,4 +1,5 @@
 /(!Panel:!EnableAction:Refresh)
+/(!MobileAlerts)
 
 /(!If:/(!Req:_type)=json)
 	/(ContentType:application/json)
