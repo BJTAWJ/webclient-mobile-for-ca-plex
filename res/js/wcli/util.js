@@ -519,8 +519,8 @@ wcli.util = (function() {
 			if (typeof state.disabled !== 'undefined') {
 				control[state.disabled ? 'disable' : 'enable']();
 			}
-			if (typeof state.visible !== 'undefined') {
-				control[state.visible ? 'show' : 'hide']();
+			if (typeof state.hidden !== 'undefined') {
+				control[state.hidden ? 'hide' : 'show']();
 				var parent = control.up();
 				if (parent.xtype == 'toolbar') {
 					var tbItemVisible = false;

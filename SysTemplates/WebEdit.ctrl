@@ -7,7 +7,7 @@
 /(!StatesArea)
 	/(!Action:SetState)"/(!NameID)": {
 		"disabled": /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
-		"visible": /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If)
+		"hidden": /(!If:/(!Property:Visible)=Yes)false/(!Else)true/(!If)
 	},/(!Action)
 /(!StatesArea)
 
