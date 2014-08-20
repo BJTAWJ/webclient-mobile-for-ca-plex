@@ -183,7 +183,7 @@ wcli.util = (function() {
 			
 			if (state.gridCols && state.gridRows) {
 				var store = window[control.getName() + '_store'],
-					storeConf = wcli.util.gridStore(control.getName(),
+					storeConf = wcli.util.gridDataStore(control.getName(),
 						state.gridCols, state.gridRows, false);
 				store.clearData();
 				store.addData(storeConf.data);
@@ -373,10 +373,10 @@ wcli.util = (function() {
 					if (dataType == "Date") {
 						c = "[Ext.Date.format(wcli.util.dateConvert(values[\"" + c + "\"]), Ext.util.Format.defaultDateFormat)]";
 					}
-					if (dataType == "FixedDec" || dataType == "Double"){
-						c = c.toFixed(2);
-					}
-					tpl += "<td class='col" + i + "'>{" + c + "}</td>";
+					//if (dataType == "FixedDec" || dataType == "Double"){
+					//	c = c.toFixed(2);
+					//}
+					tpl += "<td class='col" + i + "' colIndex='" + i + "' dataType='" + dataType + "'>{" + c + "}</td>";
 				}
 				if (i % 3 == 2){
 					tpl += "</tr></table>";
@@ -388,7 +388,7 @@ wcli.util = (function() {
 			return tpl;
 		},
 		
-		gridStore: function(model, cols, rows, grouped) {
+		gridDataStore: function(model, cols, rows, grouped) {
 			if (typeof cols === 'string') {
 				cols = JSON.parse(cols);
 			}
@@ -437,8 +437,9 @@ wcli.util = (function() {
 			}
 			
 			for (var i = 0; i < rows.length; i++) {
-				var row = rows[i],
-					item = {};
+				var row = rows[i];
+				var	item = {};
+			
 				for (var j = 0; j < row.length; j++) {
 					var name = cols[j];
 					item[_esc(name)] = row[j].v;
@@ -448,6 +449,25 @@ wcli.util = (function() {
 			}
 			
 			return store;
+		},
+		
+		gridModeStore: function(model, cols, rows) {
+			if (typeof cols === 'string') {
+				cols = JSON.parse(cols);
+			}
+			if (typeof rows === 'string') {
+				rows = JSON.parse(rows);
+			}
+			
+			var colModes = [];
+			
+			var row = rows[0];
+			var	item = {};
+			for (var j = 0; j < cols.length; j++) {
+				var name = cols[j];
+				colModes[j] = row[j].m;
+			}
+			return colModes;
 		},
 		
 		getDate: function(dateStr) {
@@ -506,7 +526,7 @@ wcli.util = (function() {
 	   //wcli.loadTimer = null;
 
 	   /* The amount of time in milliseconds before the load mask should appear. */
-	   //wcli.LOADMASK_TIME = 350;
+	   wcli.LOADMASK_TIME = 350;
 
 	   /**
 	    * Called when a server request is started. If the request is not finished

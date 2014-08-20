@@ -1,0 +1,102 @@
+/(!EnableAction:Grid.Clear,Grid.Insert,Grid.Remove,Grid.Update, SetState)
+
+/(!StatesArea)
+	/(!Action:Grid.Clear)
+	"/(!NameID)": {
+		"gridCols": /(!This:!jsonCols),
+		"gridRows": /(!This:!jsonRows)
+	},
+	/(!Action)
+	/(!Action:Grid.Insert)
+	"/(!NameID)": {
+		"gridCols": /(!This:!jsonCols),
+		"gridRows": /(!This:!jsonRows)
+	},
+	/(!Action)
+	/(!Action:Grid.Remove)
+	"/(!NameID)": {
+		"gridCols": /(!This:!jsonCols),
+		"gridRows": /(!This:!jsonRows)
+	},
+	/(!Action)
+	/(!Action:Grid.Update)
+	"/(!NameID)": {
+		"gridCols": /(!This:!jsonCols),
+		"gridRows": /(!This:!jsonRows)
+	},
+	/(!Action)
+/(!StatesArea)
+
+/(!JSInit)
+	 var grouped = "/(!Param:grouped)" === "true";
+	/(!WebGrid-model.inc)
+/(!JSInit)
+
+/(!JS)
+	 var grouped = "/(!Param:grouped)" === "true";
+	/(!WebGrid-model.inc)
+/(!JS)
+
+/(!MainArea)
+{
+	xtype: "textfield",
+	hidden: true,
+	name: "/(!NameID)"
+},
+/(!MainArea)
+
+(function() {
+		/(!NameID)_cols = [
+			/(!AttachPoint:name=ColumnsArea:inlinetemplate:sep=,)
+				{ colHeader: "/(!Text:htmlbr)",
+				  dataType: "/(!Edit:!DataType)"
+				}
+			/(!EnableAction:SetState)
+			/(!AttachPoint)
+		];
+})() ||
+
+/(!If:/(!Param:renderTplGenerator))
+new Ext.Panel({
+	layout: "vbox",
+	flex: 1,
+	items: [
+	  {
+		html: (/(!Param:renderTplGenerator))(/(!This:!jsonCols),/(!jsonColVis), /(!NameID)_cols, "/(!Param:grouped)" === "true", "/(!Param:gridClass)")
+	  },	  
+/(!If)
+
+new wcli.EditableGrid({
+	baseCls: "/(!Param:gridClass)",
+	name: "/(!NameID)",
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	cls: '/(!Param:class)',
+	flex: 1,
+	onItemDisclosure: "/(!Param:disclose)" === "true",
+	grouped: "/(!Param:grouped)" === "true",
+	indexBar: "/(!Param:indexBar)" === "true",
+	itemTpl: (/(!If:/(!Param:tplGenerator))/(!Param:tplGenerator)/(!Else)wcli.util.gridTpl/(!If))(/(!This:!jsonCols),/(!jsonColVis),
+				/(!NameID)_cols, "/(!Param:grouped)" === "true", "/(!Param:gridClass)"),
+	itemCls: "/(!Param:itemClass)",
+	store: window["/(!NameID)_store"],
+	modes:  window["/(!NameID)_store"].colModes,
+	disabled: "/(!Mode)" === "Read Only",
+	listeners: {
+		itemtap: function(view, index, target, record, event) {
+			/(!If:/(!Event:phys=Changed))
+			this.onTap(view, index, target, record, event);
+			index = view.getStore().getAt(index).get('$$idx$$') + this.getChanges();
+			panel.setValues({ "/(!NameID)": index });
+			panel.submit(wcli.util.evt("Changed", "/(!NameID)"));
+			/(!If)
+		}
+	}
+})
+
+/(!If:/(!Param:renderTplGenerator))
+	]
+})	
+/(!If)
+,
+
+
