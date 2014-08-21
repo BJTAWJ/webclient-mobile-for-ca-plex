@@ -33,13 +33,13 @@ Ext.define('wcli.field.DatePicker',{
 	},
 	
 	getValue: function(format) {
-        var value = this.value || null;
+        var value = this._value || null;
         if(value == null){
         	return value;
         }
         else{
-        	return (format && Ext.isDate(value)) ? value.format(Ext.util.Format.defaultDateFormat)
-        		: value.format('Ymd');
+        	return (format && Ext.isDate(value)) ? Ext.Date.format(value, Ext.util.Format.defaultDateFormat)
+        		: Ext.Date.format(value,'Ymd');
     	}
     },
 });
