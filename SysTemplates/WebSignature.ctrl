@@ -1,0 +1,37 @@
+/(!EnableAction:SetValue,SetState,SetFocus)
+
+/(!ValuesArea)
+	/(!Action:SetValue)"/(!NameID)": /(!This),/(!Action)
+/(!ValuesArea)
+
+/(!StatesArea)
+	/(!Action:SetState)"/(!NameID)": {
+		'disabled': /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+		'visible': /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If)
+	},/(!Action)
+/(!StatesArea)
+
+/(!FocusArea)
+	/(!Action:SetFocus)"/(!NameID)",/(!Action)
+/(!FocusArea)
+
+new wcli.Signature({
+	id: '/(!NameID)',
+	name: "/(!NameID)",
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	value: /(!This),
+	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+	hidden: /(!If:/(!Property:Visible)=Yes)false/(!Else)true/(!If),
+	listeners: {
+		focus: function(e) {
+				/(!If:/(!Event:phys=Gained Focus))
+				panel.submit(wcli.util.evt("Gained Focus", "/(!NameID)"));
+				/(!If)
+		},
+		blur: function(e) {
+				/(!If:/(!Event:phys=Lost Focus))
+				panel.submit(wcli.util.evt("Lost Focus", "/(!NameID)"));
+				/(!If)
+		}
+	}
+}),
