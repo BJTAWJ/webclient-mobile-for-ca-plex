@@ -37,6 +37,7 @@ Ext.define('wcli.EditableGrid',{
 					me.rowChanges[index] = [];
 				}
 				me.rowChanges[index][colIndex] = inputVal; 
+				me.fireEvent("changed", view, index)
 			});
 			input.dom.focus();
 		}

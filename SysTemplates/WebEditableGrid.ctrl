@@ -84,11 +84,13 @@ new wcli.EditableGrid({
 	listeners: {
 		itemtap: function(view, index, target, record, event) {
 			/(!If:/(!Event:phys=Changed))
-			this.onTap(view, index, target, record, event);
+			this.onTap(view, index, target, record, event);	
+			/(!If)
+		},
+		changed: function(view, index){
 			index = view.getStore().getAt(index).get('$$idx$$') + this.getChanges();
 			panel.setValues({ "/(!NameID)": index });
 			panel.submit(wcli.util.evt("Changed", "/(!NameID)"));
-			/(!If)
 		}
 	}
 })
