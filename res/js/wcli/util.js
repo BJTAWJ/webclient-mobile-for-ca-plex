@@ -461,11 +461,13 @@ wcli.util = (function() {
 			
 			var colModes = [];
 			
-			var row = rows[0];
-			var	item = {};
-			for (var j = 0; j < cols.length; j++) {
-				var name = cols[j];
-				colModes[j] = row[j].m;
+			if(rows.length > 0){
+				var row = rows[0];
+				var	item = {};
+				for (var j = 0; j < cols.length; j++) {
+					var name = cols[j];
+					colModes[j] = row[j].m;
+				}
 			}
 			return colModes;
 		},
