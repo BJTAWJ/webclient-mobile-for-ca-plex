@@ -79,7 +79,7 @@ Ext.define('Ext.ux.DatePicker', {
 		this.refresh();
 
 		// handle events
-		this.bodyElement.on("click", function(e, t) {
+		this.bodyElement.on("tap", function(e, t) {
 			t = Ext.fly(t);
 
 			if (!t.hasCls('unselectable')) {
@@ -88,7 +88,7 @@ Ext.define('Ext.ux.DatePicker', {
 			}
 		}, this, {delegate: 'td'});
 
-		this.bodyElement.on("click", function(e, t) {
+		this.bodyElement.on("tap", function(e, t) {
 			t = Ext.fly(t);
 
 			if (t.hasCls("goto-prevmonth")) {
@@ -100,7 +100,7 @@ Ext.define('Ext.ux.DatePicker', {
 			}
 		}, this, {delegate: 'th'});
 		
-		this.bodyElement.on("click", function(e, t) {
+		this.bodyElement.on("tap", function(e, t) {
 			t = Ext.fly(t);
 			
 			if (t.hasCls("cancelBtn")) {
