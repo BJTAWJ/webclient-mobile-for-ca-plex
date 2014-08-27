@@ -23,6 +23,9 @@ Ext.define('wcli.Signature',{
 	
 	getValue: function(){
 		var value = this.signaturePad.toDataURL();
+		if(this.signaturePad.isEmpty()){
+			value = "";
+		}
 		return value;
 	}
 });
