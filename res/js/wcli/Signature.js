@@ -22,9 +22,12 @@ Ext.define('wcli.Signature',{
 	},
 	
 	getValue: function(){
-		var value = this.signaturePad.toDataURL();
-		if(this.signaturePad.isEmpty()){
-			value = "";
+		var value = "";
+		if(this.signaturePad){
+			value = this.signaturePad.toDataURL();
+			if(this.signaturePad.isEmpty()){
+				value = "";
+			}
 		}
 		return value;
 	}
