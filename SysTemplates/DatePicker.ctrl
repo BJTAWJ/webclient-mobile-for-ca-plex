@@ -1,7 +1,7 @@
 /(!EnableAction:SetValue,SetState,SetFocus)
 
 /(!ValuesArea)
-	/(!Action:SetValue)"/(!NameID)": wcli.getDate(/(!This)),/(!Action)
+	/(!Action:SetValue)"/(!NameID)": wcli.util.getDate(/(!This)),/(!Action)
 /(!ValuesArea)
 
 /(!StatesArea)
