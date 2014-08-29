@@ -14,7 +14,7 @@ Ext.define('wcli.EditableGrid',{
 	},
 	
 	onTap: function(view, index, target, record, event){
-		if(this.getModes() && this.getModes()[event.target.getAttribute("colindex")] == "rw" && event && event.$className == "Ext.event.Touch"){
+		if(this.getModes().length > 0 && this.getModes()[event.target.getAttribute("colindex")] == "rw" && event && event.$className == "Ext.event.Touch"){
 			event.target.innerHTML = "";
 			if(event.target.getAttribute("dataType") == "Double" || event.target.getAttribute("dataType") == "FixedDec"){
 				var inputExt = Ext.create("wcli.field.Number", { renderTo: event.target});
