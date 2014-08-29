@@ -14,7 +14,8 @@ Ext.define('wcli.EditableGrid',{
 	},
 	
 	onTap: function(view, index, target, record, event){
-		if(this.getModes().length > 0 && this.getModes()[event.target.getAttribute("colindex")] == "rw" && event && event.$className == "Ext.event.Touch"){
+		if(this.getModes().length > 0 && event.target && event.target.getAttribute("colindex") && this.getModes()[event.target.getAttribute("colindex")] == "rw" && event && event.$className == "Ext.event.Touch"){
+			var orgValue = event.target.innerText;
 			event.target.innerHTML = "";
 			if(event.target.getAttribute("dataType") == "Double" || event.target.getAttribute("dataType") == "FixedDec"){
 				var inputExt = Ext.create("wcli.field.Number", { renderTo: event.target});
@@ -23,6 +24,7 @@ Ext.define('wcli.EditableGrid',{
 				var inputExt = Ext.create('Ext.form.Text', { renderTo: event.target });
 			}
 			var input = inputExt.element.down('input');
+			input.dom.value = orgValue;
 			var me = this;
 			input.on('blur', function() {
 				var colIndex = inputExt.element.dom.parentNode.getAttribute('colindex');
