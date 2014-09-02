@@ -187,6 +187,11 @@ wcli.util = (function() {
 						state.gridCols, state.gridRows, false);
 				store.clearData();
 				store.addData(storeConf.data);
+				
+				var storeColModes = wcli.util.gridModeStore(control.getName(),
+						state.gridCols, state.gridRows);
+				window[control.getName() + '_store'].colModes = storeColModes;
+				Ext.ComponentQuery.query('list[name=' + control.getName() + ']')[0].setModes(storeColModes);
 			}
 			
 			if (typeof state.disabled !== 'undefined') {
