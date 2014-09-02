@@ -1,0 +1,23 @@
+/(!HeaderArea)
+	{
+		xtype: "container",
+		dock: "top",
+		items: [
+			{
+		     	xtype: "component",
+		     	cls: "panel-caption",
+		     	flex: 1,
+		     	controlName: wcli.util.parseControlName("PCaption:ToolbarArea:align=center"),
+		     	disabled: false,
+		     	hidden: false,
+		     	iconMask: true,
+		     	iconCls: "",
+		    	/(!If:/(!Panel:!Title)=)
+					html: /(!Panel:!Property:Title)
+				/(!Else)
+					html: /(!Panel:!Title)
+				/(!If)
+		    }
+		]		
+	},
+/(!HeaderArea)

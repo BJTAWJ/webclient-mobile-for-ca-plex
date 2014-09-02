@@ -1,0 +1,30 @@
+/(!EnableAction:SetValue)
+
+/(!ValuesArea)
+	/(!Action:SetValue)"/(!NameID)": /(!This),/(!Action)
+/(!ValuesArea)
+
+new wcli.field.Text({
+	id: "/(!NameID)",
+	name: "/(!NameID)",
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	maxLength: /(!Length),
+	value: /(!This),
+	hidden: true,
+	listeners: {
+		change: function() {
+				/(!If:/(!Event:phys=Updated))
+					var geocoder = new google.maps.Geocoder();
+		  			var address = Ext.getCmp("/(!NameID)").getValue();
+		  			geocoder.geocode( { 'address': address}, function(results, status) {
+						if (status == google.maps.GeocoderStatus.OK) {	
+						    var latitude = results[0].geometry.location.lat();
+						    var longitude = results[0].geometry.location.lng();
+						    Ext.getCmp("/(!NameID)").setValue(latitude + "," + longitude);
+						    panel.submit(wcli.util.evt("Updated", "/(!NameID)"));
+					    } 
+					});
+				/(!If)
+		}
+	}
+}),

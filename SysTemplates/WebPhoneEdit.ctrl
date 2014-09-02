@@ -1,0 +1,69 @@
+/(!EnableAction:SetValue,SetState,SetFocus)
+
+/(!ValuesArea)
+	/(!Action:SetValue)"/(!NameID)": /(!This),/(!Action)
+/(!ValuesArea)
+
+/(!StatesArea)
+	/(!Action:SetState)"/(!NameID)": {
+		'disabled': /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+		'visible': /(!If:/(!Property:Visible)=No)false/(!Else)true/(!If)
+	},/(!Action)
+/(!StatesArea)
+
+/(!FocusArea)
+	/(!Action:SetFocus)"/(!NameID)",/(!Action)
+/(!FocusArea)
+
+/(!If:/(!DataType)=Char)
+new wcli.field.Text({
+/(!Else)
+	/(!If:/(!DataType)=Double)
+	new wcli.field.Number({
+	/(!Else)
+	new wcli.field.Integer({
+	/(!If)
+/(!If)
+	id: "/(!NameID)",
+	name: "/(!NameID)",
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	cls: '/(!Param:cls)',
+	label: /(!AttachPoint:name=Label:inlinetemplate)"/(!Text)" || /(!AttachPoint) "/(!Param:label)" || undefined,
+	maxLength: /(!Length),
+	component: {
+        xtype: 'input',
+        type: 'tel'
+    },
+	labelWidth: "40%",
+	// /(!LabelStyle:width=/(!Param:labelWidth):align=/(!Param:labelAlign):nc) 
+	value: /(!If:/(!DataType)=Char)/(!This)/(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)/(!DecLength)/(!If))/(!If) /(!AttachPoint:name=Extra:inlinetemplate) + ' ' + /(!If:/(!DataType)=Char)/(!This) /(!Else)parseFloat(/(!This)).toFixed(/(!If:/(!Param:decimal))/(!Param:decimal)/(!Else)/(!DecLength)/(!If)) /(!If)/(!AttachPoint) ,
+	disabled: /(!If:/(!Mode)=Edit)false/(!Else)true/(!If),
+	extraControl: ([/(!AttachPoint:name=ExtraControl)]),
+	hidden: /(!If:/(!Property:Visible)=No)true/(!Else)false/(!If),
+	placeHolder: '/(!Param:hint)',
+	listeners: {
+		focus: function() {
+				/(!If:/(!Event:phys=Gained Focus))
+				panel.submit(wcli.util.evt("Gained Focus", "/(!NameID)"));
+				/(!If)
+		},
+		blur: function() {
+				/(!If:/(!Event:phys=Lost Focus))
+				panel.submit(wcli.util.evt("Lost Focus", "/(!NameID)"));
+				/(!If)
+		},
+		keypress: function() {
+				wcli.validateMaxLength("/(!NameID)");
+		},
+		keyup: function() {
+				/(!If:/(!Event:phys=Modified))
+				panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
+				/(!If)
+		},
+		change: function() {
+				/(!If:/(!Event:phys=Updated))
+				panel.submit(wcli.util.evt("Updated", "/(!NameID)"));
+				/(!If)
+		}
+	}
+}),
