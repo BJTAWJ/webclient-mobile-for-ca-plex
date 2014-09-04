@@ -15,7 +15,11 @@ Ext.define('wcli.Signature',{
 	
 	onPainted: function(){
 		var newCanvas = document.createElement("CANVAS");
-		newCanvas.setAttribute("width", this.element.getWidth());
+		newCanvas.setAttribute("width", "600px");
+		this.element.dom.style.width = "600px";
+		this.up('container').element.dom.style.width = "600px";
+		this.up('container').element.dom.style.marginLeft = "auto";
+		this.up('container').element.dom.style.marginRight = "auto";
 		this.element.appendChild(newCanvas);
 		this.signaturePad = new SignaturePad(newCanvas);
 		this.up('formpanel').setScrollable(false);
