@@ -19,11 +19,13 @@ Ext.define('wcli.EditableGrid',{
 			event.target.innerHTML = "";
 			if(event.target.getAttribute("dataType") == "Double" || event.target.getAttribute("dataType") == "FixedDec"){
 				var inputExt = Ext.create("wcli.field.Number", { renderTo: event.target});
+				var input = inputExt.element.down('input');
 			}
 			else{
-				var inputExt = Ext.create('Ext.form.Text', { renderTo: event.target });
+				var inputExt = Ext.create('wcli.field.TextArea', { renderTo: event.target });
+				var input = inputExt.element.down('textarea');
 			}
-			var input = inputExt.element.down('input');
+			
 			input.dom.value = orgValue;
 			var me = this;
 			input.on('blur', function() {
