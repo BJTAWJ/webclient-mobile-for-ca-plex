@@ -52,6 +52,12 @@ new wcli.field.Text({
 				wcli.validateMaxLength("/(!NameID)");
 		},
 		keyup: function() {
+				/(!If:/(!Property:Case)=Upper)
+				this.setValue(this.getValue().toUpperCase());
+				/(!If)
+				/(!If:/(!Property:Case)=Lower)
+				this.setValue(this.getValue().toLowerCase());
+				/(!If)
 				/(!If:/(!Event:phys=Modified))
 				panel.submit(wcli.util.evt("Modified", "/(!NameID)"));
 				/(!If)
