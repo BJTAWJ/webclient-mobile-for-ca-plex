@@ -28,7 +28,7 @@
 			/(!If)
 		};
 		function failure() {};
-		navigator.camera.getPicture(success, failure, { quality: 15 });
+		navigator.camera.getPicture(success, failure, { quality: 15, destinationType: Camera.DestinationType.DATA_URL });
 	},
 	text: "Camera"
 },
