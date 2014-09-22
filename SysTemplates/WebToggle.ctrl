@@ -43,6 +43,13 @@ new wcli.field.CheckboxToggle({
 				// so catch the error and ignore it
 				try {
 					var control = Ext.getCmp("/(!NameID)");
+					var currentValue = control.getValue();
+					if (currentValue === "/(!CheckedValue)"){
+						control.setValue("/(!UncheckedValue)");
+					}
+					else{
+						control.setValue("/(!CheckedValue)");
+					}
 					if (control.notFirstChanged){
 						/(!If:/(!Event:phys=Updated))
 						panel.submit(wcli.util.evt("Updated", "/(!NameID)"));
