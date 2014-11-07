@@ -112,6 +112,7 @@ Ext.define('Ext.field.Integer', {
         }
 
         this.originalValue = value;
+
         this.getComponent().element.dom.firstChild.setAttribute("pattern","[0-9]*");
     },
 
@@ -142,7 +143,6 @@ Ext.define('Ext.field.Integer', {
         me.hideClearIcon();
     }
 });
-
 
 Ext.define('wcli.form.htmlarea',{
 	extend:'Ext.form.TextArea',
@@ -203,6 +203,19 @@ Ext.define('wcli.field.Number',{
 	config: {
 		controlName: {}
 	},
+	
+	doInitValue : function() {
+        var value = this.getInitialConfig().value;
+
+        if (value) {
+            value = this.applyValue(value);
+        }
+
+        this.originalValue = value;
+        if (value == "0") {
+        	this.getComponent().input.dom.value = "";
+        }
+    },
 });
 
 Ext.define('wcli.field.Integer',{

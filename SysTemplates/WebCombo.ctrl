@@ -57,6 +57,7 @@ new wcli.field.Select({
 		{
 			items.push({text: name[i], value: value[i]});
 		}
+		items.push({text: "", value: ""});
 		return items;
 	})(),
 	value: /(!This:value),

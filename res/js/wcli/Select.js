@@ -11,9 +11,9 @@ Ext.define('wcli.field.Select',{
     setValue: function(value) {
 	var idx = 0, record;
 		
-	if (value) {
+	//if (value) {
             idx = this.getStore().findExact("text", value);
-        }
+    //    }
 	record = this.getStore().getAt(idx);
 		
 	Ext.form.Select.prototype.setValue.call(this, record && record.get('value'));

@@ -1,1 +1,5 @@
 /(!EnableAction:SetState)
+new wcli.Panel({
+	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
+	html: '<p style="font-size:10px"> /(!Text) </p>'
+}),
