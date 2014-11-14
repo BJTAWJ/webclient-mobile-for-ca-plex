@@ -216,6 +216,11 @@ Ext.define('wcli.field.Number',{
         	this.getComponent().input.dom.value = "";
         }
     },
+    applyValue: function(value) {
+    	if (value == "0") {
+        	this.getComponent().input.dom.value = "";
+        }
+    }
 });
 
 Ext.define('wcli.field.Integer',{
