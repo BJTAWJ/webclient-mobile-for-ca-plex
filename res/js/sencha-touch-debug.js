@@ -11609,8 +11609,8 @@ Ext.Element.addMethods({
     
     getXY : function() {
         
-        var point = window.webkitConvertPointFromNodeToPage(this.dom, new WebKitPoint(0, 0));
-        return [point.x, point.y];
+    	var rect = this.dom.getBoundingClientRect();
+    	return [rect.left, rect.top];
     },
 
     
