@@ -20,8 +20,8 @@ new wcli.Button({
 	ui: "/(!Param:ui)" || "plain",
 	handler: function(b, e) {
 		/(!If:/(!Event:phys=Pressed))
-			/(!If:/(!Param:transition))panel.transition="/(!Param:transition)";/(!If)
-			/(!If:/(!Param:direction))panel.transdir="/(!Param:direction)";/(!If)
+			/(!If:/(!Param:transition))panel.config.transition="/(!Param:transition)";/(!If)
+			/(!If:/(!Param:direction))panel.config.transdir="/(!Param:direction)";/(!If)
 			panel.submit(wcli.util.evt("Pressed", "/(!NameID)"));
 		/(!If)
 	},
