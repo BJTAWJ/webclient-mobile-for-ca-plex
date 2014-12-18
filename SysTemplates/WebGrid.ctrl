@@ -81,10 +81,10 @@ new wcli.List({
 	store: window["/(!NameID)_store"],
 	disabled: "/(!Mode)" === "Read Only",
 	listeners: {
-		itemtap: function(view, index) {
-			/(!If:/(!Event:phys=Select))
+		itemtap: function(view, index) {		
 			index = view.getStore().getAt(index).get('$$idx$$');
 			panel.setValues({ "/(!NameID)": index });
+			/(!If:/(!Event:phys=Select))
 			panel.submit(wcli.util.evt("Select", "/(!NameID)"));
 			/(!If)
 		}
