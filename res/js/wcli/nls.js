@@ -52,6 +52,9 @@ nls.msg.es = {
 		cancelButton: 'Cancelar',
 		okButton: 'Ok'
 };
+if (!nls.msg[nls.language]){
+	nls.language = 'en';
+}
 Ext.apply(nls.msg, nls.msg[nls.language]);
 
 nls.picker.en = {
@@ -83,7 +86,9 @@ nls.picker.es = {
 		doneButton : 'OK',
 		cancelButton: 'Cancelar'
 };
-
+if (!nls.picker[nls.language]){
+	nls.language = 'en';
+}
 Ext.apply(nls.picker, nls.picker[nls.language]);
 
 nls.day.en = {
@@ -145,7 +150,9 @@ nls.day.es = {
  		6: "Vie",
  		7: "Sab"
 };
-
+if (!nls.day[nls.language]){
+	nls.language = 'en';
+}
 Ext.apply(nls.day, nls.day[nls.language]);
 
 nls.month.en = {
@@ -237,5 +244,7 @@ nls.month.es = {
    		11: "Noviembre",
    		12: "Diciembre"	
 };
-
+if (!nls.month[nls.language]){
+	nls.language = 'en';
+}
 Ext.apply(nls.month, nls.month[nls.language]);
