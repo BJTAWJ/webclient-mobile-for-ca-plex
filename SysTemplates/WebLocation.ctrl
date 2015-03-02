@@ -2,10 +2,6 @@
 	/(!WebLocation-init.inc)
 /(!JSOnLoad)
 
-/(!JS)
-	/(!WebLocation-init.inc)
-/(!JS)
-
 new wcli.field.Text({
 	hidden: true,
 	name: "/(!NameID)",
