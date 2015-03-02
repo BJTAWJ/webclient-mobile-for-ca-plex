@@ -6,8 +6,8 @@
 	/(!WebLocation-init.inc)
 /(!JS)
 
-{
-	xtype: "textfield",
+new wcli.field.Text({
 	hidden: true,
-	name: "/(!NameID)"
-},
+	name: "/(!NameID)",
+	id: "/(!NameID)"
+}),
