@@ -191,7 +191,8 @@ wcli.util = (function() {
 				var storeColModes = wcli.util.gridModeStore(control.getName(),
 						state.gridCols, state.gridRows);
 				window[control.getName() + '_store'].colModes = storeColModes;
-				if (typeof yourFunctionName == 'setModes'){
+				currentVar = Ext.ComponentQuery.query('list[name=' + control.getName() + ']')[0]
+				if (typeof currentVar.setModes == 'function'){
 					Ext.ComponentQuery.query('list[name=' + control.getName() + ']')[0].setModes(storeColModes);
 				}
 			}
