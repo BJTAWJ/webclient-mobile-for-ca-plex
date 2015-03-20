@@ -99,8 +99,15 @@ Ext.ns('wcli');
 				fieldSet.items.push(item);
 			}
 			for (var i = 0; i < bodyItems.length; i++) {
+				if (bodyItems[i].name){
+					fieldSetClass = bodyItems[i].name.trim();
+				}
+				else{
+					fieldSetClass = '';
+				}
 				config.items.push({
 					xtype: 'fieldset',
+					cls: fieldSetClass + "FieldSet",
 					title: bodyItems[i].name.trim() || undefined,
 					items: bodyItems[i].items
 				});
