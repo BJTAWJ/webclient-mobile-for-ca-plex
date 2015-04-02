@@ -12,6 +12,7 @@
 /(!FocusArea)
 
 new wcli.Button({
+	id: '/(!NameID)',
 	controlName: wcli.util.parseControlName("/(!Property:ControlName)"),
 	cls: '/(!Param:cls)',
 	disabled: /(!If:/(!Property:Disabled)=Yes)true/(!Else)false/(!If),
