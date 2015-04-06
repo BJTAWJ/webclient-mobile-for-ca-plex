@@ -219,6 +219,10 @@ wcli.util = (function() {
 				control.removeAll();
 				control.add(panelConfig);
 			}
+			
+			if (state.additionalcode){
+				eval(state.additionalcode);
+			}
 		},
 		
 		htmlEncode: function(str) {
